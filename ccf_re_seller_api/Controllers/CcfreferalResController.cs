@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ccf_re_seller_api.Modals;
 using CCFReSeller;
+using System.Globalization;
 
 namespace ccf_re_seller_api.Controllers
 {
@@ -30,16 +31,40 @@ namespace ccf_re_seller_api.Controllers
 
         // GET: api/CcfreferalRes/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<CcfreferalRe>> GetCcfreferalRe(string id)
+        public async Task<ActionResult<IEnumerable<TotalRequest>>> GetCcfreferalRe(string id)
         {
-            var ccfreferalRe = await _context.CcfreferalRes.FindAsync(id);
+            //var ccfreferalRe = await _context.CcfreferalRes.FindAsync(id);
+            //
+            var list = _context.CcfreferalRes
+                        .SingleOrDefault(re => re.uid == id);
 
-            if (ccfreferalRe == null)
+            var listCustomer = _context.CcfreferalCusUps.AsQueryable();
+
+            int totalCustomer = listCustomer.Where(u => u.uid == id)
+                                    .Count();
+            int totalPaddingCustomer = listCustomer.Where(u => u.uid == id)
+                                       .Where(u => u.status == Constant.ASSIGN).Count();
+            int totalLoanCustomer = listCustomer.Where(u => u.uid == id)
+                           .Where(u => u.status == Constant.APPROVE).Count();
+
+            //var 
+
+            if (listCustomer == null)
             {
                 return NotFound();
             }
 
-            return ccfreferalRe;
+            List<TotalRequest> results = new List<TotalRequest>()
+            {
+                new TotalRequest()
+                {
+                    totalCustomer = totalCustomer,
+                    totalPaddingCustomer = totalPaddingCustomer,
+                     totalLoanCustomer = totalLoanCustomer,
+                     CcfreferalRe = list,
+                }
+            };
+            return results;
         }
         //Get List Referrer
         [HttpPost("all")]
@@ -67,8 +92,10 @@ namespace ccf_re_seller_api.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutCcfreferalRe(string id, CcfreferalRe ccfreferalRe)
         {
+            var datetime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+            DateTime DOI = DateTime.ParseExact((datetime).Trim(), "yyyy-MM-dd HH:mm:ss", CultureInfo.GetCultureInfo("en-GB"));
             ccfreferalRe.status = Constant.PROCESS;
-            ccfreferalRe.regdate = DateTime.Now;
+            ccfreferalRe.regdate = DOI;
 
             if (id != ccfreferalRe.refcode)
             {
@@ -101,8 +128,11 @@ namespace ccf_re_seller_api.Controllers
         [HttpPost]
         public async Task<ActionResult<CcfreferalRe>> PostCcfreferalRe(CcfreferalRe ccfreferalRe)
         {
+            var datetime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+            DateTime DOI = DateTime.ParseExact((datetime).Trim(), "yyyy-MM-dd HH:mm:ss", CultureInfo.GetCultureInfo("en-GB"));
+
             ccfreferalRe.refcode = await GetNextID();
-            ccfreferalRe.regdate = DateTime.Now;
+            ccfreferalRe.regdate = DOI;
             _context.CcfreferalRes.Add(ccfreferalRe);
             ccfreferalRe.status = Constant.REQUEST;
             try
@@ -136,8 +166,8 @@ namespace ccf_re_seller_api.Controllers
             return nextId.ToString();
         }
 
-            // DELETE: api/CcfreferalRes/5
-            [HttpDelete("{id}")]
+        // DELETE: api/CcfreferalRes/5
+        [HttpDelete("{id}")]
         public async Task<ActionResult<CcfreferalRe>> DeleteCcfreferalRe(string id)
         {
             var ccfreferalRe = await _context.CcfreferalRes.FindAsync(id);

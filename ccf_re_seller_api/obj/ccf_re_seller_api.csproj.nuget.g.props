@@ -26,6 +26,6 @@
     <PkgMicrosoft_EntityFrameworkCore_Tools_DotNet Condition=" '$(PkgMicrosoft_EntityFrameworkCore_Tools_DotNet)' == '' ">/Users/ramonoem/.nuget/packages/microsoft.entityframeworkcore.tools.dotnet/2.0.3</PkgMicrosoft_EntityFrameworkCore_Tools_DotNet>
     <PkgMicrosoft_CodeAnalysis_Analyzers Condition=" '$(PkgMicrosoft_CodeAnalysis_Analyzers)' == '' ">/Users/ramonoem/.nuget/packages/microsoft.codeanalysis.analyzers/3.3.2</PkgMicrosoft_CodeAnalysis_Analyzers>
     <PkgEntityFramework Condition=" '$(PkgEntityFramework)' == '' ">/Users/ramonoem/.nuget/packages/entityframework/6.4.4</PkgEntityFramework>
-    <PkgEASendMail Condition=" '$(PkgEASendMail)' == '' ">/Users/ramonoem/.nuget/packages/easendmail/7.7.0.6</PkgEASendMail>
+    <PkgEASendMail Condition=" '$(PkgEASendMail)' == '' ">/Users/ramonoem/.nuget/packages/easendmail/7.7.0.8</PkgEASendMail>
   </PropertyGroup>
 </Project>

@@ -38,7 +38,7 @@
           "dependencies": {
             "EASendMail": {
               "target": "Package",
-              "version": "[7.7.0.6, )"
+              "version": "[7.7.0.8, )"
             },
             "EntityFramework": {
               "target": "Package",
@@ -50,7 +50,7 @@
             },
             "MailKit": {
               "target": "Package",
-              "version": "[2.10.1, )"
+              "version": "[2.11.1, )"
             },
             "Microsoft.AspNetCore.Authentication.JwtBearer": {
               "target": "Package",

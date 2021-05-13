@@ -15,6 +15,11 @@ namespace ccf_booking_api.Models
     public string ufacebook { get; set; }
     public string mtoken { get; set; }
     public string ustatus { get; set; }
+    public int level { get; set; }
+    public string staffid { get; set; }
+    public string staffposition { get; set; }
+    public string brcode { get; set; }
+    public string u5 { get; set; }
 
     }
 }

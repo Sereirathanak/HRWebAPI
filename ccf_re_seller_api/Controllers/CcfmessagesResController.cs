@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ccf_re_seller_api.Modals;
+using ccf_re_seller_api.Repositories;
 
 namespace ccf_re_seller_api.Controllers
 {
@@ -14,6 +15,7 @@ namespace ccf_re_seller_api.Controllers
     public class CcfmessagesResController : ControllerBase
     {
         private readonly ReSellerAPIContext _context;
+        private UserRepository _userRepository;
 
         public CcfmessagesResController(ReSellerAPIContext context)
         {
@@ -27,18 +29,67 @@ namespace ccf_re_seller_api.Controllers
             return await _context.CcfmessagesRes.ToListAsync();
         }
 
-        // GET: api/CcfmessagesRes/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<CcfmessagesRe>> GetCcfmessagesRe(string id)
+        // POST: api/CcfmessagesRes/5
+        [HttpPost("ByUser")]
+        public async Task<ActionResult<IEnumerable<ReturnMessage>>> GetCcfmessagesRe(CustomerFilter filter)
         {
-            var ccfmessagesRe = await _context.CcfmessagesRes.FindAsync(id);
-
-            if (ccfmessagesRe == null)
+            try
             {
-                return NotFound();
-            }
+                var messages = _context.CcfmessagesRes
+                                       .Where(m => m.ucode == filter.uid)
+                                       .AsQueryable();
 
-            return ccfmessagesRe;
+                var recordLists = messages.OrderBy(m => m.mstatus)
+                                      .ThenByDescending(m => m.id)
+                                      .AsQueryable()
+                                      .Skip((filter.pageNumber - 1) * filter.pageSize)
+                                      .Take(filter.pageSize)
+                                      .ToList();
+
+                int totalMessage = messages.Count();
+                int totalRead = messages.Where(m => m.mstatus == 1).Count();
+                int totalUnRead = messages.Where(m => m.mstatus == 0).Count();
+
+                List<ReturnMessage> resultLists = new List<ReturnMessage>() {
+                    new ReturnMessage()
+                    {
+                        totalMessage    = totalMessage,
+                        totalRead       = totalRead,
+                        totalUnread     = totalUnRead,
+                        listMessages    = recordLists
+                    }
+                };
+
+                return resultLists;
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new KeyValuePair<string, string>("999", ex.Message.ToString()));
+            }
+        }
+
+        // POST api/<MessagesController>/5
+        [HttpPost("Read/{id}")]
+        public async Task<IActionResult> Read(string id)
+        {
+            try
+            {
+                var messageObj = _context.CcfmessagesRes.SingleOrDefault(m => m.id == id);
+
+                if (messageObj == null)
+                {
+                    return BadRequest(new KeyValuePair<string, string>("000", $"The message {id} not found."));
+                }
+
+                messageObj.mstatus = 1;
+                _context.SaveChanges();
+
+                return Ok(new KeyValuePair<string, string>("200", "The message was successfully read."));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new KeyValuePair<string, string>("999", ex.Message.ToString()));
+            }
         }
 
         // PUT: api/CcfmessagesRes/5

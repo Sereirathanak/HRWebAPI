@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ccf_re_seller_api.Modals;
-
+using System.Globalization;
 namespace ccf_re_seller_api.Controllers
 {
     [Route("api/[controller]")]
@@ -47,10 +46,15 @@ namespace ccf_re_seller_api.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutCcflogRe(string id, CcflogRe ccflogRe)
         {
+            var datetime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+            DateTime DOI = DateTime.ParseExact((datetime).Trim(), "yyyy-MM-dd HH:mm:ss", CultureInfo.GetCultureInfo("en-GB"));
+
             if (id != ccflogRe.id)
             {
                 return BadRequest();
             }
+            ccflogRe.odate = DOI;
+            ccflogRe.u1 = "LogOut";
 
             _context.Entry(ccflogRe).State = EntityState.Modified;
 
@@ -79,10 +83,34 @@ namespace ccf_re_seller_api.Controllers
         [HttpPost]
         public async Task<ActionResult<CcflogRe>> PostCcflogRe(CcflogRe ccflogRe)
         {
-            ccflogRe.id = await GetNextID();
-            _context.CcflogRes.Add(ccflogRe);
+            var datetime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+            DateTime DOI = DateTime.ParseExact((datetime).Trim(), "yyyy-MM-dd HH:mm:ss", CultureInfo.GetCultureInfo("en-GB"));
+
+
             try
             {
+                var id = _context.CcflogRes.Max(c => c.id);
+                int convertInt = 0;
+                if (id == null)
+                {
+                    convertInt = 40000;
+                }
+                else
+                {
+                    convertInt = int.Parse(id) + 1;
+
+                }
+                ccflogRe.id = convertInt.ToString();
+                if(ccflogRe.u1 == "L")
+                {
+                    ccflogRe.ldate = DOI;
+
+                }
+                else
+                {
+                    ccflogRe.odate = DOI;
+                }
+                _context.CcflogRes.Add(ccflogRe);
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateException)
@@ -96,21 +124,30 @@ namespace ccf_re_seller_api.Controllers
                     throw;
                 }
             }
+            return Ok(ccflogRe);
 
-            return CreatedAtAction("GetCcflogRe", new { id = ccflogRe.id }, ccflogRe);
         }
 
-        //Next ID
-        public async Task<string> GetNextID()
+        private  string  genNextId()
         {
-            var id = await _context.CcflogRes.OrderByDescending(u => u.id).FirstOrDefaultAsync();
+            var id = _context.CcflogRes.Max(c => c.id) + 1;
 
-            if (id == null)
+            return id.ToString();
+        }
+
+
+
+
+        public async Task<dynamic> GetNextIDLog()
+        {
+            var ids = await _context.CcflogRes.OrderByDescending(u => u.id).FirstOrDefaultAsync();
+
+            if (ids == null)
             {
-                return "700000";
+                return "400000";
             }
-            var nextId = int.Parse(id.id) + 1;
-            return nextId.ToString();
+            var nextId = int.Parse(ids.id) + 1;
+            return nextId;
         }
 
         // DELETE: api/CcflogRes/5

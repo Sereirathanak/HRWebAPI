@@ -42,11 +42,6 @@ namespace ccf_re_seller_api.Controllers
                     if (_userData != null && _userData.pwd != null)
                     {
                         var user = GetUser(_userData.phone, _userData.pwd);
-                    //
-                    Console.WriteLine(_userData.phone);
-                    Console.WriteLine(_userData.pwd);
-                    Console.WriteLine(user);
-                    //
                         if (user != null)
                         {
                             // Check Lock
@@ -68,8 +63,6 @@ namespace ccf_re_seller_api.Controllers
                             new Claim(JwtRegisteredClaimNames.Iat, DateTime.UtcNow.ToString()),
                             new Claim("Phone", user.uid),
                             new Claim("Uno", user.uno.ToString()),
-                            //new Claim("UserLevel", user.utype.ToString()),
-                            //new Claim("UserBranch", user.uotpcode)
                        };
 
                             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));

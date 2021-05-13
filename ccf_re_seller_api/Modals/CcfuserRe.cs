@@ -30,9 +30,25 @@ namespace ccf_re_seller_api.Modals
         public string mtoken { get; set; }
         public string ufacebook { get; set; }
         public string phone { get; set; }
+        public int level { get; set; }
+        public string staffid { get; set; }
+        public string staffposition { get; set; }
+        public string brcode { get; set; }
+        public string job { get; set; }
+        public string address { get; set; }
+        public string email { get; set; }
+        //
+        public string dob { get; set; }
+        public string idtype { get; set; }
+        public string idnumber { get; set; }
+        public string banktype { get; set; }
+        public string banknumber { get; set; }
+        public string verifystatus { get; set; }
+        public string gender { get; set; }
+
+        
 
         public virtual ICollection<CcfreferalRe> ccfreferalRe { get; set; }
-
 
     }
 }

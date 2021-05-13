@@ -27,8 +27,13 @@ namespace ccf_re_seller_api.Modals
         public virtual DbSet<CcfreferalRe> CcfreferalRes { get; set; }
         public virtual DbSet<CcfroleRe> CcfroleRes { get; set; }
         public virtual DbSet<CcfuserRe> CcfuserRes { get; set; }
-
-
+        public virtual DbSet<BranchClass> BranchClass { get; set; }
+        public virtual DbSet<Address> Addresses { get; set; }
+        public virtual DbSet<Currency> Currency { get; set; }
+        public virtual DbSet<Transition> Transition { get; set; }
+        public virtual DbSet<ExchangeRate> ExchangeRate { get; set; }
+        public virtual DbSet<Document> Document { get; set; }
+        
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             OnModelCreatingPartial(modelBuilder);

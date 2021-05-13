@@ -14,5 +14,8 @@ namespace ccf_re_seller_api.Modals
         public int pageSize { get; set; }
         public string dateOf { get; set; }
         public string? isDownload { get; set; }
+        public int? level { get; set; }
+        public string? refcode { get; set; }
+
     }
 }

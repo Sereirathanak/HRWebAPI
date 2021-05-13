@@ -1,5 +1,6 @@
 /Users/ramonoem/Desktop/Projects/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/appsettings.Development.json
 /Users/ramonoem/Desktop/Projects/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/appsettings.json
+/Users/ramonoem/Desktop/Projects/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/ccf-re-seller-app-firebase-adminsdk-khxlw-514befc41e.json
 /Users/ramonoem/Desktop/Projects/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/Properties/launchSettings.json
 /Users/ramonoem/Desktop/Projects/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/ccf_re_seller_api.deps.json
 /Users/ramonoem/Desktop/Projects/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/ccf_re_seller_api.runtimeconfig.json

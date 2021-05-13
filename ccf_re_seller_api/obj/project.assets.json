@@ -2,7 +2,7 @@
   "version": 3,
   "targets": {
     ".NETCoreApp,Version=v3.1": {
-      "EASendMail/7.7.0.6": {
+      "EASendMail/7.7.0.8": {
         "type": "package",
         "compile": {
           "lib/netcoreapp2.1/EASendMail.dll": {}
@@ -121,10 +121,10 @@
           "lib/netstandard2.0/Humanizer.dll": {}
         }
       },
-      "MailKit/2.10.1": {
+      "MailKit/2.11.1": {
         "type": "package",
         "dependencies": {
-          "MimeKit": "2.10.1"
+          "MimeKit": "2.11.0"
         },
         "compile": {
           "lib/netstandard2.0/MailKit.dll": {}
@@ -701,10 +701,10 @@
           }
         }
       },
-      "MimeKit/2.10.1": {
+      "MimeKit/2.11.0": {
         "type": "package",
         "dependencies": {
-          "Portable.BouncyCastle": "1.8.8",
+          "Portable.BouncyCastle": "1.8.10",
           "System.Buffers": "4.5.1",
           "System.Reflection.TypeExtensions": "4.4.0",
           "System.Security.Cryptography.Pkcs": "4.7.0",
@@ -798,7 +798,7 @@
           "lib/netstandard1.3/Npgsql.EntityFrameworkCore.PostgreSQL.Design.dll": {}
         }
       },
-      "Portable.BouncyCastle/1.8.8": {
+      "Portable.BouncyCastle/1.8.10": {
         "type": "package",
         "compile": {
           "lib/netstandard2.0/BouncyCastle.Crypto.dll": {}
@@ -1391,15 +1391,15 @@
     }
   },
   "libraries": {
-    "EASendMail/7.7.0.6": {
-      "sha512": "6SoJ19yZwLyqtLjkU+xEhiSreulB8ziNY0YkLQG/xp/9PJe250JH/PYHooQFsBy3ZZFJrV7g1CEXXkIieBFUHA==",
+    "EASendMail/7.7.0.8": {
+      "sha512": "fteTcni8zp5VPjKtVNBgAdcyvEFiXtX/rdLMfD+qqpY8ZmxFU2Jf5dnGqp5bfq+kp+ofTfnm7JUuQFxquIRS9g==",
       "type": "package",
-      "path": "easendmail/7.7.0.6",
+      "path": "easendmail/7.7.0.8",
       "hasTools": true,
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
-        "easendmail.7.7.0.6.nupkg.sha512",
+        "easendmail.7.7.0.8.nupkg.sha512",
         "easendmail.nuspec",
         "lib/net11/EASendMail.dll",
         "lib/net20-cf/EASendMail.dll",
@@ -1612,10 +1612,10 @@
         "logo.png"
       ]
     },
-    "MailKit/2.10.1": {
-      "sha512": "CG0utzggjYutAzlOnuY+2yS2HGL4WFTbAYtU73vBSGdHKMXNRnVy9onITGqz1Rmmq5Q63de/ZJBXzNyNPCx9Mw==",
+    "MailKit/2.11.1": {
+      "sha512": "Z/MjVOicmCCLMgOQ3pr7MKQ9fsIrMt5qA2qqTO7Uux7Q6y4pYQFV4HBeJcc/oTjNxngiLzFlUoF9oSuQdFD/ig==",
       "type": "package",
-      "path": "mailkit/2.10.1",
+      "path": "mailkit/2.11.1",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -1632,10 +1632,13 @@
         "lib/net48/MailKit.dll",
         "lib/net48/MailKit.pdb",
         "lib/net48/MailKit.xml",
+        "lib/net50/MailKit.dll",
+        "lib/net50/MailKit.pdb",
+        "lib/net50/MailKit.xml",
         "lib/netstandard2.0/MailKit.dll",
         "lib/netstandard2.0/MailKit.pdb",
         "lib/netstandard2.0/MailKit.xml",
-        "mailkit.2.10.1.nupkg.sha512",
+        "mailkit.2.11.1.nupkg.sha512",
         "mailkit.nuspec"
       ]
     },
@@ -2828,10 +2831,10 @@
         "version.txt"
       ]
     },
-    "MimeKit/2.10.1": {
-      "sha512": "rBpIsOdgpMvcNraBDgQSSNCk/MVxxFv7VX2Qq1WnFJ4AnvjIU+r12gaKs6r+SRvCEZWvC5CQlKHuoQbIbO/brA==",
+    "MimeKit/2.11.0": {
+      "sha512": "xZGy3hLMxbw0ks82N/NjVYsW7Qb4pMEPtoJ+kcoJw566KVF2RJh2+kl0rdmzitghgf7FpxPGJmCNgIh+iciBmg==",
       "type": "package",
-      "path": "mimekit/2.10.1",
+      "path": "mimekit/2.11.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -2848,13 +2851,16 @@
         "lib/net48/MimeKit.dll",
         "lib/net48/MimeKit.pdb",
         "lib/net48/MimeKit.xml",
+        "lib/net50/MimeKit.dll",
+        "lib/net50/MimeKit.pdb",
+        "lib/net50/MimeKit.xml",
         "lib/netstandard2.0/MimeKit.dll",
         "lib/netstandard2.0/MimeKit.pdb",
         "lib/netstandard2.0/MimeKit.xml",
         "lib/netstandard2.1/MimeKit.dll",
         "lib/netstandard2.1/MimeKit.pdb",
         "lib/netstandard2.1/MimeKit.xml",
-        "mimekit.2.10.1.nupkg.sha512",
+        "mimekit.2.11.0.nupkg.sha512",
         "mimekit.nuspec"
       ]
     },
@@ -3086,10 +3092,10 @@
         "npgsql.entityframeworkcore.postgresql.design.nuspec"
       ]
     },
-    "Portable.BouncyCastle/1.8.8": {
-      "sha512": "1rxdf8NfyAxLlqIEciCl/yNhmz1YiLkmp6rrF8p3/NVmyHHzPWLx8djtDvSAwhPLg64BXvsRcM3+5bP1HAUdYg==",
+    "Portable.BouncyCastle/1.8.10": {
+      "sha512": "XLhjNAwuVB9ynwn11l5K44eyozh8q6gFseTrlnLNttejimglX7+F9+vxh60LPjvA/DAt6fUdS43N3ah8K6eaWg==",
       "type": "package",
-      "path": "portable.bouncycastle/1.8.8",
+      "path": "portable.bouncycastle/1.8.10",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -3097,7 +3103,7 @@
         "lib/net40/BouncyCastle.Crypto.xml",
         "lib/netstandard2.0/BouncyCastle.Crypto.dll",
         "lib/netstandard2.0/BouncyCastle.Crypto.xml",
-        "portable.bouncycastle.1.8.8.nupkg.sha512",
+        "portable.bouncycastle.1.8.10.nupkg.sha512",
         "portable.bouncycastle.nuspec"
       ]
     },
@@ -5201,10 +5207,10 @@
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v3.1": [
-      "EASendMail >= 7.7.0.6",
+      "EASendMail >= 7.7.0.8",
       "EntityFramework >= 6.4.4",
       "FirebaseAdmin >= 2.0.0",
-      "MailKit >= 2.10.1",
+      "MailKit >= 2.11.1",
       "Microsoft.AspNetCore.Authentication.JwtBearer >= 3.1.8",
       "Microsoft.AspNetCore.Mvc.NewtonsoftJson >= 3.1.8",
       "Microsoft.CodeAnalysis.Analyzers >= 3.3.2",
@@ -5257,7 +5263,7 @@
         "dependencies": {
           "EASendMail": {
             "target": "Package",
-            "version": "[7.7.0.6, )"
+            "version": "[7.7.0.8, )"
           },
           "EntityFramework": {
             "target": "Package",
@@ -5269,7 +5275,7 @@
           },
           "MailKit": {
             "target": "Package",
-            "version": "[2.10.1, )"
+            "version": "[2.11.1, )"
           },
           "Microsoft.AspNetCore.Authentication.JwtBearer": {
             "target": "Package",

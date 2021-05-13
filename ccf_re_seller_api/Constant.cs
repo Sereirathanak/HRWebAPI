@@ -41,6 +41,15 @@ namespace CCFReSeller
         public static string LOCK       = "L";
         public static string GROUPLOAN = "G";
         public static string PROCESS = "P";
+        public static string DIGETAL = "Digetal";
+        public static string BM = "Brand Maneger";
+        public static string BTL = "Brand Team Lead";
+        public static string CO = "Credit Officer";
+        public static string ASSIGN = "ASSIGN";
+        public static string UPDATE = "UPDATE";
+        public static string FINALAPPROVE = "FINAL APPROVE";
+        public static string PEDDING = "Pedding";
+
 
 
 

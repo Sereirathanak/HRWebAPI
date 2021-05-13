@@ -31,8 +31,25 @@ namespace ccf_re_seller_api.Modals
         public string job { get; set; }
         public decimal? bal { get; set; }
         public string status { get; set; }
-
+        public string email { get; set; }
+        public string verify { get; set; }
+        public string typeaccountbank { get; set; }
+        public string typeaccountnumber { get; set; }
+        public string idtype { get; set; }
+        public string idnumber { get; set; }
+        public string verifystatus { get; set; }
+        public string gender { get; set; }
 
         public virtual CcfuserRe CcfuserRe { get; set; }
+        
+    }
+
+    public class TotalRequest
+    {
+        public int totalCustomer { get; set; }
+        public int totalPaddingCustomer { get; set; }
+        public int totalLoanCustomer { get; set; }
+
+        public virtual CcfreferalRe CcfreferalRe { get; set; }
     }
 }

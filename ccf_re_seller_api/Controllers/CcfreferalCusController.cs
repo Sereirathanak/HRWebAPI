@@ -7,6 +7,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ccf_re_seller_api.Modals;
 using CCFReSeller;
+using ccf_re_seller_api.Repositories;
+using Microsoft.AspNetCore.Hosting;
+using System.Globalization;
 
 namespace ccf_re_seller_api.Controllers
 {
@@ -15,10 +18,12 @@ namespace ccf_re_seller_api.Controllers
     public class CcfreferalCusController : ControllerBase
     {
         private readonly ReSellerAPIContext _context;
+        private readonly UserRepository _userRepository;
 
-        public CcfreferalCusController(ReSellerAPIContext context)
+        public CcfreferalCusController(ReSellerAPIContext context, IWebHostEnvironment env)
         {
             _context = context;
+            _userRepository = new UserRepository(_context, env);
         }
 
         // GET: api/CcfreferalCus
@@ -34,7 +39,7 @@ namespace ccf_re_seller_api.Controllers
         {
             var ccfreferalCu = await _context.CcfreferalCus
                 .FindAsync(id);
-               
+
 
             if (ccfreferalCu == null)
             {
@@ -53,7 +58,7 @@ namespace ccf_re_seller_api.Controllers
                 .AsQueryable();
 
             int totalListReferalCus = listReferalCus.Count();
-            var listReferalsCus= listReferalCus.Where(lr => lr.status == Constant.REQUEST)
+            var listReferalsCus = listReferalCus.Where(lr => lr.status == Constant.REQUEST)
                                                .OrderByDescending(lr => lr.refdate)
                                                .AsQueryable()
                                                .Skip((filter.pageNumber - 1) * filter.pageSize)
@@ -104,35 +109,45 @@ namespace ccf_re_seller_api.Controllers
         [HttpPost]
         public async Task<ActionResult<CcfreferalCu>> PostCcfreferalCu(CcfreferalCu ccfreferalCu)
         {
-            ccfreferalCu.cid = await GetNextID();
-            ccfreferalCu.refdate = DateTime.Now;
-            ccfreferalCu.status = Constant.REQUEST;
-            //
-
-            CcfreferalCusUp ccfreferalCusUp = new CcfreferalCusUp();
-            ccfreferalCusUp.id = await GetNextIDCusterUpdate();
-            ccfreferalCusUp.refdate = DateTime.Now;
-            ccfreferalCusUp.status = Constant.PROCESS;
-            ccfreferalCusUp.cid = ccfreferalCu.cid;
-            ccfreferalCusUp.uid = ccfreferalCu.uid;
-            ccfreferalCusUp.cname = ccfreferalCu.cname;
-            ccfreferalCusUp.phone = ccfreferalCu.phone;
-            ccfreferalCusUp.lamount = int.Parse(ccfreferalCu.lamount.ToString());
-            ccfreferalCusUp.lpourpose = ccfreferalCu.lpourpose;
-            ccfreferalCusUp.address = ccfreferalCu.u1;
-            ccfreferalCusUp.job = "";
-            ccfreferalCusUp.bm = "";
-            ccfreferalCusUp.btl = "";
-            ccfreferalCusUp.co = "";
-            ccfreferalCusUp.br = "";
-
-            //insert to Referal Customer Update table
-            _context.CcfreferalCusUps.Add(ccfreferalCusUp);
-
-            //insert to Referal Customer table
-            _context.CcfreferalCus.Add(ccfreferalCu);
+            var datetime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+            DateTime DOI = DateTime.ParseExact((datetime).Trim(), "yyyy-MM-dd HH:mm:ss", CultureInfo.GetCultureInfo("en-GB"));
             try
             {
+                ccfreferalCu.cid = await GetNextID();
+                ccfreferalCu.refdate = DOI;
+                ccfreferalCu.status = Constant.PEDDING;
+                //
+
+                CcfreferalCusUp ccfreferalCusUp = new CcfreferalCusUp(_context);
+                ccfreferalCusUp.id = await GetNextIDCusterUpdate();
+                ccfreferalCusUp.refdate = DOI;
+                ccfreferalCusUp.status = Constant.PEDDING;
+                ccfreferalCusUp.cid = ccfreferalCu.cid;
+                ccfreferalCusUp.uid = ccfreferalCu.uid;
+                ccfreferalCusUp.cname = ccfreferalCu.cname;
+                ccfreferalCusUp.phone = ccfreferalCu.phone;
+                ccfreferalCusUp.lamount = (int)ccfreferalCu.lamount;
+                ccfreferalCusUp.lpourpose = ccfreferalCu.lpourpose;
+                ccfreferalCusUp.address =
+                     ccfreferalCu.u4;
+                ccfreferalCusUp.job = "";
+                ccfreferalCusUp.bm = "";
+                ccfreferalCusUp.btl = "";
+                ccfreferalCusUp.co = "";
+                ccfreferalCusUp.br = "";
+                ccfreferalCusUp.province = ccfreferalCu.province;
+                ccfreferalCusUp.district = ccfreferalCu.district;
+                ccfreferalCusUp.commune = ccfreferalCu.commune;
+                ccfreferalCusUp.village = ccfreferalCu.village;
+                ccfreferalCusUp.curcode = ccfreferalCu.curcode;
+
+                //insert to Referal Customer table
+                _context.CcfreferalCus.Add(ccfreferalCu);
+
+                //insert to Referal Customer Update table
+                _context.CcfreferalCusUps.Add(ccfreferalCusUp);
+
+
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateException)
@@ -146,7 +161,8 @@ namespace ccf_re_seller_api.Controllers
                     throw;
                 }
             }
-
+            var refererName = _context.CcfreferalRes.SingleOrDefault(rn => rn.refcode == ccfreferalCu.refcode);
+            await _userRepository.SendNotificationCreateReferer("CCF ReSeller App", $"New customer {ccfreferalCu.cname} have been referer by {refererName.refname}", ccfreferalCu.uid, ccfreferalCu.cid, ccfreferalCu.cname, ccfreferalCu.lamount.ToString(), ccfreferalCu.refdate, ccfreferalCu.phone);
             return Ok(ccfreferalCu);
         }
 

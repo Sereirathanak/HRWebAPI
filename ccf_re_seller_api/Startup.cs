@@ -38,7 +38,11 @@ namespace ccf_re_seller_api
             services.AddEntityFrameworkNpgsql();
             services.AddDbContext<ReSellerAPIContext>((serviceProvider, optionsBuilder) =>
             {
+                //Production
                 var connection = Configuration.GetConnectionString("ProductionConnection");
+
+                //Default
+                //var connection = Configuration.GetConnectionString("DefaultConnection");
                 optionsBuilder.UseNpgsql(connection);
                 optionsBuilder.UseInternalServiceProvider(serviceProvider);
             });

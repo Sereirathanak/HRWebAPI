@@ -1,47 +1,28 @@
 ﻿<Properties StartupConfiguration="{8AA323D7-ED9B-47F9-98C9-1F665E462E82}|CCFWebAPI">
   <MonoDevelop.Ide.ItemProperties.ccf__re__seller__api PreferredExecutionTarget="/Applications/Brave Browser.app" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Controllers/CcfmessagesResController.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Startup.cs">
     <Files>
-      <File FileName="Controllers/CcfassignResController.cs" Line="116" Column="1" />
-      <File FileName="Controllers/CcflogResController.cs" />
-      <File FileName="Modals/ReSellerContext.cs" />
-      <File FileName="appsettings.json" />
-      <File FileName="Startup.cs" />
-      <File FileName="Modals/CcfassignRe.cs" />
+      <File FileName="Controllers/CcfreferalResController.cs" Line="45" Column="79" />
+      <File FileName="Controllers/CcfmessagesResController.cs" />
       <File FileName="Controllers/CcfuserResController.cs" />
-      <File FileName="Modals/CcfuserRe.cs" />
-      <File FileName="Modals/CcfroleRe.cs" />
-      <File FileName="Modals/CcfreferalRe.cs" />
-      <File FileName="Modals/CcfreferalCusUp.cs" />
-      <File FileName="Modals/CcfreferalCu.cs" />
-      <File FileName="Modals/CcfmessagesRe.cs" />
-      <File FileName="Modals/CcflogRe.cs" />
-      <File FileName="Modals/CcfcustAsig.cs" />
-      <File FileName="Modals/CcfcustApr.cs" />
       <File FileName="Controllers/CcfcustAsigsController.cs" />
-      <File FileName="Controllers/CcfmessagesResController.cs" Line="1" Column="1" />
+      <File FileName="Program.cs" />
+      <File FileName="Controllers/CcfcustAprController.cs" />
       <File FileName="Controllers/CcfreferalCusController.cs" />
+      <File FileName="Controllers/InterUserController.cs" />
+      <File FileName="ccf-re-seller-app-firebase-adminsdk-khxlw-514befc41e.json" />
+      <File FileName="Modals/CcfuserRe.cs" />
+      <File FileName="Modals/CcfreferalCusUp.cs" />
       <File FileName="Controllers/CcfreferalCusUpsController.cs" />
-      <File FileName="Controllers/CcfreferalResController.cs" />
-      <File FileName="Controllers/CcfroleResController.cs" />
-      <File FileName="Properties/launchSettings.json" Line="25" Column="28" />
-      <File FileName="Controllers/TokenController.cs" Line="1" Column="1" />
+      <File FileName="appsettings.json" />
+      <File FileName="Repositories/UserRepository.cs" />
+      <File FileName="Startup.cs" Line="21" Column="25" />
+      <File FileName="Modals/CcfreferalRe.cs" />
+      <File FileName="Controllers/AddressesController.cs" />
+      <File FileName="Controllers/BranchController.cs" />
+      <File FileName="Modals/Address.cs" />
+      <File FileName="Modals/ReSellerContext.cs" />
     </Files>
-    <Pads>
-      <Pad Id="ProjectPad">
-        <State name="__root__">
-          <Node name="ccf_re_seller_api" expanded="True">
-            <Node name="ccf_re_seller_api" expanded="True">
-              <Node name="Controllers" expanded="True">
-                <Node name="CcfmessagesResController.cs" selected="True" />
-              </Node>
-              <Node name="Modals" expanded="True" />
-              <Node name="appsettings.json" expanded="True" />
-            </Node>
-          </Node>
-        </State>
-      </Pad>
-    </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Release" />
