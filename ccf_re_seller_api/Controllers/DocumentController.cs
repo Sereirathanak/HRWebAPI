@@ -358,7 +358,7 @@ namespace ccf_re_seller_api.Controllers
                         if (userReferrer != null)
                         {
                             userReferrer.regdate = DOI;
-                            userReferrer.verifystatus = status;
+                            userReferrer.verifystatus = "R";
                             userReferrer.typeaccountbank = loanDocument.typeaccountbank;
                             userReferrer.typeaccountnumber = loanDocument.typeaccountnumber;
                             userReferrer.idtype = loanDocument.idtype;

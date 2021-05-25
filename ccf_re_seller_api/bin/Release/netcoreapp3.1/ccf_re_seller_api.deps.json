@@ -8,7 +8,14 @@
       "TRACE",
       "RELEASE",
       "NETCOREAPP",
-      "NETCOREAPP3_1"
+      "NETCOREAPP3_1",
+      "NETCOREAPP1_0_OR_GREATER",
+      "NETCOREAPP1_1_OR_GREATER",
+      "NETCOREAPP2_0_OR_GREATER",
+      "NETCOREAPP2_1_OR_GREATER",
+      "NETCOREAPP2_2_OR_GREATER",
+      "NETCOREAPP3_0_OR_GREATER",
+      "NETCOREAPP3_1_OR_GREATER"
     ],
     "languageVersion": "8.0",
     "platform": "",
@@ -34,7 +41,7 @@
           "Microsoft.EntityFrameworkCore": "5.0.2",
           "Microsoft.EntityFrameworkCore.Design": "5.0.2",
           "Microsoft.EntityFrameworkCore.Tools.DotNet": "2.0.3",
-          "Microsoft.Net.Compilers": "3.8.0",
+          "Microsoft.Net.Compilers": "3.9.0",
           "Newtonsoft.Json": "12.0.3",
           "Npgsql.EntityFrameworkCore.PostgreSQL": "5.0.2",
           "Npgsql.EntityFrameworkCore.PostgreSQL.Design": "1.1.0",
@@ -816,7 +823,7 @@
           "lib/netstandard2.0/Microsoft.IdentityModel.Tokens.dll": {}
         }
       },
-      "Microsoft.Net.Compilers/3.8.0": {},
+      "Microsoft.Net.Compilers/3.9.0": {},
       "Microsoft.NETCore.App/2.0.7": {
         "dependencies": {
           "Microsoft.NETCore.DotNetHostPolicy": "2.0.7",
@@ -3206,12 +3213,12 @@
       "path": "microsoft.identitymodel.tokens/6.8.0",
       "hashPath": "microsoft.identitymodel.tokens.6.8.0.nupkg.sha512"
     },
-    "Microsoft.Net.Compilers/3.8.0": {
+    "Microsoft.Net.Compilers/3.9.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-57PnxwBjgxJECuhRsM4CGQUWgKx0xgsSWhM5UXjjhTP1mY7QLE6Jan5zo1LzeTKOblO8+DxFNAcP4bEPXsH+kA==",
-      "path": "microsoft.net.compilers/3.8.0",
-      "hashPath": "microsoft.net.compilers.3.8.0.nupkg.sha512"
+      "sha512": "sha512-uopLz2cQvxaiKVHhsxalzzwtbixJAILpdfxggv3wka0KuRgX+/DwffkfqG4+yYPsKVKltNHVyr0hR9UhCoblog==",
+      "path": "microsoft.net.compilers/3.9.0",
+      "hashPath": "microsoft.net.compilers.3.9.0.nupkg.sha512"
     },
     "Microsoft.NETCore.App/2.0.7": {
       "type": "package",

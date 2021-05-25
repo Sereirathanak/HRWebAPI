@@ -1,33 +1,38 @@
 ﻿<Properties StartupConfiguration="{0A30F87B-9A53-4034-B81D-B4759050C150}|CCFWebAPI">
   <MonoDevelop.Ide.ItemProperties.ccf__re__seller__api PreferredExecutionTarget="/Applications/Brave Browser.app" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="ccf_re_seller_api/Controllers/CcfreferalCusUpsController.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="ccf_re_seller_api/Repositories/UserRepository.cs">
     <Files>
       <File FileName="ccf_re_seller_api/Properties/launchSettings.json" Line="6" Column="50" />
-      <File FileName="ccf_re_seller_api/appsettings.json" Line="1" Column="1" />
-      <File FileName="ccf_re_seller_api/Startup.cs" Line="1" Column="1" />
-      <File FileName="ccf_re_seller_api/Controllers/CcfuserResController.cs" Line="159" Column="59" />
+      <File FileName="ccf_re_seller_api/appsettings.json" />
+      <File FileName="ccf_re_seller_api/Startup.cs" />
+      <File FileName="ccf_re_seller_api/Controllers/CcfuserResController.cs" />
       <File FileName="ccf_re_seller_api/Program.cs" />
-      <File FileName="ccf_re_seller_api/Modals/CcfuserRe.cs" Line="34" Column="45" />
-      <File FileName="ccf_re_seller_api/Controllers/CcfreferalResController.cs" Line="137" Column="10" />
+      <File FileName="ccf_re_seller_api/Modals/CcfuserRe.cs" />
+      <File FileName="ccf_re_seller_api/Controllers/CcfreferalResController.cs" />
       <File FileName="ccf_re_seller_api/Controllers/TokenController.cs" />
-      <File FileName="ccf_re_seller_api/Controllers/CcfreferalCusController.cs" Line="114" Column="52" />
-      <File FileName="ccf_re_seller_api/Controllers/CcfreferalCusUpsController.cs" Line="71" Column="39" />
-      <File FileName="ccf_re_seller_api/Controllers/CcfroleResController.cs" Line="1" Column="1" />
-      <File FileName="ccf_re_seller_api/Modals/CcfreferalCu.cs" Line="11" Column="38" />
-      <File FileName="ccf_re_seller_api/Modals/CcfreferalCusUp.cs" Line="40" Column="33" />
-      <File FileName="ccf_re_seller_api/Modals/CcfreferalRe.cs" Line="12" Column="26" />
-      <File FileName="ccf_re_seller_api/Modals/ReSellerContext.cs" Line="25" Column="57" />
+      <File FileName="ccf_re_seller_api/Controllers/CcfreferalCusController.cs" />
+      <File FileName="ccf_re_seller_api/Controllers/CcfreferalCusUpsController.cs" />
+      <File FileName="ccf_re_seller_api/Controllers/CcfroleResController.cs" />
+      <File FileName="ccf_re_seller_api/Modals/CcfreferalCu.cs" />
+      <File FileName="ccf_re_seller_api/Modals/CcfreferalCusUp.cs" />
+      <File FileName="ccf_re_seller_api/Modals/CcfreferalRe.cs" />
+      <File FileName="ccf_re_seller_api/Modals/ReSellerContext.cs" />
+      <File FileName="ccf_re_seller_api/Controllers/CcfmessagesResController.cs" />
+      <File FileName="ccf_re_seller_api/Controllers/CcfcustAprController.cs" />
+      <File FileName="ccf_re_seller_api/Repositories/UserRepository.cs" Line="94" Column="61" />
+      <File FileName="ccf_re_seller_api/Controllers/DocumentController.cs" Line="361" Column="61" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="ccf_re_seller_api" expanded="True">
             <Node name="ccf_re_seller_api" expanded="True">
-              <Node name="Controllers" expanded="True">
-                <Node name="CcfreferalCusUpsController.cs" selected="True" />
-              </Node>
+              <Node name="Controllers" expanded="True" />
               <Node name="Modals" expanded="True" />
               <Node name="Properties" expanded="True" />
+              <Node name="Repositories" expanded="True">
+                <Node name="UserRepository.cs" selected="True" />
+              </Node>
             </Node>
           </Node>
         </State>

@@ -118,7 +118,7 @@ namespace ccf_re_seller_api.Controllers
 
                         if (finalAmount < 10000)
                         {
-                            amount = 5;
+                            amount = 7;
                         }
 
                         if (finalAmount >= 10000 && finalAmount <= 30000)
@@ -136,7 +136,7 @@ namespace ccf_re_seller_api.Controllers
                     {
                         if (int.Parse(ccfcustApr.u3) < 10000)
                         {
-                            amount = 5;
+                            amount = 7;
                         }
 
                         if (int.Parse(ccfcustApr.u3) >= 10000 && int.Parse(ccfcustApr.u3) <= 30000)

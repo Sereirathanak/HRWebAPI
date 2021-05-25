@@ -466,7 +466,7 @@
           "lib/netstandard2.0/Microsoft.IdentityModel.Tokens.dll": {}
         }
       },
-      "Microsoft.Net.Compilers/3.8.0": {
+      "Microsoft.Net.Compilers/3.9.0": {
         "type": "package",
         "build": {
           "build/Microsoft.Net.Compilers.props": {}
@@ -2278,10 +2278,10 @@
         "microsoft.identitymodel.tokens.nuspec"
       ]
     },
-    "Microsoft.Net.Compilers/3.8.0": {
-      "sha512": "57PnxwBjgxJECuhRsM4CGQUWgKx0xgsSWhM5UXjjhTP1mY7QLE6Jan5zo1LzeTKOblO8+DxFNAcP4bEPXsH+kA==",
+    "Microsoft.Net.Compilers/3.9.0": {
+      "sha512": "uopLz2cQvxaiKVHhsxalzzwtbixJAILpdfxggv3wka0KuRgX+/DwffkfqG4+yYPsKVKltNHVyr0hR9UhCoblog==",
       "type": "package",
-      "path": "microsoft.net.compilers/3.8.0",
+      "path": "microsoft.net.compilers/3.9.0",
       "hasTools": true,
       "files": [
         ".nupkg.metadata",
@@ -2289,7 +2289,7 @@
         "Icon.png",
         "ThirdPartyNotices.rtf",
         "build/Microsoft.Net.Compilers.props",
-        "microsoft.net.compilers.3.8.0.nupkg.sha512",
+        "microsoft.net.compilers.3.9.0.nupkg.sha512",
         "microsoft.net.compilers.nuspec",
         "tools/Microsoft.Build.Tasks.CodeAnalysis.dll",
         "tools/Microsoft.CSharp.Core.targets",
@@ -5217,7 +5217,7 @@
       "Microsoft.EntityFrameworkCore >= 5.0.2",
       "Microsoft.EntityFrameworkCore.Design >= 5.0.2",
       "Microsoft.EntityFrameworkCore.Tools.DotNet >= 2.0.3",
-      "Microsoft.Net.Compilers >= 3.8.0",
+      "Microsoft.Net.Compilers >= 3.9.0",
       "Newtonsoft.Json >= 12.0.3",
       "Npgsql.EntityFrameworkCore.PostgreSQL >= 5.0.2",
       "Npgsql.EntityFrameworkCore.PostgreSQL.Design >= 1.1.0",
@@ -5227,19 +5227,19 @@
     ]
   },
   "packageFolders": {
-    "/Users/ramonoem/.nuget/packages/": {}
+    "/Users/vatsopheap/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/ramonoem/Desktop/Projects/ccf_re_seller_api/ccf_re_seller_api/ccf_re_seller_api.csproj",
+      "projectUniqueName": "/Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/ccf_re_seller_api.csproj",
       "projectName": "ccf_re_seller_api",
-      "projectPath": "/Users/ramonoem/Desktop/Projects/ccf_re_seller_api/ccf_re_seller_api/ccf_re_seller_api.csproj",
-      "packagesPath": "/Users/ramonoem/.nuget/packages/",
-      "outputPath": "/Users/ramonoem/Desktop/Projects/ccf_re_seller_api/ccf_re_seller_api/obj/",
+      "projectPath": "/Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/ccf_re_seller_api.csproj",
+      "packagesPath": "/Users/vatsopheap/.nuget/packages/",
+      "outputPath": "/Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/Users/ramonoem/.config/NuGet/NuGet.Config"
+        "/Users/vatsopheap/.config/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "netcoreapp3.1"
@@ -5249,6 +5249,7 @@
       },
       "frameworks": {
         "netcoreapp3.1": {
+          "targetAlias": "netcoreapp3.1",
           "projectReferences": {}
         }
       },
@@ -5260,6 +5261,7 @@
     },
     "frameworks": {
       "netcoreapp3.1": {
+        "targetAlias": "netcoreapp3.1",
         "dependencies": {
           "EASendMail": {
             "target": "Package",
@@ -5309,7 +5311,7 @@
             "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
             "suppressParent": "All",
             "target": "Package",
-            "version": "[3.8.0, )"
+            "version": "[3.9.0, )"
           },
           "Newtonsoft.Json": {
             "target": "Package",
@@ -5354,7 +5356,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/3.1.402/RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/5.0.203/RuntimeIdentifierGraph.json"
       }
     }
   }
