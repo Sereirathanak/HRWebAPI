@@ -175,52 +175,62 @@ namespace ccf_re_seller_api.Controllers
             try
             {
                 bool exsitingUserLogCreate = false;
+                bool exsitingUserByFacebook = false;
+
                 exsitingUserLogCreate = _context.CcfuserRes.Any(e => e.phone == ccfuserRe.phone);
+
+                exsitingUserByFacebook= _context.CcfuserRes.Any(e => e.u2 == ccfuserRe.u2);
+
+                if (exsitingUserByFacebook == true)
+                {
+                    var listByFacebook = _context.CcfuserRes.Include(u => u.ccfreferalRe).SingleOrDefault(u => u.u2 == ccfuserRe.u2);
+                    return Ok(listByFacebook);
+                }
+                 
 
                 if (exsitingUserLogCreate == true)
                 {
                     var listByPhone = _context.CcfuserRes.Include(u => u.ccfreferalRe).SingleOrDefault(u => u.phone == ccfuserRe.phone);
                     return Ok(listByPhone);
                 }
-
-                else
-                {
-                    //create user
-                    ccfuserRe.uid = await GetNextID();
-                    ccfuserRe.uno = int.Parse(await GetNextID());
-                    ccfuserRe.datecreate = DOI;
-                    ccfuserRe.ustatus = Constant.ACTIVE;
-                    ccfuserRe.utype = Constant.CUSTOMER;
-                    ccfuserRe.u5 = "N";
-                    ccfuserRe.level = 0;
-                    ccfuserRe.staffposition = Constant.CUSTOMER;
-                    ccfuserRe.verifystatus = "Please Verify Account";
+                return Ok(ccfuserRe);
 
 
-                    // create user referer
+                ////create user
+                //ccfuserRe.uid = await GetNextID();
+                //ccfuserRe.uno = int.Parse(await GetNextID());
+                //ccfuserRe.datecreate = DOI;
+                //ccfuserRe.ustatus = Constant.ACTIVE;
+                //ccfuserRe.utype = Constant.CUSTOMER;
+                //ccfuserRe.u5 = "N";
+                //ccfuserRe.level = 0;
+                //ccfuserRe.staffposition = Constant.CUSTOMER;
+                //ccfuserRe.verifystatus = "Please Verify Account";
 
-                    CcfreferalRe user = new CcfreferalRe();
 
-                    user.refcode = await GetNextIDReferal();
-                    user.regdate = DOI;
-                    user.status = Constant.ACTIVE;
-                    user.refname = ccfuserRe.uname;
-                    user.refphone = ccfuserRe.phone;
-                    user.uid = ccfuserRe.uid;
-                    user.u5 = "N";
-                    user.u1 = Constant.CUSTOMER;
-                    user.verify = "N";
-                    user.verifystatus = "Please Verify Account";
+                //// create user referer
 
-                    _context.CcfuserRes.Add(ccfuserRe);
-                    _context.CcfreferalRes.Add(user);
-                    await _context.SaveChangesAsync();
+                //CcfreferalRe user = new CcfreferalRe();
 
-                    var listReferer = _context.CcfuserRes.Include(el => el.ccfreferalRe)
-                        .Where(el => el.uid == ccfuserRe.uid);
+                //user.refcode = await GetNextIDReferal();
+                //user.regdate = DOI;
+                //user.status = Constant.ACTIVE;
+                //user.refname = ccfuserRe.uname;
+                //user.refphone = ccfuserRe.phone;
+                //user.uid = ccfuserRe.uid;
+                //user.u5 = "N";
+                //user.u1 = Constant.CUSTOMER;
+                //user.verify = "N";
+                //user.verifystatus = "Please Verify Account";
 
-                    return Ok(ccfuserRe);
-                }
+                //_context.CcfuserRes.Add(ccfuserRe);
+                //_context.CcfreferalRes.Add(user);
+                //await _context.SaveChangesAsync();
+
+                //var listReferer = _context.CcfuserRes.Include(el => el.ccfreferalRe)
+                //    .Where(el => el.uid == ccfuserRe.uid);
+
+                //return Ok(ccfuserRe);
 
             }
             catch (DbUpdateException)
@@ -247,12 +257,12 @@ namespace ccf_re_seller_api.Controllers
                 var datetime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
                 DateTime DOI = DateTime.ParseExact((datetime).Trim(), "yyyy-MM-dd HH:mm:ss", CultureInfo.GetCultureInfo("en-GB"));
                 bool exsitingUserLogCreateByFacebook = false;
-                exsitingUserLogCreateByFacebook = _context.CcfuserRes.Any(e => e.ufacebook == ccfuserRe.ufacebook);
+                exsitingUserLogCreateByFacebook = _context.CcfuserRes.Any(e => e.u2 == ccfuserRe.u2);
                 Console.WriteLine(exsitingUserLogCreateByFacebook);
                 if (exsitingUserLogCreateByFacebook == true)
                 {
                     var list = _context.CcfuserRes.Include(u => u.ccfreferalRe)
-                        .SingleOrDefault(u => u.ufacebook == ccfuserRe.ufacebook);
+                        .SingleOrDefault(u => u.u2 == ccfuserRe.u2);
 
                     Console.WriteLine(list);
 

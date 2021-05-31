@@ -1,6 +1,10 @@
 {
   "version": 2,
+<<<<<<< Updated upstream
   "dgSpecHash": "1oNTd5HPv3DqYV8VGgEd2ceRIT2UuAKtoom+7+o2YbMupGZbyUQgdg+6dg6uNltWd+7QgnRI5CHUwKlbyoPsPw==",
+=======
+  "dgSpecHash": "QIYCTwbKNJYifIfkz8rBYmymq9yDgEznSmUG6vPFmo6/tw5KG8fsLv7GqYp7BBDqhWN4XUW3Q4ri6oXQZsak9Q==",
+>>>>>>> Stashed changes
   "success": true,
   "projectFilePath": "/Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/ccf_re_seller_api.csproj",
   "expectedPackageFiles": [

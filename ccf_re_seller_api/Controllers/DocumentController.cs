@@ -381,7 +381,7 @@ namespace ccf_re_seller_api.Controllers
 
                         if (refererName != null)
                         {
-                            refererName.verifystatus = status;
+                            refererName.verifystatus = "R";
                             refererName.banktype = loanDocument.typeaccountbank;
                             refererName.banknumber = loanDocument.typeaccountnumber;
                             refererName.idtype = loanDocument.idtype;
