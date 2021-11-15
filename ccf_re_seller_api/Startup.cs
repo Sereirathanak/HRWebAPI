@@ -80,7 +80,7 @@ namespace ccf_re_seller_api
 
             app.UseHttpsRedirection();
 
-            app.UseCors(builder => builder.WithOrigins("*").AllowAnyHeader());
+            app.UseCors(x => x.WithOrigins("*").AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
 
             app.UseRouting();
 

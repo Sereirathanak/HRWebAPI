@@ -23,6 +23,8 @@ namespace ccf_re_seller_api.Modals
         public string date { get; set; }
         public string phone { get; set; }
         public string imgurl { get; set; }
+        public string postion { get; set; }
+
     }
 
     public class ReturnMessage

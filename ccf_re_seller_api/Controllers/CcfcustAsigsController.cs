@@ -10,11 +10,14 @@ using CCFReSeller;
 using ccf_re_seller_api.Repositories;
 using Microsoft.AspNetCore.Hosting;
 using System.Globalization;
+using System.Web.Http.Cors;
 
 namespace ccf_re_seller_api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [EnableCors("*", "*", "*")]
+
     public class CcfcustAsigsController : ControllerBase
     {
         private readonly ReSellerAPIContext _context;
@@ -138,9 +141,7 @@ namespace ccf_re_seller_api.Controllers
             DateTime DOI = DateTime.ParseExact((datetime).Trim(), "yyyy-MM-dd HH:mm:ss", CultureInfo.GetCultureInfo("en-GB"));
 
             var user = _context.CcfuserRes.SingleOrDefault(ul => ul.uid == ccfcustAsig.tuid);
-            Console.WriteLine(ccfcustAsig.status);
-
-            if(ccfcustAsig.status == "Request Disbursement")
+            if (ccfcustAsig.status == "Request Disbursement")
             {
                 ccfcustAsig.ascode = await GetNextID();
                 ccfcustAsig.date = DOI;
@@ -163,7 +164,7 @@ namespace ccf_re_seller_api.Controllers
                 //
                 var referer = _context.CcfreferalRes.SingleOrDefault(rn => rn.refcode == referalCustomer.refcode);
                 //
-                await _userRepository.SendNotificationAssignedUser("CCF ReSeller App", $"Loan Application is request disbursement {user.uname}", user.uid, ccfcustAsig.cid, referalCustomer.cname, referalCustomerUpdate.status, ccfcustAsig.date, referer.refcode, referalCustomerUpdate.phone);
+                await _userRepository.SendNotificationAssignedUser("CCF ReSeller App", $"Loan Application is request disbursement {user.uname} {user.staffposition}", user.uid, ccfcustAsig.cid, referalCustomer.cname, referalCustomerUpdate.status, ccfcustAsig.date, referer.refcode, referalCustomerUpdate.phone, user.staffposition);
             }
 
             if (user.level == 3 && ccfcustAsig.status == "FINAL APPROVE")
@@ -175,7 +176,7 @@ namespace ccf_re_seller_api.Controllers
                 var referalCustomer = _context.CcfreferalCus.SingleOrDefault(e => e.cid == ccfcustAsig.cid);
 
                 referalCustomer.status = ccfcustAsig.status;
-                referalCustomer.u1 = user.uname;
+                referalCustomer.u1 = user.uname + user.staffposition;
                 referalCustomer.u5 = user.u5;
 
 
@@ -183,13 +184,13 @@ namespace ccf_re_seller_api.Controllers
                 var referalCustomerUpdate = _context.CcfreferalCusUps.SingleOrDefault(e => e.cid == ccfcustAsig.cid);
 
                 referalCustomerUpdate.status = ccfcustAsig.status;
-                referalCustomerUpdate.u1 = user.uname;
+                referalCustomerUpdate.u1 = user.uname + user.staffposition;
                 referalCustomer.u5 = user.u5;
                 _context.Entry(referalCustomerUpdate).State = EntityState.Modified;
                 //
                 var referer = _context.CcfreferalRes.SingleOrDefault(rn => rn.refcode == referalCustomer.refcode);
                 //
-                await _userRepository.SendNotificationAssignedUser("CCF ReSeller App", $"New customer have been assigned to {user.uname}", user.uid, ccfcustAsig.cid, referalCustomer.cname, referalCustomerUpdate.status, ccfcustAsig.date, referer.refcode, referalCustomerUpdate.phone);
+                await _userRepository.SendNotificationAssignedUser("CCF ReSeller App", $"New customer have been assigned to {user.uname} {user.staffposition}", user.uid, ccfcustAsig.cid, referalCustomer.cname, referalCustomerUpdate.status, ccfcustAsig.date, referer.refcode, referalCustomerUpdate.phone, user.staffposition);
             }
             else
             {
@@ -200,7 +201,7 @@ namespace ccf_re_seller_api.Controllers
 
                 var referalCustomer = _context.CcfreferalCus.SingleOrDefault(e => e.cid == ccfcustAsig.cid);
                 referalCustomer.status = ccfcustAsig.status;
-                referalCustomer.u1 = user.uname;
+                referalCustomer.u1 = user.uname + user.staffposition;
                 referalCustomer.u5 = user.u5;
                 _context.Entry(referalCustomer).State = EntityState.Modified;
 
@@ -213,7 +214,7 @@ namespace ccf_re_seller_api.Controllers
                 //
                 var referer = _context.CcfreferalRes.SingleOrDefault(rn => rn.refcode == referalCustomer.refcode);
                 //
-                await _userRepository.SendNotificationAssignedUser("CCF ReSeller App", $"New customer have been assigned to {user.uname}", user.uid, ccfcustAsig.cid, referalCustomer.cname, referalCustomerUpdate.status, ccfcustAsig.date, referer.refcode, referalCustomerUpdate.phone);
+                await _userRepository.SendNotificationAssignedUser("CCF ReSeller App", $"New customer have been assigned to {user.uname} {user.staffposition}", user.uid, ccfcustAsig.cid, referalCustomer.cname, referalCustomerUpdate.status, ccfcustAsig.date, referer.refcode, referalCustomerUpdate.phone, user.staffposition);
             };
 
             try

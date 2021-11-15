@@ -2,17 +2,19 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ccf_re_seller_api.Modals;
 using CCFReSeller;
 using System.Globalization;
+using System.Web.Http.Cors;
 
 namespace ccf_re_seller_api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [EnableCors("*", "*","*")]
+
     public class CcfuserResController : ControllerBase
     {
         private readonly ReSellerAPIContext _context;
@@ -22,16 +24,58 @@ namespace ccf_re_seller_api.Controllers
             _context = context;
         }
 
-
-
-
-
         // GET: api/CcfuserRes
         [HttpGet]
         public async Task<ActionResult<IEnumerable<CcfuserRe>>> GetCcfuserRes()
         {
             return await _context.CcfuserRes.ToListAsync();
             //return Ok();
+        }
+
+
+        [HttpPost("all")]
+        public async Task<ActionResult<IEnumerable<CcfuserRe>>> GetAll(CustomerFilter filter)
+        {
+            if (filter.level == 4 || filter.level == 5)
+            {
+                var listReferalCustomer = _context.CcfuserRes
+               .Include(rf => rf.ccfreferalRe)
+               .AsQueryable();
+                if ((filter.sdate != null && filter.sdate != "") && (filter.edate != null && filter.edate != ""))
+                {
+                    DateTime dateFrom = DateTime.Parse(filter.sdate.ToString());
+                    DateTime dateTo = DateTime.Parse(filter.edate.ToString());
+                    listReferalCustomer = listReferalCustomer.Where(la => la.datecreate >= dateFrom && la.datecreate <= dateTo);
+                }
+                else if (filter.sdate != null && filter.sdate != "")
+                {
+                    var strDateTo = DateTime.Now.ToString("yyyy-MM-dd 00:00:00");
+                    DateTime dateFrom = DateTime.Parse(filter.sdate.ToString());
+                    DateTime dateTo = DateTime.Parse(strDateTo.ToString());
+                    listReferalCustomer = listReferalCustomer.Where(la => la.datecreate >= dateFrom && la.datecreate <= dateTo);
+                }
+                if (filter.status != null && filter.status != "")
+                {
+                    listReferalCustomer = listReferalCustomer.Where(lr => lr.verifystatus == filter.status.ToString());
+                }
+
+                if (filter.verifystatus != null && filter.verifystatus != "")
+                {
+                    listReferalCustomer = listReferalCustomer.Where(lr => lr.verifystatus == filter.verifystatus.ToString());
+                }
+                int totalListReferalCustomer = listReferalCustomer.Count();
+                var listReferalsCustomer = listReferalCustomer
+                    .Where(lr => lr.staffid == null)
+                    .OrderByDescending(lr => lr.datecreate)
+                    .AsQueryable()
+                    .Skip((filter.pageNumber - 1) * filter.pageSize)
+                    .Take(filter.pageSize)
+                    //.OrderBy(x => x.verifystatus == "")
+                    .ToList();
+                return Ok(listReferalsCustomer);
+            }
+            return BadRequest();
+
         }
 
         //check exiting phone
@@ -47,7 +91,7 @@ namespace ccf_re_seller_api.Controllers
             var exitingPhone = _context.CcfuserRes.SingleOrDefault(ul => ul.phone == phone);
             //var listCus = _context.CcfreferalCus.SingleOrDefault(e => e.phone == phone);
 
-           
+
 
 
             if (phone != exitingPhone.phone)
@@ -92,59 +136,56 @@ namespace ccf_re_seller_api.Controllers
             try
             {
 
-                users.uid = id;
-                users.uno = int.Parse(id);
                 users.pwd = ccfuserRe.pwd;
                 users.uname = ccfuserRe.uname;
                 users.phone = ccfuserRe.phone;
                 users.email = ccfuserRe.email;
-                users.address = ccfuserRe.address;
-                users.job = ccfuserRe.job;
-                users.u4 = ccfuserRe.u4;
+                users.brcode = ccfuserRe.brcode;
+                users.level = ccfuserRe.level;
+                users.staffid = ccfuserRe.staffid;
+                users.staffposition = ccfuserRe.staffposition;
+
+                users.job = users.job;
+                users.u4 = users.u4;
                 users.datecreate = DOI;
                 users.ustatus = Constant.ACTIVE;
-                users.utype = Constant.CUSTOMER;
+                users.utype = ccfuserRe.staffposition;
                 users.u5 = "N";
-                users.level = 0;
-                users.staffposition = Constant.CUSTOMER;
-
-                users.dob = ccfuserRe.dob;
-                users.idtype = ccfuserRe.idtype;
-                users.idnumber = ccfuserRe.idnumber;
-                users.banktype = ccfuserRe.banktype;
-                users.banknumber = ccfuserRe.banknumber;
-                users.verifystatus = ccfuserRe.verifystatus;
-                users.gender = ccfuserRe.gender;
+                users.dob = users.dob;
+                users.idtype = users.idtype;
+                users.idnumber = users.idnumber;
+                users.banktype = users.banktype;
+                users.banknumber = users.banknumber;
+                users.verifystatus = users.verifystatus;
+                users.gender = users.gender;
+                users.changePassword = ccfuserRe.changePassword;
+                users.ustatus = ccfuserRe.ustatus;
 
                 var user = _context.CcfreferalRes.SingleOrDefault(e => e.uid == id);
                 if (id == user.uid)
                 {
                     user.regdate = DOI;
-                    user.status = Constant.ACTIVE;
+                    user.status = ccfuserRe.ustatus;
                     user.refname = ccfuserRe.uname;
                     user.refphone = ccfuserRe.phone;
                     user.uid = ccfuserRe.uid;
                     user.u5 = "N";
-                    user.u1 = Constant.CUSTOMER;
+                    user.u1 = ccfuserRe.staffposition;
                     user.email = ccfuserRe.email;
-                    user.address = ccfuserRe.address;
-                    user.job = ccfuserRe.job;
-                    user.nid = ccfuserRe.u4;
+                    user.address = user.address;
+                    user.job = user.job;
+                    user.nid = user.u4;
 
-                    user.dob = ccfuserRe.dob;
-                    user.idtype = ccfuserRe.idtype;
-                    user.idnumber = ccfuserRe.idnumber;
-                    user.typeaccountbank = ccfuserRe.banktype;
-                    user.typeaccountnumber = ccfuserRe.banknumber;
-                    user.verifystatus = ccfuserRe.verifystatus;
-                    user.gender = ccfuserRe.gender;
+                    user.dob = user.dob;
+                    user.idtype = user.idtype;
+                    user.idnumber = user.idnumber;
+                    user.typeaccountbank = user.typeaccountbank;
+                    user.typeaccountnumber = user.typeaccountnumber;
+                    user.verifystatus = user.verifystatus;
+                    user.gender = user.gender;
 
-
-                    _context.Entry(user).State = EntityState.Modified;
 
                 }
-                _context.Entry(users).State = EntityState.Modified;
-
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
@@ -175,62 +216,54 @@ namespace ccf_re_seller_api.Controllers
             try
             {
                 bool exsitingUserLogCreate = false;
-                bool exsitingUserByFacebook = false;
 
                 exsitingUserLogCreate = _context.CcfuserRes.Any(e => e.phone == ccfuserRe.phone);
 
-                exsitingUserByFacebook= _context.CcfuserRes.Any(e => e.u2 == ccfuserRe.u2);
-
-                if (exsitingUserByFacebook == true)
-                {
-                    var listByFacebook = _context.CcfuserRes.Include(u => u.ccfreferalRe).SingleOrDefault(u => u.u2 == ccfuserRe.u2);
-                    return Ok(listByFacebook);
-                }
-                 
 
                 if (exsitingUserLogCreate == true)
                 {
                     var listByPhone = _context.CcfuserRes.Include(u => u.ccfreferalRe).SingleOrDefault(u => u.phone == ccfuserRe.phone);
                     return Ok(listByPhone);
                 }
+
+
+                //create user
+                ccfuserRe.uid = await GetNextID();
+                ccfuserRe.uno = int.Parse(await GetNextID());
+                ccfuserRe.datecreate = DOI;
+                ccfuserRe.ustatus = Constant.ACTIVE;
+                ccfuserRe.utype = Constant.CUSTOMER;
+                ccfuserRe.u5 = "N";
+                ccfuserRe.level = 0;
+                ccfuserRe.staffposition = Constant.CUSTOMER;
+                ccfuserRe.verifystatus = "Please Verify Account";
+                ccfuserRe.staffposition = "Referer";
+
+
+
+                // create user referer
+
+                CcfreferalRe user = new CcfreferalRe();
+
+                user.refcode = await GetNextIDReferal();
+                user.regdate = DOI;
+                user.status = Constant.ACTIVE;
+                user.refname = ccfuserRe.uname;
+                user.refphone = ccfuserRe.phone;
+                user.uid = ccfuserRe.uid;
+                user.u5 = "N";
+                user.u1 = Constant.CUSTOMER;
+                user.verify = "N";
+                user.verifystatus = "Please Verify Account";
+
+                _context.CcfuserRes.Add(ccfuserRe);
+                _context.CcfreferalRes.Add(user);
+                await _context.SaveChangesAsync();
+
+                var listReferer = _context.CcfuserRes.Include(el => el.ccfreferalRe)
+                    .Where(el => el.uid == ccfuserRe.uid);
+
                 return Ok(ccfuserRe);
-
-
-                ////create user
-                //ccfuserRe.uid = await GetNextID();
-                //ccfuserRe.uno = int.Parse(await GetNextID());
-                //ccfuserRe.datecreate = DOI;
-                //ccfuserRe.ustatus = Constant.ACTIVE;
-                //ccfuserRe.utype = Constant.CUSTOMER;
-                //ccfuserRe.u5 = "N";
-                //ccfuserRe.level = 0;
-                //ccfuserRe.staffposition = Constant.CUSTOMER;
-                //ccfuserRe.verifystatus = "Please Verify Account";
-
-
-                //// create user referer
-
-                //CcfreferalRe user = new CcfreferalRe();
-
-                //user.refcode = await GetNextIDReferal();
-                //user.regdate = DOI;
-                //user.status = Constant.ACTIVE;
-                //user.refname = ccfuserRe.uname;
-                //user.refphone = ccfuserRe.phone;
-                //user.uid = ccfuserRe.uid;
-                //user.u5 = "N";
-                //user.u1 = Constant.CUSTOMER;
-                //user.verify = "N";
-                //user.verifystatus = "Please Verify Account";
-
-                //_context.CcfuserRes.Add(ccfuserRe);
-                //_context.CcfreferalRes.Add(user);
-                //await _context.SaveChangesAsync();
-
-                //var listReferer = _context.CcfuserRes.Include(el => el.ccfreferalRe)
-                //    .Where(el => el.uid == ccfuserRe.uid);
-
-                //return Ok(ccfuserRe);
 
             }
             catch (DbUpdateException)

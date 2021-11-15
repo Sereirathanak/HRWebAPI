@@ -5,6 +5,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Http.Cors;
 using ccf_booking_api.Models;
 using ccf_re_seller_api.Modals;
 using Microsoft.AspNetCore.Mvc;
@@ -17,6 +18,8 @@ namespace ccf_re_seller_api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [EnableCors("*", "*","*")]
+
     public class TokenController : Controller
     {
         // GET: /<controller>/

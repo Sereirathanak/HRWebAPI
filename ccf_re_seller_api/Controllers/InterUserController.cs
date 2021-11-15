@@ -6,6 +6,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Http.Cors;
 using ccf_booking_api.Models;
 using ccf_re_seller_api.Modals;
 using CCFReSeller;
@@ -20,6 +21,7 @@ namespace ccf_re_seller_api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [EnableCors("*", "*","*")]
     public class InterUserController : Controller
     {
         // GET: /<controller>/
@@ -36,6 +38,7 @@ namespace ccf_re_seller_api.Controllers
             _configuration = config;
             _context = context;
         }
+
         [HttpPost("all")]
         public async Task<ActionResult<IEnumerable<CcfuserRe>>> GetAll(CustomerFilter filter)
         {
@@ -61,17 +64,23 @@ namespace ccf_re_seller_api.Controllers
                 {
                     listReferalCustomer = listReferalCustomer.Where(lr => lr.verifystatus == filter.status.ToString());
                 }
+                if(filter.search != null && filter.search != "")
+                {
+                    listReferalCustomer = listReferalCustomer.Where(lr => lr.uname.ToLower().Contains(filter.search.ToLower()));
+                }
+
                 int totalListReferalCustomer = listReferalCustomer.Count();
                 var listReferalsCustomer = listReferalCustomer
+                    .Where(lr => lr.staffid != null)
                     .OrderByDescending(lr => lr.datecreate)
                     .AsQueryable()
                     .Skip((filter.pageNumber - 1) * filter.pageSize)
                     .Take(filter.pageSize)
-                    .OrderBy(x => x.verifystatus == "R")
+                    //.OrderBy(x => x.verifystatus == "")
                     .ToList();
-                return listReferalsCustomer;
+                return Ok(listReferalsCustomer);
             }
-            return Ok();
+            return BadRequest();
         }
 
         [HttpPost]
@@ -147,6 +156,7 @@ namespace ccf_re_seller_api.Controllers
                     ccfuserRe.datecreate = DOI;
                     ccfuserRe.ustatus = Constant.ACTIVE;
                     ccfuserRe.u5 = "N";
+                    ccfuserRe.changePassword = "N";
                     ccfuserRe.phone = phoneUserInternal;
                     _context.CcfuserRes.Add(ccfuserRe);
 
@@ -202,6 +212,64 @@ namespace ccf_re_seller_api.Controllers
             }
             var nextId = int.Parse(id.refcode) + 1;
             return nextId.ToString();
+        }
+
+        [HttpPost("ChangePassword/{id}")]
+        public async Task<ActionResult> SetPWD(string id, CcfuserRe user)
+        {
+            try
+            {
+                //var getUser = _context?.CcfuserRes.Where(a => a.uid == id).FirstOrDefault();
+                var getUser = _context.CcfuserRes.SingleOrDefault(e => e.staffid == id);
+
+
+
+                //var getUser = await _context.CcfuserRes.SingleOrDefault(a => a.uid == id);
+                getUser.pwd = user.pwd;
+                getUser.changePassword = "Y";
+                await _context.SaveChangesAsync();
+
+                List<Authentication> results = new List<Authentication>()
+                {
+                    new Authentication()
+                    {
+                        changePassword = "Y"
+                    }
+                };
+
+                return Ok(getUser);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message.ToString());
+            }
+
+        }
+
+
+        [HttpPut("verifyaccount/{id}")]
+        public async Task<ActionResult> VerifyAccountUser(string id, CcfuserRe user)
+        {
+            try
+            {
+                var getUser = _context.CcfuserRes.SingleOrDefault(e => e.uid == id);
+                getUser.verifystatus = user.verifystatus;
+                await _context.SaveChangesAsync();
+                List<Authentication> results = new List<Authentication>()
+                {
+                    new Authentication()
+                    {
+                        verifystatus = "Verified"
+                    }
+                };
+
+                return Ok(getUser);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message.ToString());
+            }
+
         }
 
         //Next ID
@@ -279,7 +347,8 @@ namespace ccf_re_seller_api.Controllers
                                 staffid = user.staffid,
                                 staffposition = user.staffposition,
                                 brcode = user.brcode,
-                                u5 = user.u5
+                                u5 = user.u5,
+                                changePassword = user.changePassword
                             }
                         };
 

@@ -33,7 +33,8 @@ namespace ccf_re_seller_api.Modals
         public virtual DbSet<Transition> Transition { get; set; }
         public virtual DbSet<ExchangeRate> ExchangeRate { get; set; }
         public virtual DbSet<Document> Document { get; set; }
-        
+        public virtual DbSet<CcfcurrentAmount> CcfcurrentAmount { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             OnModelCreatingPartial(modelBuilder);

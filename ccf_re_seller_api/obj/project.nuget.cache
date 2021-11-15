@@ -1,10 +1,6 @@
 {
   "version": 2,
-<<<<<<< Updated upstream
-  "dgSpecHash": "1oNTd5HPv3DqYV8VGgEd2ceRIT2UuAKtoom+7+o2YbMupGZbyUQgdg+6dg6uNltWd+7QgnRI5CHUwKlbyoPsPw==",
-=======
-  "dgSpecHash": "QIYCTwbKNJYifIfkz8rBYmymq9yDgEznSmUG6vPFmo6/tw5KG8fsLv7GqYp7BBDqhWN4XUW3Q4ri6oXQZsak9Q==",
->>>>>>> Stashed changes
+  "dgSpecHash": "HRSeD479FEiD/+FP3j20mj2Mi+Wse/YqD/+yg34mXwkcG4y42eHlwW9GKLEgoMaG63ogyyhnVKLx7vhRikAD1Q==",
   "success": true,
   "projectFilePath": "/Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/ccf_re_seller_api.csproj",
   "expectedPackageFiles": [
@@ -18,6 +14,10 @@
     "/Users/vatsopheap/.nuget/packages/google.apis.core/1.49.0/google.apis.core.1.49.0.nupkg.sha512",
     "/Users/vatsopheap/.nuget/packages/humanizer.core/2.8.26/humanizer.core.2.8.26.nupkg.sha512",
     "/Users/vatsopheap/.nuget/packages/mailkit/2.11.1/mailkit.2.11.1.nupkg.sha512",
+    "/Users/vatsopheap/.nuget/packages/microsoft.aspnet.cors/5.2.7/microsoft.aspnet.cors.5.2.7.nupkg.sha512",
+    "/Users/vatsopheap/.nuget/packages/microsoft.aspnet.webapi.client/5.2.7/microsoft.aspnet.webapi.client.5.2.7.nupkg.sha512",
+    "/Users/vatsopheap/.nuget/packages/microsoft.aspnet.webapi.core/5.2.7/microsoft.aspnet.webapi.core.5.2.7.nupkg.sha512",
+    "/Users/vatsopheap/.nuget/packages/microsoft.aspnet.webapi.cors/5.2.7/microsoft.aspnet.webapi.cors.5.2.7.nupkg.sha512",
     "/Users/vatsopheap/.nuget/packages/microsoft.aspnetcore.authentication.jwtbearer/3.1.8/microsoft.aspnetcore.authentication.jwtbearer.3.1.8.nupkg.sha512",
     "/Users/vatsopheap/.nuget/packages/microsoft.aspnetcore.jsonpatch/3.1.8/microsoft.aspnetcore.jsonpatch.3.1.8.nupkg.sha512",
     "/Users/vatsopheap/.nuget/packages/microsoft.aspnetcore.mvc.newtonsoftjson/3.1.8/microsoft.aspnetcore.mvc.newtonsoftjson.3.1.8.nupkg.sha512",
@@ -45,7 +45,7 @@
     "/Users/vatsopheap/.nuget/packages/microsoft.identitymodel.protocols/5.5.0/microsoft.identitymodel.protocols.5.5.0.nupkg.sha512",
     "/Users/vatsopheap/.nuget/packages/microsoft.identitymodel.protocols.openidconnect/5.5.0/microsoft.identitymodel.protocols.openidconnect.5.5.0.nupkg.sha512",
     "/Users/vatsopheap/.nuget/packages/microsoft.identitymodel.tokens/6.8.0/microsoft.identitymodel.tokens.6.8.0.nupkg.sha512",
-    "/Users/vatsopheap/.nuget/packages/microsoft.net.compilers/3.9.0/microsoft.net.compilers.3.9.0.nupkg.sha512",
+    "/Users/vatsopheap/.nuget/packages/microsoft.net.compilers/3.8.0/microsoft.net.compilers.3.8.0.nupkg.sha512",
     "/Users/vatsopheap/.nuget/packages/microsoft.netcore.app/2.0.7/microsoft.netcore.app.2.0.7.nupkg.sha512",
     "/Users/vatsopheap/.nuget/packages/microsoft.netcore.dotnetapphost/2.0.7/microsoft.netcore.dotnetapphost.2.0.7.nupkg.sha512",
     "/Users/vatsopheap/.nuget/packages/microsoft.netcore.dotnethostpolicy/2.0.7/microsoft.netcore.dotnethostpolicy.2.0.7.nupkg.sha512",
@@ -106,5 +106,36 @@
     "/Users/vatsopheap/.nuget/packages/system.threading.tasks/4.3.0/system.threading.tasks.4.3.0.nupkg.sha512",
     "/Users/vatsopheap/.nuget/packages/system.windows.extensions/4.7.0/system.windows.extensions.4.7.0.nupkg.sha512"
   ],
-  "logs": []
+  "logs": [
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'Microsoft.AspNet.Cors 5.2.7' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8' instead of the project target framework '.NETCoreApp,Version=v3.1'. This package may not be fully compatible with your project.",
+      "libraryId": "Microsoft.AspNet.Cors",
+      "targetGraphs": [
+        ".NETCoreApp,Version=v3.1"
+      ]
+    },
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'Microsoft.AspNet.WebApi.Core 5.2.7' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8' instead of the project target framework '.NETCoreApp,Version=v3.1'. This package may not be fully compatible with your project.",
+      "libraryId": "Microsoft.AspNet.WebApi.Core",
+      "targetGraphs": [
+        ".NETCoreApp,Version=v3.1"
+      ]
+    },
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'Microsoft.AspNet.WebApi.Cors 5.2.7' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8' instead of the project target framework '.NETCoreApp,Version=v3.1'. This package may not be fully compatible with your project.",
+      "libraryId": "Microsoft.AspNet.WebApi.Cors",
+      "targetGraphs": [
+        ".NETCoreApp,Version=v3.1"
+      ]
+    }
+  ]
 }

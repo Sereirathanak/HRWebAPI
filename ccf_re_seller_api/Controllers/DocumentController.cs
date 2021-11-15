@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using ccf_re_seller_api.Modals;
 using ccf_re_seller_api.Repositories;
-using Microsoft.AspNetCore.Authorization;
+using System.Web.Http.Cors;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -19,6 +19,8 @@ namespace ccf_re_seller_api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [EnableCors("*", "*","*")]
+
     public class DocumentController : Controller
     {
         private readonly ReSellerAPIContext _context;
@@ -401,7 +403,7 @@ namespace ccf_re_seller_api.Controllers
 
                         // Save Commit All Data Into Database
                         await _context.SaveChangesAsync();
-                        await _userRepository.SendNotificationCreateReferer("CCF ReSeller App", $"An Referrer {refererName.uname} have been referer by {refererName.uname}", refererName.uid, GenerateID, refererName.uname, "", refererName.datecreate, refererName.phone);
+                        await _userRepository.SendNotificationCreateReferer("CCF ReSeller App", $"An Referrer {refererName.uname} Request to verfiy an account profile.", refererName.uid, GenerateID, refererName.uname, "", refererName.datecreate, refererName.phone, "");
 
                         return Ok(new KeyValuePair<string, string>("200", $"An Referrer {loanDocument.ucode} was successfully submitted."));
                     }

@@ -45,8 +45,7 @@ namespace ccf_re_seller_api.Modals
         public string banknumber { get; set; }
         public string verifystatus { get; set; }
         public string gender { get; set; }
-
-        
+        public string changePassword { get; set; }
 
         public virtual ICollection<CcfreferalRe> ccfreferalRe { get; set; }
 

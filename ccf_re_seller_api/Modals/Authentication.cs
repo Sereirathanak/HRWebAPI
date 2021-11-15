@@ -20,6 +20,9 @@ namespace ccf_booking_api.Models
     public string staffposition { get; set; }
     public string brcode { get; set; }
     public string u5 { get; set; }
+    public string changePassword { get; set; }
+    public string verifystatus { get; set; }
+
 
     }
 }

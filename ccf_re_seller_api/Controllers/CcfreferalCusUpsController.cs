@@ -8,11 +8,14 @@ using Microsoft.EntityFrameworkCore;
 using ccf_re_seller_api.Modals;
 using CCFReSeller;
 using System.Globalization;
+using System.Web.Http.Cors;
 
 namespace ccf_re_seller_api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [EnableCors("*", "*","*")]
+
     public class CcfreferalCusUpsController : ControllerBase
     {
         private readonly ReSellerAPIContext _context;
@@ -56,6 +59,12 @@ namespace ccf_re_seller_api.Controllers
             {
                 return BadRequest();
             }
+
+            if (ccfreferalCusUp.u5 == null || ccfreferalCusUp.u5 =="")
+            {
+                return BadRequest();
+            }
+
             var status = "";
             if (ccfreferalCusUp.status == "Request Disbursement")
             {

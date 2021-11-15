@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Web.Http.Cors;
 using ccf_re_seller_api.Modals;
 using ccf_re_seller_api.Repositories;
 using Microsoft.AspNetCore.Hosting;
@@ -15,6 +16,8 @@ namespace ccf_re_seller_api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [EnableCors("*", "*","*")]
+
     public class TransitionController : Controller
     {
         private readonly ReSellerAPIContext _context;
@@ -76,6 +79,7 @@ namespace ccf_re_seller_api.Controllers
                 }
                 var list = listReferalCustomer
                    .OrderByDescending(lr => lr.datecreate)
+                   .Where(re => re.refcode == filter.refcode)
                    .AsQueryable()
                    .Skip((filter.pageNumber - 1) * filter.pageSize)
                    .Take(filter.pageSize)
@@ -87,50 +91,7 @@ namespace ccf_re_seller_api.Controllers
 
         }
 
-        //if transfer widthrawal
-        //api/transition
-        [HttpPost]
-        public async Task<ActionResult<Transition>> PostTransitionWidthrawal(Transition transition)
-        {
-
-
-            var datetime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-            DateTime DOI = DateTime.ParseExact((datetime).Trim(), "yyyy-MM-dd HH:mm:ss", CultureInfo.GetCultureInfo("en-GB"));
-
-            var referrer = _context.CcfreferalRes.SingleOrDefault(e => e.refcode == transition.refcode);
-
-            transition.tid = await GetNextID();
-            transition.datecreate = DOI;
-            transition.transitiontype = "Withdrawal";
-            //transition.typeaccountbank = referrer.
-
-            //status W = Withdrawal
-            transition.status = "W";
-            //insert to Transition Table for Withdrawal
-            _context.Transition.Add(transition);
-
-            //Calculator withdrawal money from referer
-            var amountUser = ((int)(referrer.bal - transition.amount));
-            referrer.bal = amountUser;
-            _context.SaveChanges();
-            await _context.SaveChangesAsync();
-            return Ok(transition);
-
-        }
-
-
-
-        public async Task<string> GetNextID()
-        {
-            var id = await _context.Transition.OrderByDescending(u => u.tid).FirstOrDefaultAsync();
-
-            if (id == null)
-            {
-                return "900000";
-            }
-            var nextId = int.Parse(id.tid) + 1;
-            return nextId.ToString();
-        }
+       
 
     }
 }

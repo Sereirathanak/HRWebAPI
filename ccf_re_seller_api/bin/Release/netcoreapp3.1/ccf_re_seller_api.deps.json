@@ -35,13 +35,14 @@
           "EntityFramework": "6.4.4",
           "FirebaseAdmin": "2.0.0",
           "MailKit": "2.11.1",
+          "Microsoft.AspNet.WebApi.Cors": "5.2.7",
           "Microsoft.AspNetCore.Authentication.JwtBearer": "3.1.8",
           "Microsoft.AspNetCore.Mvc.NewtonsoftJson": "3.1.8",
           "Microsoft.CodeAnalysis.Analyzers": "3.3.2",
           "Microsoft.EntityFrameworkCore": "5.0.2",
           "Microsoft.EntityFrameworkCore.Design": "5.0.2",
           "Microsoft.EntityFrameworkCore.Tools.DotNet": "2.0.3",
-          "Microsoft.Net.Compilers": "3.9.0",
+          "Microsoft.Net.Compilers": "3.8.0",
           "Newtonsoft.Json": "12.0.3",
           "Npgsql.EntityFrameworkCore.PostgreSQL": "5.0.2",
           "Npgsql.EntityFrameworkCore.PostgreSQL.Design": "1.1.0",
@@ -476,6 +477,61 @@
           "lib/netstandard2.0/MailKit.dll": {}
         }
       },
+      "Microsoft.AspNet.Cors/5.2.7": {
+        "runtime": {
+          "lib/net45/System.Web.Cors.dll": {
+            "assemblyVersion": "5.2.7.0",
+            "fileVersion": "5.2.61128.0"
+          }
+        },
+        "compile": {
+          "lib/net45/System.Web.Cors.dll": {}
+        }
+      },
+      "Microsoft.AspNet.WebApi.Client/5.2.7": {
+        "dependencies": {
+          "Newtonsoft.Json": "12.0.3",
+          "Newtonsoft.Json.Bson": "1.0.2"
+        },
+        "runtime": {
+          "lib/netstandard2.0/System.Net.Http.Formatting.dll": {
+            "assemblyVersion": "5.2.7.0",
+            "fileVersion": "5.2.61128.0"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.0/System.Net.Http.Formatting.dll": {}
+        }
+      },
+      "Microsoft.AspNet.WebApi.Core/5.2.7": {
+        "dependencies": {
+          "Microsoft.AspNet.WebApi.Client": "5.2.7"
+        },
+        "runtime": {
+          "lib/net45/System.Web.Http.dll": {
+            "assemblyVersion": "5.2.7.0",
+            "fileVersion": "5.2.61128.0"
+          }
+        },
+        "compile": {
+          "lib/net45/System.Web.Http.dll": {}
+        }
+      },
+      "Microsoft.AspNet.WebApi.Cors/5.2.7": {
+        "dependencies": {
+          "Microsoft.AspNet.Cors": "5.2.7",
+          "Microsoft.AspNet.WebApi.Core": "5.2.7"
+        },
+        "runtime": {
+          "lib/net45/System.Web.Http.Cors.dll": {
+            "assemblyVersion": "5.2.7.0",
+            "fileVersion": "5.2.61128.0"
+          }
+        },
+        "compile": {
+          "lib/net45/System.Web.Http.Cors.dll": {}
+        }
+      },
       "Microsoft.AspNetCore.Authentication.JwtBearer/3.1.8": {
         "dependencies": {
           "Microsoft.IdentityModel.Protocols.OpenIdConnect": "5.5.0"
@@ -823,7 +879,7 @@
           "lib/netstandard2.0/Microsoft.IdentityModel.Tokens.dll": {}
         }
       },
-      "Microsoft.Net.Compilers/3.9.0": {},
+      "Microsoft.Net.Compilers/3.8.0": {},
       "Microsoft.NETCore.App/2.0.7": {
         "dependencies": {
           "Microsoft.NETCore.DotNetHostPolicy": "2.0.7",
@@ -3024,6 +3080,34 @@
       "path": "mailkit/2.11.1",
       "hashPath": "mailkit.2.11.1.nupkg.sha512"
     },
+    "Microsoft.AspNet.Cors/5.2.7": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-r7qTj8SKzHT32F2mbB3qgE+6VUd2xILkGaq4LtMW+KP3dDAQmI//j+8Ku01I3D1GKZvB9PU8HTJPkaw7sxSLtQ==",
+      "path": "microsoft.aspnet.cors/5.2.7",
+      "hashPath": "microsoft.aspnet.cors.5.2.7.nupkg.sha512"
+    },
+    "Microsoft.AspNet.WebApi.Client/5.2.7": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-/76fAHknzvFqbznS6Uj2sOyE9rJB3PltY+f53TH8dX9RiGhk02EhuFCWljSj5nnqKaTsmma8DFR50OGyQ4yJ1g==",
+      "path": "microsoft.aspnet.webapi.client/5.2.7",
+      "hashPath": "microsoft.aspnet.webapi.client.5.2.7.nupkg.sha512"
+    },
+    "Microsoft.AspNet.WebApi.Core/5.2.7": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-gM2QzApnHdy1FbKUJ/ROGJSm69P2G+HMoVd/t5Vq1O/zZ5TI4IKC9PX6nUfRt/NHgebZOIWHpB4/4K4inuy4yQ==",
+      "path": "microsoft.aspnet.webapi.core/5.2.7",
+      "hashPath": "microsoft.aspnet.webapi.core.5.2.7.nupkg.sha512"
+    },
+    "Microsoft.AspNet.WebApi.Cors/5.2.7": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-LUY5ufoiYLHKZXdrrNe7GlAwmu9WlyrX5iUtBSLwFZ31/tvPobyU7j1E31OWVdGZMBvRCxKbfyB7unxgrjTRpA==",
+      "path": "microsoft.aspnet.webapi.cors/5.2.7",
+      "hashPath": "microsoft.aspnet.webapi.cors.5.2.7.nupkg.sha512"
+    },
     "Microsoft.AspNetCore.Authentication.JwtBearer/3.1.8": {
       "type": "package",
       "serviceable": true,
@@ -3213,12 +3297,12 @@
       "path": "microsoft.identitymodel.tokens/6.8.0",
       "hashPath": "microsoft.identitymodel.tokens.6.8.0.nupkg.sha512"
     },
-    "Microsoft.Net.Compilers/3.9.0": {
+    "Microsoft.Net.Compilers/3.8.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-uopLz2cQvxaiKVHhsxalzzwtbixJAILpdfxggv3wka0KuRgX+/DwffkfqG4+yYPsKVKltNHVyr0hR9UhCoblog==",
-      "path": "microsoft.net.compilers/3.9.0",
-      "hashPath": "microsoft.net.compilers.3.9.0.nupkg.sha512"
+      "sha512": "sha512-57PnxwBjgxJECuhRsM4CGQUWgKx0xgsSWhM5UXjjhTP1mY7QLE6Jan5zo1LzeTKOblO8+DxFNAcP4bEPXsH+kA==",
+      "path": "microsoft.net.compilers/3.8.0",
+      "hashPath": "microsoft.net.compilers.3.8.0.nupkg.sha512"
     },
     "Microsoft.NETCore.App/2.0.7": {
       "type": "package",

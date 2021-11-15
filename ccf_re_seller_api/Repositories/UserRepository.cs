@@ -11,9 +11,11 @@ using System.Threading.Tasks;
 using ccf_re_seller_api.Modals;
 using CCFReSeller;
 using System.Globalization;
+using System.Web.Http.Cors;
 
 namespace ccf_re_seller_api.Repositories
 {
+    [EnableCors("*", "*", "*")]
     public class UserRepository
     {
         private readonly ReSellerAPIContext _context;
@@ -97,10 +99,10 @@ namespace ccf_re_seller_api.Repositories
             // Google Firebase
             var googleCredential = _env.ContentRootPath;
             //mac
-            //googleCredential = googleCredential + "//ccf-re-seller-app-firebase-adminsdk-khxlw-514befc41e.json";
+            //googleCredential = googleCredential + "//ccf-re-seller-app-firebase-adminsdk-khxlw-681bd6ea44.json";
 
             //window
-            googleCredential = googleCredential + "\\ccf-re-seller-app-firebase-adminsdk-khxlw-514befc41e.json";
+            googleCredential = googleCredential + "\\ccf-re-seller-app-firebase-adminsdk-khxlw-681bd6ea44.json";
 
             // I suggest to create by specifying a name for instance while we have multiple projects to setup.
             var app = FirebaseApp.Create(new AppOptions
@@ -127,10 +129,98 @@ namespace ccf_re_seller_api.Repositories
             };
             var firebaseMessagingInstance = FirebaseMessaging.GetMessaging(app);
             await firebaseMessagingInstance.SendMulticastAsync(message).ConfigureAwait(false);
+            return true;
+        }
+
+        public virtual async Task<dynamic> SendNotificationInternal(List<string> clientToken, string title, string body)
+        {
+            var curDate = DateTime.Now.ToString();
+            var Mins = UniqueId.CreateRandomId().ToString();
+            var appName = title + curDate + Mins;
+            var registeredToken = clientToken;
+            Console.WriteLine(clientToken);
+            // Google Firebase
+            var googleCredential = _env.ContentRootPath;
+            //mac
+            //googleCredential = googleCredential + "//chokchey-reseller-app-5a4ab-firebase-adminsdk-rejho-48b8595ed9.json";
+
+            //window
+            googleCredential = googleCredential + "\\chokchey-reseller-app-5a4ab-firebase-adminsdk-rejho-48b8595ed9.json";
+
+            // I suggest to create by specifying a name for instance while we have multiple projects to setup.
+            var app = FirebaseApp.Create(new AppOptions
+            {
+                ProjectId = "chokchey-reseller-app-5a4ab",
+                Credential = GoogleCredential.FromFile(googleCredential)
+            }, appName);
+
+            var message = new MulticastMessage
+            {
+                // payload data, some additional information for device
+                Data = new Dictionary<string, string>
+                {
+                    { "additional_data", "" },
+                    { "another_data", "" }
+                },
+                // the notification itself
+                Notification = new Notification
+                {
+                    Title = title,
+                    Body = body
+                },
+                Tokens = registeredToken,
+            };
+            var firebaseMessagingInstance = FirebaseMessaging.GetMessaging(app);
+            await firebaseMessagingInstance.SendMulticastAsync(message);
+            return true;
+        }
+
+        public virtual async Task<dynamic> SendNotificationInternalWebApplication(List<string> clientToken, string title, string body)
+        {
+            var curDate = DateTime.Now.ToString();
+            var Mins = UniqueId.CreateRandomId().ToString();
+            var appName = title + curDate + Mins;
+            var registeredToken = clientToken;
+            // Google Firebase
+            var googleCredential = _env.ContentRootPath;
+            //mac
+            //googleCredential = googleCredential + "//ccf-reseller-web-app-firebase-adminsdk-cjlin-7306caa621.json";
+
+            //window
+            googleCredential = googleCredential + "\\ccf-reseller-web-app-firebase-adminsdk-cjlin-7306caa621.json";
+
+            // I suggest to create by specifying a name for instance while we have multiple projects to setup.
+            var app = FirebaseApp.Create(new AppOptions
+            {
+                ProjectId = "808239604896",
+                Credential = GoogleCredential.FromFile(googleCredential)
+            }, appName);
+
+            var message = new MulticastMessage
+            {
+                // payload data, some additional information for device
+                Data = new Dictionary<string, string>
+                {
+                    { "additional_data", "" },
+                    { "another_data", "" }
+                },
+                // the notification itself
+                Notification = new Notification
+                {
+                    Title = title,
+                    Body = body
+                },
+                Tokens = registeredToken,
+            };
+            var firebaseMessagingInstance = FirebaseMessaging.GetMessaging(app);
+            await firebaseMessagingInstance.SendMulticastAsync(message).ConfigureAwait(false);
 
             return true;
         }
-        public virtual async Task<dynamic> SendNotificationAssignedUser(string title, string body, string uid, string cid, string cname, string lamount, DateTime refdate, string refcode, string phone)
+
+        //
+
+        public virtual async Task<dynamic> SendNotificationAssignedUser(string title, string body, string uid, string cid, string cname, string lamount, DateTime refdate, string refcode, string phone, string postion)
         {
 
             var listReferer = _context.CcfreferalRes.SingleOrDefault(u => u.refcode == refcode);
@@ -164,8 +254,12 @@ namespace ccf_re_seller_api.Repositories
                     tokenCList = tokenCList.Distinct().ToList();
                     userCList = userCList.Distinct().ToList();
 
+                    await SendNotificationInternal(tokenCList, title, body);
                     await SendNotification(tokenCList, title, body);
-                    await SaveMessage(userCList, title, body, cid, cname, lamount, refdate, phone);
+                    await SendNotificationInternalWebApplication(tokenCList, title, body);
+
+
+                    await SaveMessage(userCList, title, body, cid, cname, lamount, refdate, phone, postion);
                 }
             }
 
@@ -173,7 +267,7 @@ namespace ccf_re_seller_api.Repositories
             return "";
         }
         //
-        public virtual async Task<dynamic> SendNotificationCreateReferer(string title, string body, string uid, string cid, string cname, string lamount, DateTime refdate, string phone)
+        public virtual async Task<dynamic> SendNotificationCreateReferer(string title, string body, string uid, string cid, string cname, string lamount, DateTime refdate, string phone, string postion)
         {
            
             try {
@@ -196,8 +290,10 @@ namespace ccf_re_seller_api.Repositories
                     {
                         Console.WriteLine(user.mtoken);
 
-                        if (user.mtoken != null && user.mtoken != "")
+                        if (user.mtoken != null && user.mtoken != "" && user.mtoken != "null")
                         {
+                            Console.WriteLine(user.mtoken);
+
                             tokenCList.Add(user.mtoken);
                             userCList.Add(user.uid);
                         }
@@ -208,10 +304,10 @@ namespace ccf_re_seller_api.Repositories
                         // Remove duplicated token & ucode
                         tokenCList = tokenCList.Distinct().ToList();
                         userCList = userCList.Distinct().ToList();
-
                         await SendNotification(tokenCList, title, body);
-                        await SaveMessage(userCList, title, body, cid, cname, lamount, refdate, phone);
-                        Console.WriteLine("");
+                        await SendNotificationInternal(tokenCList, title, body);
+                        await SendNotificationInternalWebApplication(tokenCList, title, body);
+                        await SaveMessage(userCList, title, body, cid, cname, lamount, refdate, phone, postion);
                     }
                 }
             } catch {
@@ -224,7 +320,7 @@ namespace ccf_re_seller_api.Repositories
             return "";
         }
 
-        public virtual async Task<dynamic> SaveMessage(List<string> userList, string title, string body, string cid, string cname, string lamount, DateTime refdate, string phone)
+        public virtual async Task<dynamic> SaveMessage(List<string> userList, string title, string body, string cid, string cname, string lamount, DateTime refdate, string phone, string postion)
         {
             var datetime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
             DateTime DOI = DateTime.ParseExact((datetime).Trim(), "yyyy-MM-dd HH:mm:ss", CultureInfo.GetCultureInfo("en-GB"));
@@ -252,6 +348,7 @@ namespace ccf_re_seller_api.Repositories
                         date = dateNow,
                         phone = phone,
                         imgurl = "",
+                        postion = postion
                     });
 
                     int NewID = int.Parse(NextId) + 1;

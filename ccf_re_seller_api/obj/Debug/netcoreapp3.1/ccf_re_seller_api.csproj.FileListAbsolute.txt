@@ -1,0 +1,166 @@
+/Users/vatsopheap/Documents/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/appsettings.Development.json
+/Users/vatsopheap/Documents/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/appsettings.json
+/Users/vatsopheap/Documents/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/ccf-re-seller-app-firebase-adminsdk-khxlw-514befc41e.json
+/Users/vatsopheap/Documents/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/chokchey-reseller-app-5a4ab-firebase-adminsdk-rejho-48b8595ed9.json
+/Users/vatsopheap/Documents/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/ccf_re_seller_api.deps.json
+/Users/vatsopheap/Documents/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/ccf_re_seller_api.runtimeconfig.json
+/Users/vatsopheap/Documents/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/ccf_re_seller_api.runtimeconfig.dev.json
+/Users/vatsopheap/Documents/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/ccf_re_seller_api.dll
+/Users/vatsopheap/Documents/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/ccf_re_seller_api.pdb
+/Users/vatsopheap/Documents/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/EASendMail.dll
+/Users/vatsopheap/Documents/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/EntityFramework.SqlServer.dll
+/Users/vatsopheap/Documents/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/EntityFramework.dll
+/Users/vatsopheap/Documents/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/FirebaseAdmin.dll
+/Users/vatsopheap/Documents/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/Google.Api.Gax.dll
+/Users/vatsopheap/Documents/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/Google.Api.Gax.Rest.dll
+/Users/vatsopheap/Documents/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/Google.Apis.dll
+/Users/vatsopheap/Documents/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/Google.Apis.Auth.PlatformServices.dll
+/Users/vatsopheap/Documents/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/Google.Apis.Auth.dll
+/Users/vatsopheap/Documents/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/Google.Apis.Core.dll
+/Users/vatsopheap/Documents/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/Humanizer.dll
+/Users/vatsopheap/Documents/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/MailKit.dll
+/Users/vatsopheap/Documents/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/Microsoft.AspNetCore.Authentication.JwtBearer.dll
+/Users/vatsopheap/Documents/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/Microsoft.AspNetCore.JsonPatch.dll
+/Users/vatsopheap/Documents/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
+/Users/vatsopheap/Documents/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/Microsoft.Bcl.AsyncInterfaces.dll
+/Users/vatsopheap/Documents/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/Microsoft.EntityFrameworkCore.dll
+/Users/vatsopheap/Documents/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/Microsoft.EntityFrameworkCore.Abstractions.dll
+/Users/vatsopheap/Documents/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/Microsoft.EntityFrameworkCore.Design.dll
+/Users/vatsopheap/Documents/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/Microsoft.EntityFrameworkCore.Relational.dll
+/Users/vatsopheap/Documents/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/Microsoft.EntityFrameworkCore.Relational.Design.dll
+/Users/vatsopheap/Documents/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/dotnet-ef.dll
+/Users/vatsopheap/Documents/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/Microsoft.Extensions.Caching.Abstractions.dll
+/Users/vatsopheap/Documents/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/Microsoft.Extensions.Caching.Memory.dll
+/Users/vatsopheap/Documents/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/Microsoft.Extensions.Configuration.Abstractions.dll
+/Users/vatsopheap/Documents/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/Microsoft.Extensions.DependencyInjection.dll
+/Users/vatsopheap/Documents/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/Microsoft.Extensions.DependencyInjection.Abstractions.dll
+/Users/vatsopheap/Documents/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/Microsoft.Extensions.Logging.dll
+/Users/vatsopheap/Documents/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/Microsoft.Extensions.Logging.Abstractions.dll
+/Users/vatsopheap/Documents/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/Microsoft.Extensions.Options.dll
+/Users/vatsopheap/Documents/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/Microsoft.Extensions.Primitives.dll
+/Users/vatsopheap/Documents/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/Microsoft.IdentityModel.JsonWebTokens.dll
+/Users/vatsopheap/Documents/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/Microsoft.IdentityModel.Logging.dll
+/Users/vatsopheap/Documents/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/Microsoft.IdentityModel.Protocols.dll
+/Users/vatsopheap/Documents/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+/Users/vatsopheap/Documents/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/Microsoft.IdentityModel.Tokens.dll
+/Users/vatsopheap/Documents/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/MimeKit.dll
+/Users/vatsopheap/Documents/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/Newtonsoft.Json.dll
+/Users/vatsopheap/Documents/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/Newtonsoft.Json.Bson.dll
+/Users/vatsopheap/Documents/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/Npgsql.dll
+/Users/vatsopheap/Documents/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/Npgsql.EntityFrameworkCore.PostgreSQL.dll
+/Users/vatsopheap/Documents/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/Npgsql.EntityFrameworkCore.PostgreSQL.Design.dll
+/Users/vatsopheap/Documents/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/BouncyCastle.Crypto.dll
+/Users/vatsopheap/Documents/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/System.CodeDom.dll
+/Users/vatsopheap/Documents/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/System.Collections.Immutable.dll
+/Users/vatsopheap/Documents/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/System.ComponentModel.Annotations.dll
+/Users/vatsopheap/Documents/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/System.Configuration.ConfigurationManager.dll
+/Users/vatsopheap/Documents/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/System.Data.SqlClient.dll
+/Users/vatsopheap/Documents/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/System.Diagnostics.DiagnosticSource.dll
+/Users/vatsopheap/Documents/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/System.IdentityModel.Tokens.Jwt.dll
+/Users/vatsopheap/Documents/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/System.Security.Cryptography.ProtectedData.dll
+/Users/vatsopheap/Documents/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/runtimes/win-arm64/native/sni.dll
+/Users/vatsopheap/Documents/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/runtimes/win-x64/native/sni.dll
+/Users/vatsopheap/Documents/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/runtimes/win-x86/native/sni.dll
+/Users/vatsopheap/Documents/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/runtimes/unix/lib/netcoreapp2.1/System.Data.SqlClient.dll
+/Users/vatsopheap/Documents/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/runtimes/win/lib/netcoreapp2.1/System.Data.SqlClient.dll
+/Users/vatsopheap/Documents/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/runtimes/win/lib/netstandard2.0/System.Security.Cryptography.ProtectedData.dll
+/Users/vatsopheap/Documents/ccf_re_seller_api/ccf_re_seller_api/obj/Debug/netcoreapp3.1/ccf_re_seller_api.csprojAssemblyReference.cache
+/Users/vatsopheap/Documents/ccf_re_seller_api/ccf_re_seller_api/obj/Debug/netcoreapp3.1/ccf_re_seller_api.GeneratedMSBuildEditorConfig.editorconfig
+/Users/vatsopheap/Documents/ccf_re_seller_api/ccf_re_seller_api/obj/Debug/netcoreapp3.1/ccf_re_seller_api.AssemblyInfoInputs.cache
+/Users/vatsopheap/Documents/ccf_re_seller_api/ccf_re_seller_api/obj/Debug/netcoreapp3.1/ccf_re_seller_api.AssemblyInfo.cs
+/Users/vatsopheap/Documents/ccf_re_seller_api/ccf_re_seller_api/obj/Debug/netcoreapp3.1/ccf_re_seller_api.csproj.CoreCompileInputs.cache
+/Users/vatsopheap/Documents/ccf_re_seller_api/ccf_re_seller_api/obj/Debug/netcoreapp3.1/ccf_re_seller_api.MvcApplicationPartsAssemblyInfo.cache
+/Users/vatsopheap/Documents/ccf_re_seller_api/ccf_re_seller_api/obj/Debug/netcoreapp3.1/staticwebassets/ccf_re_seller_api.StaticWebAssets.Manifest.cache
+/Users/vatsopheap/Documents/ccf_re_seller_api/ccf_re_seller_api/obj/Debug/netcoreapp3.1/staticwebassets/ccf_re_seller_api.StaticWebAssets.xml
+/Users/vatsopheap/Documents/ccf_re_seller_api/ccf_re_seller_api/obj/Debug/netcoreapp3.1/scopedcss/bundle/ccf_re_seller_api.styles.css
+/Users/vatsopheap/Documents/ccf_re_seller_api/ccf_re_seller_api/obj/Debug/netcoreapp3.1/ccf_re_seller_api.RazorTargetAssemblyInfo.cache
+/Users/vatsopheap/Documents/ccf_re_seller_api/ccf_re_seller_api/obj/Debug/netcoreapp3.1/ccf_re_seller_api.csproj.CopyComplete
+/Users/vatsopheap/Documents/ccf_re_seller_api/ccf_re_seller_api/obj/Debug/netcoreapp3.1/ccf_re_seller_api.dll
+/Users/vatsopheap/Documents/ccf_re_seller_api/ccf_re_seller_api/obj/Debug/netcoreapp3.1/ccf_re_seller_api.pdb
+/Users/vatsopheap/Documents/ccf_re_seller_api/ccf_re_seller_api/obj/Debug/netcoreapp3.1/ccf_re_seller_api.genruntimeconfig.cache
+/Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/appsettings.Development.json
+/Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/appsettings.json
+/Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/ccf-re-seller-app-firebase-adminsdk-khxlw-514befc41e.json
+/Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/ccf-re-seller-app-firebase-adminsdk-khxlw-681bd6ea44.json
+/Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/ccf-reseller-web-app-firebase-adminsdk-cjlin-7306caa621.json
+/Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/chokchey-reseller-app-5a4ab-firebase-adminsdk-rejho-48b8595ed9.json
+/Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/mono_crash.11a6748113.0.json
+/Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/ccf_re_seller_api.deps.json
+/Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/ccf_re_seller_api.runtimeconfig.json
+/Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/ccf_re_seller_api.runtimeconfig.dev.json
+/Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/ccf_re_seller_api.dll
+/Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/ccf_re_seller_api.pdb
+/Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/EASendMail.dll
+/Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/EntityFramework.SqlServer.dll
+/Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/EntityFramework.dll
+/Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/FirebaseAdmin.dll
+/Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/Google.Api.Gax.dll
+/Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/Google.Api.Gax.Rest.dll
+/Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/Google.Apis.dll
+/Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/Google.Apis.Auth.PlatformServices.dll
+/Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/Google.Apis.Auth.dll
+/Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/Google.Apis.Core.dll
+/Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/Humanizer.dll
+/Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/MailKit.dll
+/Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/System.Web.Cors.dll
+/Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/System.Net.Http.Formatting.dll
+/Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/System.Web.Http.dll
+/Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/System.Web.Http.Cors.dll
+/Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/Microsoft.AspNetCore.Authentication.JwtBearer.dll
+/Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/Microsoft.AspNetCore.JsonPatch.dll
+/Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
+/Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/Microsoft.Bcl.AsyncInterfaces.dll
+/Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/Microsoft.EntityFrameworkCore.dll
+/Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/Microsoft.EntityFrameworkCore.Abstractions.dll
+/Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/Microsoft.EntityFrameworkCore.Design.dll
+/Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/Microsoft.EntityFrameworkCore.Relational.dll
+/Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/Microsoft.EntityFrameworkCore.Relational.Design.dll
+/Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/dotnet-ef.dll
+/Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/Microsoft.Extensions.Caching.Abstractions.dll
+/Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/Microsoft.Extensions.Caching.Memory.dll
+/Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/Microsoft.Extensions.Configuration.Abstractions.dll
+/Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/Microsoft.Extensions.DependencyInjection.dll
+/Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/Microsoft.Extensions.DependencyInjection.Abstractions.dll
+/Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/Microsoft.Extensions.Logging.dll
+/Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/Microsoft.Extensions.Logging.Abstractions.dll
+/Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/Microsoft.Extensions.Options.dll
+/Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/Microsoft.Extensions.Primitives.dll
+/Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/Microsoft.IdentityModel.JsonWebTokens.dll
+/Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/Microsoft.IdentityModel.Logging.dll
+/Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/Microsoft.IdentityModel.Protocols.dll
+/Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+/Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/Microsoft.IdentityModel.Tokens.dll
+/Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/MimeKit.dll
+/Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/Newtonsoft.Json.dll
+/Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/Newtonsoft.Json.Bson.dll
+/Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/Npgsql.dll
+/Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/Npgsql.EntityFrameworkCore.PostgreSQL.dll
+/Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/Npgsql.EntityFrameworkCore.PostgreSQL.Design.dll
+/Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/BouncyCastle.Crypto.dll
+/Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/System.CodeDom.dll
+/Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/System.Collections.Immutable.dll
+/Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/System.ComponentModel.Annotations.dll
+/Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/System.Configuration.ConfigurationManager.dll
+/Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/System.Data.SqlClient.dll
+/Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/System.Diagnostics.DiagnosticSource.dll
+/Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/System.IdentityModel.Tokens.Jwt.dll
+/Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/System.Security.Cryptography.ProtectedData.dll
+/Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/runtimes/win-arm64/native/sni.dll
+/Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/runtimes/win-x64/native/sni.dll
+/Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/runtimes/win-x86/native/sni.dll
+/Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/runtimes/unix/lib/netcoreapp2.1/System.Data.SqlClient.dll
+/Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/runtimes/win/lib/netcoreapp2.1/System.Data.SqlClient.dll
+/Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/runtimes/win/lib/netstandard2.0/System.Security.Cryptography.ProtectedData.dll
+/Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/obj/Debug/netcoreapp3.1/ccf_re_seller_api.GeneratedMSBuildEditorConfig.editorconfig
+/Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/obj/Debug/netcoreapp3.1/ccf_re_seller_api.AssemblyInfoInputs.cache
+/Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/obj/Debug/netcoreapp3.1/ccf_re_seller_api.AssemblyInfo.cs
+/Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/obj/Debug/netcoreapp3.1/ccf_re_seller_api.csproj.CoreCompileInputs.cache
+/Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/obj/Debug/netcoreapp3.1/ccf_re_seller_api.MvcApplicationPartsAssemblyInfo.cache
+/Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/obj/Debug/netcoreapp3.1/staticwebassets/ccf_re_seller_api.StaticWebAssets.Manifest.cache
+/Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/obj/Debug/netcoreapp3.1/staticwebassets/ccf_re_seller_api.StaticWebAssets.xml
+/Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/obj/Debug/netcoreapp3.1/scopedcss/bundle/ccf_re_seller_api.styles.css
+/Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/obj/Debug/netcoreapp3.1/ccf_re_seller_api.RazorTargetAssemblyInfo.cache
+/Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/obj/Debug/netcoreapp3.1/ccf_re_seller_api.csproj.CopyComplete
+/Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/obj/Debug/netcoreapp3.1/ccf_re_seller_api.dll
+/Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/obj/Debug/netcoreapp3.1/ccf_re_seller_api.pdb
+/Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/obj/Debug/netcoreapp3.1/ccf_re_seller_api.genruntimeconfig.cache

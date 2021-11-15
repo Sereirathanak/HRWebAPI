@@ -1,20 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+using System.Web.Http.Cors;
+using ccf_re_seller_api.Modals;
+using ccf_re_seller_api.Repositories;
+using CCFReSeller;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using ccf_re_seller_api.Modals;
-using CCFReSeller;
-using ccf_re_seller_api.Repositories;
-using Microsoft.AspNetCore.Hosting;
-using System.Globalization;
 
 namespace ccf_re_seller_api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [EnableCors("*", "*", "*")]
     public class CcfreferalCusController : ControllerBase
     {
         private readonly ReSellerAPIContext _context;
@@ -111,11 +112,31 @@ namespace ccf_re_seller_api.Controllers
         {
             var datetime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
             DateTime DOI = DateTime.ParseExact((datetime).Trim(), "yyyy-MM-dd HH:mm:ss", CultureInfo.GetCultureInfo("en-GB"));
+
+
             try
             {
                 ccfreferalCu.cid = await GetNextID();
+                ccfreferalCu.refcode = ccfreferalCu.refcode;
                 ccfreferalCu.refdate = DOI;
                 ccfreferalCu.status = Constant.PEDDING;
+                ccfreferalCu.cid = ccfreferalCu.cid;
+                ccfreferalCu.uid = ccfreferalCu.uid;
+                ccfreferalCu.cname = ccfreferalCu.cname;
+                ccfreferalCu.phone = ccfreferalCu.phone;
+                ccfreferalCu.lamount = (int)ccfreferalCu.lamount;
+                ccfreferalCu.lpourpose = ccfreferalCu.lpourpose;
+                ccfreferalCu.u4 =
+                     ccfreferalCu.u4;
+   
+                ccfreferalCu.province = ccfreferalCu.province;
+                ccfreferalCu.district = ccfreferalCu.district;
+                ccfreferalCu.commune = ccfreferalCu.commune;
+                ccfreferalCu.village = ccfreferalCu.village;
+                ccfreferalCu.curcode = ccfreferalCu.curcode;
+
+
+
                 //
 
                 CcfreferalCusUp ccfreferalCusUp = new CcfreferalCusUp(_context);
@@ -141,6 +162,8 @@ namespace ccf_re_seller_api.Controllers
                 ccfreferalCusUp.village = ccfreferalCu.village;
                 ccfreferalCusUp.curcode = ccfreferalCu.curcode;
 
+
+
                 //insert to Referal Customer table
                 _context.CcfreferalCus.Add(ccfreferalCu);
 
@@ -162,7 +185,7 @@ namespace ccf_re_seller_api.Controllers
                 }
             }
             var refererName = _context.CcfreferalRes.SingleOrDefault(rn => rn.refcode == ccfreferalCu.refcode);
-            await _userRepository.SendNotificationCreateReferer("CCF ReSeller App", $"New customer {ccfreferalCu.cname} have been referer by {refererName.refname}", ccfreferalCu.uid, ccfreferalCu.cid, ccfreferalCu.cname, ccfreferalCu.lamount.ToString(), ccfreferalCu.refdate, ccfreferalCu.phone);
+            await _userRepository.SendNotificationCreateReferer("CCF ReSeller App", $"New customer {ccfreferalCu.cname} have been referer by {refererName.refname}", ccfreferalCu.uid, ccfreferalCu.cid, ccfreferalCu.cname, ccfreferalCu.lamount.ToString(), ccfreferalCu.refdate, ccfreferalCu.phone, "");
             return Ok(ccfreferalCu);
         }
 

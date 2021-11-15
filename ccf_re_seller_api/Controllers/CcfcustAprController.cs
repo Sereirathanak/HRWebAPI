@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Web.Http.Cors;
 using ccf_re_seller_api.Modals;
 using ccf_re_seller_api.Repositories;
 using CCFReSeller;
@@ -16,6 +17,7 @@ namespace ccf_re_seller_api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [EnableCors("*", "*", "*")]
     public class CcfcustAprController : Controller
     {
         private readonly ReSellerAPIContext _context;
@@ -65,10 +67,6 @@ namespace ccf_re_seller_api.Controllers
         [HttpPost]
         public async Task<ActionResult<CcfcustApr>> PostCcfcustApr(CcfcustApr ccfcustApr)
         {
-            
-
-            //return Ok(userReferer);
-
             var datetime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
             DateTime DOI = DateTime.ParseExact((datetime).Trim(), "yyyy-MM-dd HH:mm:ss", CultureInfo.GetCultureInfo("en-GB"));
             try
@@ -166,6 +164,53 @@ namespace ccf_re_seller_api.Controllers
                         amountUser = ((int)(userReferer.bal + amount));
                     }
 
+                    //insert current amount user referrer
+                    var referer = _context.CcfreferalRes.SingleOrDefault(rn => rn.refcode == referalCustomer.refcode);
+
+                    bool currentUserAmount = false;
+
+                     currentUserAmount = _context.CcfcurrentAmount.Any(rn => rn.uid == referer.uid);
+
+                    // check exiting user referrer and plus new commission
+                    if(currentUserAmount == true)
+                    {
+                        var exitingUser = _context.CcfcurrentAmount.SingleOrDefault(rn => rn.uid == referer.uid);
+
+                        exitingUser.caid = exitingUser.caid;
+                        exitingUser.uid = exitingUser.uid;
+                        exitingUser.currentamount = exitingUser.currentamount + amount;
+                        exitingUser.status = "Deposit";
+                        exitingUser.createdate = DOI;
+                        _context.Entry(exitingUser).State = EntityState.Modified;
+
+                    }
+                    else
+                    {
+                        // add new user referrer 
+                        var idCurrentAmount = _context.CcfcurrentAmount.Max(c => c.caid);
+                        int convertIntCurrentAmount = 0;
+                        if (idCurrentAmount == null)
+                        {
+                            convertIntCurrentAmount = 10000;
+                        }
+                        else
+                        {
+                            convertIntCurrentAmount = int.Parse(idCurrentAmount) + 1;
+
+                        }
+
+                        CcfcurrentAmount currentAmountUser = new CcfcurrentAmount();
+                        currentAmountUser.caid = convertIntCurrentAmount.ToString();
+                        currentAmountUser.uid = referer.uid;
+                        currentAmountUser.currentamount = amount;
+                        currentAmountUser.status = "Deposit";
+                        currentAmountUser.createdate = DOI;
+                        _context.CcfcurrentAmount.Add(currentAmountUser);
+
+                    }
+
+
+
                     //deposit to referrer account into Transition Table
 
 
@@ -195,9 +240,6 @@ namespace ccf_re_seller_api.Controllers
 
                     _context.Transition.Add(updateTransition);
 
-                    //if transfer widthrawal
-
-
                     userReferer.bal = amountUser;
                     _context.Entry(userReferer).State = EntityState.Modified;
 
@@ -215,9 +257,8 @@ namespace ccf_re_seller_api.Controllers
                     _context.Entry(referalCustomerUpdate).State = EntityState.Modified;
                     await _context.SaveChangesAsync();
                     //
-                    var referer = _context.CcfreferalRes.SingleOrDefault(rn => rn.refcode == referalCustomer.refcode);
                     //
-                    await _userRepository.SendNotificationAssignedUser("CCF ReSeller App", $"New customer have been approved by {user.uname}", user.uid, ccfcustApr.cid, referalCustomer.cname, referalCustomerUpdate.status, ccfcustApr.date, referer.refcode, referalCustomerUpdate.phone);
+                    await _userRepository.SendNotificationAssignedUser("CCF ReSeller App", $"New customer have been approved by {user.uname} {user.staffposition}", user.uid, ccfcustApr.cid, referalCustomer.cname, referalCustomerUpdate.status, ccfcustApr.date, referer.refcode, referalCustomerUpdate.phone, user.staffposition);
                 }
                 else
                 {
@@ -260,7 +301,7 @@ namespace ccf_re_seller_api.Controllers
 
                     var referer = _context.CcfreferalRes.SingleOrDefault(rn => rn.refcode == referalCustomer.refcode);
                     //
-                    await _userRepository.SendNotificationAssignedUser("CCF ReSeller App", $"Customer have been disaaproved by {user.uname}", user.uid, ccfcustApr.cid, referalCustomer.cname, referalCustomerUpdate.status, ccfcustApr.date, referer.refcode, referalCustomerUpdate.phone);
+                    await _userRepository.SendNotificationAssignedUser("CCF ReSeller App", $"Customer have been disaaproved by {user.uname} {user.staffposition}", user.uid, ccfcustApr.cid, referalCustomer.cname, referalCustomerUpdate.status, ccfcustApr.date, referer.refcode, referalCustomerUpdate.phone, user.staffposition);
 
                 };
             }
