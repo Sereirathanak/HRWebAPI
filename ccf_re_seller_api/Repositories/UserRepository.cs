@@ -374,5 +374,10 @@ namespace ccf_re_seller_api.Repositories
             var nextId = int.Parse(messageObj.id) + 1;
             return nextId.ToString();
         }
+
+        public static implicit operator UserRepository(HRUserRepository v)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

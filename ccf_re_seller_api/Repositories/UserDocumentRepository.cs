@@ -101,7 +101,7 @@ namespace ccf_re_seller_api.Repositories
                 else
                 {
                     errMsg = $"The document is required.";
-                   
+
                 }
 
                 string[] results = new string[] { errMsg, err10000, err50000 };

@@ -169,10 +169,10 @@ namespace ccf_re_seller_api.Controllers
 
                     bool currentUserAmount = false;
 
-                     currentUserAmount = _context.CcfcurrentAmount.Any(rn => rn.uid == referer.uid);
+                    currentUserAmount = _context.CcfcurrentAmount.Any(rn => rn.uid == referer.uid);
 
                     // check exiting user referrer and plus new commission
-                    if(currentUserAmount == true)
+                    if (currentUserAmount == true)
                     {
                         var exitingUser = _context.CcfcurrentAmount.SingleOrDefault(rn => rn.uid == referer.uid);
 

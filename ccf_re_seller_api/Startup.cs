@@ -15,6 +15,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.EntityFrameworkCore;
 using ccf_re_seller_api.Modals;
+using ccf_re_seller_api.Models;
 
 namespace ccf_re_seller_api
 {
@@ -39,10 +40,21 @@ namespace ccf_re_seller_api
             services.AddDbContext<ReSellerAPIContext>((serviceProvider, optionsBuilder) =>
             {
                 //Production
-                var connection = Configuration.GetConnectionString("ProductionConnection");
+                //var connection = Configuration.GetConnectionString("ProductionConnection");
 
                 //Default
-                //var connection = Configuration.GetConnectionString("DefaultConnection");
+                var connection = Configuration.GetConnectionString("DefaultConnection");
+                optionsBuilder.UseNpgsql(connection);
+                optionsBuilder.UseInternalServiceProvider(serviceProvider);
+            });
+
+            services.AddDbContext<HRContext>((serviceProvider, optionsBuilder) =>
+            {
+                //Production
+                //var connection = Configuration.GetConnectionString("ProductionConnection");
+
+                //Default
+                var connection = Configuration.GetConnectionString("DefaultConnection");
                 optionsBuilder.UseNpgsql(connection);
                 optionsBuilder.UseInternalServiceProvider(serviceProvider);
             });

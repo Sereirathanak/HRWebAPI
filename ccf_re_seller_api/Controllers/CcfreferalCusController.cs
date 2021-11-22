@@ -128,7 +128,7 @@ namespace ccf_re_seller_api.Controllers
                 ccfreferalCu.lpourpose = ccfreferalCu.lpourpose;
                 ccfreferalCu.u4 =
                      ccfreferalCu.u4;
-   
+
                 ccfreferalCu.province = ccfreferalCu.province;
                 ccfreferalCu.district = ccfreferalCu.district;
                 ccfreferalCu.commune = ccfreferalCu.commune;

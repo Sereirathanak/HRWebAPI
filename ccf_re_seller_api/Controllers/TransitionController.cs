@@ -16,7 +16,7 @@ namespace ccf_re_seller_api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [EnableCors("*", "*","*")]
+    [EnableCors("*", "*", "*")]
 
     public class TransitionController : Controller
     {
@@ -35,7 +35,7 @@ namespace ccf_re_seller_api.Controllers
         {
             var listReferalCustomer = _context.Transition
                 .AsQueryable();
-          
+
             if (filter.level == 0)
             {
                 if ((filter.sdate != null && filter.sdate != "") && (filter.edate != null && filter.edate != ""))
@@ -62,7 +62,7 @@ namespace ccf_re_seller_api.Controllers
 
             }
 
-            if(filter.level == 4)
+            if (filter.level == 4)
             {
                 if ((filter.sdate != null && filter.sdate != "") && (filter.edate != null && filter.edate != ""))
                 {
@@ -91,7 +91,7 @@ namespace ccf_re_seller_api.Controllers
 
         }
 
-       
+
 
     }
 }
