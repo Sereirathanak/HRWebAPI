@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 namespace ccf_re_seller_api.Models
@@ -6,6 +7,13 @@ namespace ccf_re_seller_api.Models
     [Table("pinfo")]
     public class HREmployee
     {
+        private readonly HRContext _context;
+
+        public HREmployee(HRContext context)
+        {
+            _context = context;
+        }
+
         [Key]
         public string eid { get; set; }
         public string ecard { get; set; }
@@ -39,5 +47,21 @@ namespace ccf_re_seller_api.Models
         public string u3 { get; set; }
         public string u4 { get; set; }
         public string u5 { get; set; }
+
+        public virtual HREmployeeJoinInfo employeeJoinInfo { get; set; }
+        public virtual HREmployeeHistory employeeHistory { get; set; }
+
+
+    }
+
+    public class ReturnDocumentByLoan
+    {
+        public string uid { get; set; }
+        public string type { get; set; }
+        public string edoc { get; set; }
+        public string description { get; set; }
+        public string filepath { get; set; }
+
+       
     }
 }

@@ -5343,7 +5343,7 @@
       "outputPath": "/Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/Users/vatsopheap/.config/NuGet/NuGet.Config"
+        "/Users/vatsopheap/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "netcoreapp3.1"

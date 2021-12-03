@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 namespace ccf_re_seller_api.Models
 {
+    [Table("ecom")]
     public class HREmployeeHistory
     {
         [Key]
@@ -16,6 +17,8 @@ namespace ccf_re_seller_api.Models
         public DateTime edate { get; set; }
         public string lres { get; set; }
         public string remark { get; set; }
+
+        public virtual HREmployee pinfo { get; set; }
 
     }
 }

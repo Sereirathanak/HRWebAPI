@@ -35,20 +35,6 @@ namespace ccf_re_seller_api.Controllers
         public async Task<IActionResult> CreateUserEmployeeHistory(HREmployeeHistory employeeHistory)
 
         {
-            var datetime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-            DateTime DOI = DateTime.ParseExact((datetime).Trim(), "yyyy-MM-dd HH:mm:ss", CultureInfo.GetCultureInfo("en-GB"));
-
-            //Ex-date
-            var year = DateTime.Now.ToString("yyyy");
-            int plusYear = int.Parse(year) + 1;
-            var MM = DateTime.Now.ToString("MM");
-            var dd = DateTime.Now.ToString("dd");
-            var HH = DateTime.Now.ToString("HH");
-            var mm = DateTime.Now.ToString("mm");
-            var ss = DateTime.Now.ToString("ss");
-            String plusString = $"{plusYear}{"-"}{MM}{"-"}{dd} {HH}{":"}{mm}{":"}{ss}";
-            DateTime DOIEx = DateTime.ParseExact((plusString).Trim(), "yyyy-MM-dd HH:mm:ss", CultureInfo.GetCultureInfo("en-GB"));
-
             try
             {
                 bool exsitingEmployee = false;
@@ -65,7 +51,7 @@ namespace ccf_re_seller_api.Controllers
 
                 if (exsitingEmployee == true)
                 {
-                    var employee = _context.employee.SingleOrDefault(e => e.eid == employeeHistory.eid);
+                    var employee = _context.employee.FirstOrDefault(e => e.eid == employeeHistory.eid);
 
                     if (employeeHistory.com != null
                         && employeeHistory.pos != null
@@ -73,7 +59,7 @@ namespace ccf_re_seller_api.Controllers
                         && employeeHistory.sdate != null
                         && employeeHistory.edate != null
                         && employeeHistory.lres != null
-                        && employee != null
+                        && employeeHistory.eid != null
                         )
                     {
 
@@ -87,6 +73,7 @@ namespace ccf_re_seller_api.Controllers
                         employeeHistory.edate = employeeHistory.edate;
                         employeeHistory.lres = employeeHistory.lres;
                         employeeHistory.remark = employeeHistory.remark;
+
                         _context.employeeHistory.Add(employeeHistory);
 
 

@@ -224,12 +224,12 @@ namespace ccf_re_seller_api.Controllers
                     bool _checkUserLogin = false;
                     bool _checkUserEmployeeLogin = false;
 
-                    _checkUserLogin = _context.ccfUserClass.Any(u => u.upassword == _userData.upassword);
+                    _checkUserLogin =  _context.ccfUserClass.Any(u => u.upassword == _userData.upassword);
                     _checkUserEmployeeLogin = _context.employee.Any(u => u.ecard == _userData.uid);
 
                     if (_checkUserLogin == true && _checkUserEmployeeLogin == true)
                     {
-                        var user = _context.ccfUserClass.SingleOrDefault(u => u.upassword == _userData.upassword);
+                        var user = _context.ccfUserClass.FirstOrDefault(u => u.upassword == _userData.upassword);
                         if (user != null)
                         {
                             // Check Lock

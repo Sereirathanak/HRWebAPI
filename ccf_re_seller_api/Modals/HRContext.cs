@@ -26,31 +26,7 @@ namespace ccf_re_seller_api.Models
             public virtual DbSet<HREmployeeHistory> employeeHistory { get; set; }
             public virtual DbSet<HREmployeeEducation> employeeEducation { get; set; }
 
-
         
-
-
-
-
-
-
-
-        //public virtual DbSet<CcfcustAsig> CcfcustAsigs { get; set; }
-        //public virtual DbSet<CcflogRe> CcflogRes { get; set; }
-        //public virtual DbSet<CcfmessagesRe> CcfmessagesRes { get; set; }
-        //public virtual DbSet<CcfreferalCu> CcfreferalCus { get; set; }
-        //public virtual DbSet<CcfreferalCusUp> CcfreferalCusUps { get; set; }
-        //public virtual DbSet<CcfreferalRe> CcfreferalRes { get; set; }
-        //public virtual DbSet<CcfroleRe> CcfroleRes { get; set; }
-        //public virtual DbSet<CcfuserRe> CcfuserRes { get; set; }
-        //public virtual DbSet<BranchClass> BranchClass { get; set; }
-        //public virtual DbSet<Address> Addresses { get; set; }
-        //public virtual DbSet<Currency> Currency { get; set; }
-        //public virtual DbSet<Transition> Transition { get; set; }
-        //public virtual DbSet<ExchangeRate> ExchangeRate { get; set; }
-        //public virtual DbSet<Document> Document { get; set; }
-        //public virtual DbSet<CcfcurrentAmount> CcfcurrentAmount { get; set; }
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
             {
                 OnModelCreatingPartial(modelBuilder);

@@ -12,6 +12,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.EntityFrameworkCore;
 using System.Globalization;
+using System.Data;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -30,6 +31,54 @@ namespace ccf_re_seller_api.Controllers
             _configuration = config;
             _context = context;
         }
+
+        //Get All List Referer
+        [HttpPost("all")]
+        public async Task<ActionResult<IEnumerable<HREmployee>>> GetAll(HRCustomerFilter filter)
+        {
+            var listEmployee = _context.employee.AsQueryable();
+
+            int totallistEmployee = listEmployee.Count();
+            var listEmployess = listEmployee.Where(lr => lr.estatus == "A")
+                                               .OrderByDescending(lr => lr.rdate)
+                                               .AsQueryable()
+                                               .Skip((filter.pageNumber - 1) * filter.pageSize)
+                                               .Take(filter.pageSize)
+                                               .ToList();
+
+            return listEmployess;
+
+        }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<IEnumerable<HREmployee>>> GetDetailEmployee(string id)
+        {
+            var detail = await _context.employee.Where(u => u.eid == id)
+              .Include(e => e.employeeJoinInfo)
+              .Include(e => e.employeeHistory)
+              .AsQueryable()
+              .ToListAsync();
+            if (detail == null)
+            {
+                return NotFound();
+            }
+            var results =  _context.employee.Where(u => u.eid == id);
+            return results.ToList();
+        }
+
+        //Get Employee Detail 
+        //[HttpGet("{id}")]
+        //public async Task<ActionResult<IEnumerable<HREmployee>>> GetEmployeeDetail(string id)
+        //{
+        //    var detail =  _context.employee.Where(u => u.eid == id)
+        //        .Include(e => e.employeeJoinInfo)
+        //        .Include(e => e.employeeDocument)
+        //        .Include(e => e.employeeFamily)
+        //        .Include(e => e.employeeHistory)
+        //        .Include(e => e.employeeEducation)
+        //        .AsQueryable();
+        //    return Ok(detail);
+        //}
 
         //create employee
         [HttpPost("hr/createEmployee")]
@@ -89,11 +138,9 @@ namespace ccf_re_seller_api.Controllers
                         && employee.stype !=null
                         && employee.con !=null
                         && employee.etype !=null
-                        && employee.status !=null
-
-                        )
+                        && employee.status !=null)
                     {
-                        HREmployee employee1 = new HREmployee();
+                        HREmployee employee1 = new HREmployee(_context);
                         employee1.eid = await GetNextIDEmployee();
                         employee1.ecard = employee.ecard;
                         employee1.fname = employee.fname;
@@ -125,6 +172,8 @@ namespace ccf_re_seller_api.Controllers
                         _context.employee.Add(employee1);
                         await _context.SaveChangesAsync();
 
+               
+
                         //auto insert to table user loin
                         HRCcfUserClass _user = new HRCcfUserClass();
                         _user.ucode = await GetNextIDUserLogin();
@@ -139,6 +188,8 @@ namespace ccf_re_seller_api.Controllers
                         _user.exdate = DOIEx;
                         _user.changepassword = "N";
                         _context.ccfUserClass.Add(_user);
+                        await _context.SaveChangesAsync();
+
 
 
                         //Employee Join Infor
@@ -162,12 +213,9 @@ namespace ccf_re_seller_api.Controllers
                         _employeeJoinInfo.status = employee.status;
                         _employeeJoinInfo.remark = employee.remark;
                         _context.employeeJoinInfo.Add(_employeeJoinInfo);
-
-                        //_assign.
-
                         await _context.SaveChangesAsync();
 
-                        return Ok(employee);
+                        return Ok(employee1);
                     }
                     else
                     {
@@ -245,7 +293,7 @@ namespace ccf_re_seller_api.Controllers
 
                        )
                     {
-                        HREmployee employee1 = new HREmployee();
+                        HREmployee employee1 = new HREmployee(_context);
                         employee1.eid = editEmployee.eid;
                         employee1.ecard = editEmployee.ecard;
                         employee1.fname = employee.fname;
