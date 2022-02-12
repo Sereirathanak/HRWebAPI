@@ -1,10 +1,18 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
-using System.Globalization;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Security.Claims;
+using System.Text;
 using System.Threading.Tasks;
-using ccf_re_seller_api.Models;
+using System.Web.Http.Cors;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.EntityFrameworkCore;
+using System.Globalization;
+using ccf_re_seller_api.Models;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -19,13 +27,12 @@ namespace ccf_re_seller_api.Controllers
             _context = context;
         }
 
-        //[HttpGet("hr/userrole")]
-        //// GET: UserLogController
-        //public async Task<ActionResult<IEnumerable<HRCcfrole>>> GetUserLogs()
-        //{
-        //    var userLogs = _context.ccfrole.OrderByDescending(l => l.cdate).AsQueryable();
-        //    return await userLogs.ToListAsync();
-        //}
+        //
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<HRCcfrole>>> GetAll()
+        {
+            return await _context.ccfrole.ToListAsync();
+        }
 
         [HttpPost("hr/createrole/{uid}")]
         public async Task<IActionResult> CreateUserRole(string uid,HRCcfrole _role)

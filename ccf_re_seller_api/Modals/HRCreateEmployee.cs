@@ -33,17 +33,18 @@ namespace ccf_re_seller_api.Models
         public int elevel { get; set; }
         public string? isapprover { get; set; }
 
+        
 
         //Employee Join Info
-        
+
         public string? jonid { get; set; }
         public DateTime jdate { get; set; }
         public string? site { get; set; }
         public string? dep { get; set; }
         public string? pos { get; set; }
         public string? sup { get; set; }
-        public int pmsal { get; set; }
-        public int msal { get; set; }
+        public decimal pmsal { get; set; }
+        public decimal msal { get; set; }
         public string? stype { get; set; }
         public string? con { get; set; }
         public string? etype { get; set; }
@@ -53,5 +54,7 @@ namespace ccf_re_seller_api.Models
         public string? status { get; set; }
         public string? remark { get; set; }
         public string? changepassword { get; set; }
+        public string? incharge { get; set; }
+
     }
 }

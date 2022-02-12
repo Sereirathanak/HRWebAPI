@@ -80,11 +80,17 @@
 /Users/vatsopheap/Documents/ccf_re_seller_api/ccf_re_seller_api/obj/Debug/netcoreapp3.1/ccf_re_seller_api.genruntimeconfig.cache
 /Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/appsettings.Development.json
 /Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/appsettings.json
+/Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/ccf-hr-management-da23a-firebase-adminsdk-s5vqr-2d85b13be4.json
 /Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/ccf-re-seller-app-firebase-adminsdk-khxlw-514befc41e.json
 /Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/ccf-re-seller-app-firebase-adminsdk-khxlw-681bd6ea44.json
 /Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/ccf-reseller-web-app-firebase-adminsdk-cjlin-7306caa621.json
 /Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/chokchey-reseller-app-5a4ab-firebase-adminsdk-rejho-48b8595ed9.json
 /Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/mono_crash.11a6748113.0.json
+/Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/mono_crash.141911c23f.0.json
+/Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/mono_crash.141911c23f.1.json
+/Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/mono_crash.d15830b10.0.json
+/Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/mono_crash.d15830b10.1.json
+/Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/mono_crash.d15830b10.2.json
 /Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/ccf_re_seller_api.deps.json
 /Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/ccf_re_seller_api.runtimeconfig.json
 /Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/ccf_re_seller_api.runtimeconfig.dev.json
@@ -157,8 +163,6 @@
 /Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/obj/Debug/netcoreapp3.1/ccf_re_seller_api.csproj.CoreCompileInputs.cache
 /Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/obj/Debug/netcoreapp3.1/ccf_re_seller_api.MvcApplicationPartsAssemblyInfo.cache
 /Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/obj/Debug/netcoreapp3.1/staticwebassets/ccf_re_seller_api.StaticWebAssets.Manifest.cache
-/Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/obj/Debug/netcoreapp3.1/staticwebassets/ccf_re_seller_api.StaticWebAssets.xml
-/Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/obj/Debug/netcoreapp3.1/scopedcss/bundle/ccf_re_seller_api.styles.css
 /Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/obj/Debug/netcoreapp3.1/ccf_re_seller_api.RazorTargetAssemblyInfo.cache
 /Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/obj/Debug/netcoreapp3.1/ccf_re_seller_api.csproj.CopyComplete
 /Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/obj/Debug/netcoreapp3.1/ccf_re_seller_api.dll

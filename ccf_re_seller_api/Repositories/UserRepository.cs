@@ -375,9 +375,5 @@ namespace ccf_re_seller_api.Repositories
             return nextId.ToString();
         }
 
-        public static implicit operator UserRepository(HRUserRepository v)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

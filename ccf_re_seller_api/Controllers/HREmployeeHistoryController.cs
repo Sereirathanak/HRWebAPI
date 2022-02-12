@@ -1,18 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
+using System.Globalization;
 using System.Linq;
-using System.Security.Claims;
-using System.Text;
 using System.Threading.Tasks;
 using System.Web.Http.Cors;
+using ccf_re_seller_api.Modals;
 using ccf_re_seller_api.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using Microsoft.IdentityModel.Tokens;
 using Microsoft.EntityFrameworkCore;
-using System.Globalization;
-
+using Microsoft.Extensions.Configuration;
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace ccf_re_seller_api.Controllers
@@ -29,6 +25,13 @@ namespace ccf_re_seller_api.Controllers
         {
             _configuration = config;
             _context = context;
+        }
+        //
+        //
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<HREmployeeHistory>>> GetCcfreferalCus()
+        {
+            return await _context.employeeHistory.ToListAsync();
         }
         //
         [HttpPost("hr/createEmployeeHistory")]
@@ -166,6 +169,22 @@ namespace ccf_re_seller_api.Controllers
             }
             var nextId = int.Parse(id.ecom) + 1;
             return nextId.ToString();
+        }
+
+
+
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<IEnumerable<HREmployeeHistory>>> GetDetailEmployee(string id)
+        {
+            var detail = await _context.employeeHistory.Where(u => u.eid == id)
+              .AsQueryable()
+              .ToListAsync();
+            if (detail == null)
+            {
+                return NotFound();
+            }
+            return detail.ToList();
         }
     }
 }

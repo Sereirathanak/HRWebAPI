@@ -9,6 +9,7 @@ namespace ccf_re_seller_api.Models
     {
         [Key]
         public string ucode { get; set; }
+        [ForeignKey("ccfpinfo")]
         public string uid { get; set; }
         public string upassword { get; set; }
         public int ulevel { get; set; }
@@ -24,5 +25,9 @@ namespace ccf_re_seller_api.Models
         public string u3 { get; set; }
         public string u4 { get; set; }
         public string u5 { get; set; }
+        public string mtoken { get; set; }
+
+        public virtual HREmployee ccfpinfo { get; set; }
+
     }
 }

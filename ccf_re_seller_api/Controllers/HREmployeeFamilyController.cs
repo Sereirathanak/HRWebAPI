@@ -32,6 +32,13 @@ namespace ccf_re_seller_api.Controllers
             _context = context;
         }
         //
+        //
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<HREmployeeFamily>>> GetCcfreferalCus()
+        {
+            return await _context.employeeFamily.ToListAsync();
+        }
+        //
         [HttpGet("{id}")]
         public async Task<ActionResult<IEnumerable<HREmployeeFamily>>> GetByDocumentFamily(string id)
         {

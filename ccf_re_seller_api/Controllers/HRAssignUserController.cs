@@ -34,12 +34,10 @@ namespace ccf_re_seller_api.Controllers
     {
         private readonly HRContext _context;
 
-        private readonly UserRepository _userRepository;
 
         public HRAssignUserController(HRContext context, IWebHostEnvironment env)
         {
             _context = context;
-            _userRepository = new HRUserRepository(_context, env);
         }
 
         // GET: api/CcfcustAsigs

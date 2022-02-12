@@ -33,6 +33,13 @@ namespace ccf_re_seller_api.Controllers
         }
 
         //
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<HREmployeeDocument>>> GetAll()
+        {
+            return await _context.employeeDocument.ToListAsync();
+        }
+
+        //
         [HttpGet("{id}")]
         public async Task<ActionResult<IEnumerable<HREmployeeDocument>>> GetByDocument(string id)
         {

@@ -1,22 +1,23 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using ccf_re_seller_api.Modals;
 
 namespace ccf_re_seller_api.Models
 {
-    [Table("edoc")]
+    [Table("ccfedoc")]
     public class HREmployeeDocument
     {
         [Key]
         public string docid { get; set; }
-        [ForeignKey("pinfo")]
+        [ForeignKey("ccfpinfo")]
         public string eid { get; set; }
         public string doctype { get; set; }
         public string docnum { get; set; }
         public DateTime edate { get; set; }
         public byte[] docatt { get; set; }
         public string rmark { get; set; }
-        public virtual HREmployee pinfo { get; set; }
+        public virtual HRTimeLogClass ccfpinfo { get; set; }
 
     }
 

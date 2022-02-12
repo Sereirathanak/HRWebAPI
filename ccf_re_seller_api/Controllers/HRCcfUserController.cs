@@ -13,6 +13,8 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.EntityFrameworkCore;
 using System.Globalization;
 using ccf_re_seller_api.Models;
+using ccf_re_seller_api.Repositories;
+using Microsoft.AspNetCore.Hosting;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -26,22 +28,52 @@ namespace ccf_re_seller_api.Controllers
     {
         public IConfiguration _configuration;
         private readonly HRContext _context;
+     
 
-        public HRCcfUserController(IConfiguration config, HRContext context)
+        public HRCcfUserController(HRContext context)
         {
-            _configuration = config;
             _context = context;
         }
 
+        //
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<HRCcfUserClass>>> GetAll()
+        {
+            return await _context.ccfUserClass.ToListAsync();
+        }
+
+        // POST: api/Users/5/UpdateMobileToken
+        [HttpPost("{id}/mtoken")]
+        public async Task<ActionResult<HRCcfUserClass>> UpdateMobileToken(string id, [Bind("mtoken")] HRCcfUserClass userForm)
+        {
+            try
+            {
+                var user = _context.ccfUserClass.FirstOrDefault(e => e.ucode == id);
+                if (user == null)
+                {
+                    return NotFound();
+                }
+
+                user.mtoken = userForm.mtoken;
+                await _context.SaveChangesAsync();
+
+                return Ok(new KeyValuePair<string, string>("200", "The mobile token was successfully saved."));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.ToString());
+            }
+        }
+
         [HttpPost("hr/createuser/{userId}")]
-        public async Task<IActionResult>CreateUser(string userId, HRCcfUserClass _user)
+        public async Task<IActionResult> CreateUser(string userId, HRCcfUserClass _user)
 
         {
             var datetime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
             DateTime DOI = DateTime.ParseExact((datetime).Trim(), "yyyy-MM-dd HH:mm:ss", CultureInfo.GetCultureInfo("en-GB"));
 
             var year = DateTime.Now.ToString("yyyy");
-            int plusYear = int.Parse(year)+1;
+            int plusYear = int.Parse(year) + 1;
             var MM = DateTime.Now.ToString("MM");
             var dd = DateTime.Now.ToString("dd");
             var HH = DateTime.Now.ToString("HH");
@@ -90,7 +122,7 @@ namespace ccf_re_seller_api.Controllers
 
                         var role = _context.ccfrole.SingleOrDefault();
                         var roleUser = "";
-                        if(role == null)
+                        if (role == null)
                         {
                             roleUser = "";
                         }
@@ -165,7 +197,7 @@ namespace ccf_re_seller_api.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutCcfreferalCu(string id, HRCcfUserClass _user)
         {
-            if (id != _user.uid)
+            if (id != _user.ucode)
             {
                 return BadRequest();
             }
@@ -199,7 +231,7 @@ namespace ccf_re_seller_api.Controllers
         }
 
         //Next ID
-        public async Task<string> GetNextID() 
+        public async Task<string> GetNextID()
         {
             var id = await _context.ccfUserClass.OrderByDescending(u => u.ucode).FirstOrDefaultAsync();
 
@@ -210,70 +242,80 @@ namespace ccf_re_seller_api.Controllers
             var nextId = int.Parse(id.ucode) + 1;
             return nextId.ToString();
         }
-        //funtion user login
+        
+
 
         [HttpPost("login")]
-        public async Task<IActionResult> Login(HRCcfUserClass _userData)
+        public async Task<ActionResult<HRCcfUserClass>> Login(HRCcfUserClass _userData)
         {
             try
             {
                 if (_userData != null && _userData.upassword != null)
                 {
 
-                    //var user = GetUser(_userData.uid, _userData.upassword);
                     bool _checkUserLogin = false;
                     bool _checkUserEmployeeLogin = false;
 
-                    _checkUserLogin =  _context.ccfUserClass.Any(u => u.upassword == _userData.upassword);
+                    _checkUserLogin = _context.ccfUserClass.Any(u => u.upassword == _userData.upassword);
                     _checkUserEmployeeLogin = _context.employee.Any(u => u.ecard == _userData.uid);
 
                     if (_checkUserLogin == true && _checkUserEmployeeLogin == true)
                     {
-                        var user = _context.ccfUserClass.FirstOrDefault(u => u.upassword == _userData.upassword);
-                        if (user != null)
+                        var employeeEcard = _context.employee.FirstOrDefault(u => u.ecard == _userData.uid);
+
+                        if (employeeEcard != null)
                         {
                             // Check Lock
-                            if (user.ustatus == "L")
+                            if (employeeEcard.estatus == "L")
                             {
                                 return BadRequest("The user is locked by Administrator.");
                             }
 
                             // Check Inactive
-                            if (user.ustatus == "I")
+                            if (employeeEcard.estatus == "I")
                             {
                                 return BadRequest("The user is inactived, please contact to Administrator.");
                             }
 
                             //create claims details based on the user information
-                            var claims = new[] {
-                            new Claim(JwtRegisteredClaimNames.Sub, _configuration["Jwt:Subject"]),
-                            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                            new Claim(JwtRegisteredClaimNames.Iat, DateTime.UtcNow.ToString()),
-                            new Claim("Phones", user.uid),
-                            new Claim("Unoe", user.datecreate.ToString()),
-                       };
+                            //     var claims = new[] {
+                            //     new Claim(JwtRegisteredClaimNames.Sub, _configuration["Jwt:Subject"]),
+                            //     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                            //     new Claim(JwtRegisteredClaimNames.Iat, DateTime.UtcNow.ToString()),
+                            //     new Claim("Phones", employeeEcard.pnum),
+                            //     new Claim("Unoe", employeeEcard.rdate.ToString()),
+                            //};
 
-                            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
-                            var signIn = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-                            var token = new JwtSecurityToken(_configuration["Jwt:Issuer"], _configuration["Jwt:Audience"], claims, expires: DateTime.UtcNow.AddDays(1000), signingCredentials: signIn);
-                            var registerToken = new JwtSecurityTokenHandler().WriteToken(token);
+                            //     var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
+                            //     var signIn = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+                            //     var token = new JwtSecurityToken(_configuration["Jwt:Issuer"], _configuration["Jwt:Audience"], claims, expires: DateTime.UtcNow.AddDays(1000), signingCredentials: signIn);
+                            //     var registerToken = new JwtSecurityTokenHandler().WriteToken(token);
 
 
-                            var employeeEcard = _context.employee.FirstOrDefault(u => u.ecard == _userData.uid);
+                            var userBranchCode = _context.employeeJoinInfo.FirstOrDefault(u => u.eid == employeeEcard.eid);
+
+                            var user = _context.ccfUserClass.FirstOrDefault(u => u.uid == employeeEcard.eid);
+
                             List<HRAuthentication> result = new List<HRAuthentication>
-                        {
-                            new HRAuthentication {
-                                uname   = user.uname,
-                                uid   = employeeEcard.ecard,
-                                phone   = employeeEcard.pnum,
-                                pwe = user.upassword,
-                                ustatus = user.ustatus,
-                                level = user.ulevel,
-                                roles   = GetRoleListByUser(user.ucode),
-                                changePassword = user.changepassword,
-                                token   = registerToken,
-                            }
-                        };
+                            {
+                                new HRAuthentication {
+                                    ucode   = user.ucode,
+                                    uname   = employeeEcard.dname,
+                                    uid   = employeeEcard.ecard,
+                                    phone   = employeeEcard.pnum,
+                                    pwe = user.upassword,
+                                    email = employeeEcard.email,
+                                    ustatus = employeeEcard.estatus,
+                                    level = employeeEcard.elevel,
+                                    roles   = GetRoleListByUser(user.ucode),
+                                    changePassword = user.changepassword,
+                                    token   = "",
+                                    brcode = userBranchCode.site,
+                                    eid = employeeEcard.eid
+
+
+                                }
+                            };
                             return Ok(result);
 
                         }
@@ -342,22 +384,6 @@ namespace ccf_re_seller_api.Controllers
 
             return Ok(_user);
         }
-
-
-        //private HRCcfUserClass GetUser(string uid, string password)
-        //{
-        //    bool _checkUserLogin = false;
-        //    bool _checkUserEmployeeLogin = false;
-
-        //     _checkUserLogin = _context.ccfUserClass.Any(u => u.upassword == password);
-        //     _checkUserEmployeeLogin = _context.employee.Any(u => u.ecard == uid);
-
-        //    if(_checkUserLogin == true && _checkUserEmployeeLogin == true)
-        //    {
-        //        return _context.ccfUserClass.FirstOrDefault(u => u.uid == uid);
-
-        //    }
-        //}
 
     }
 }

@@ -38,5 +38,5 @@ namespace ccf_re_seller_api.Controllers
                .AsQueryable();
             return Ok(listReferalCus);
         }
-        }
+    }
 }

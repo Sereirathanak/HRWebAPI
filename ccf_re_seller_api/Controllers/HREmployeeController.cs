@@ -36,17 +36,721 @@ namespace ccf_re_seller_api.Controllers
         [HttpPost("all")]
         public async Task<ActionResult<IEnumerable<HREmployee>>> GetAll(HRCustomerFilter filter)
         {
+             
             var listEmployee = _context.employee.AsQueryable();
-
             int totallistEmployee = listEmployee.Count();
-            var listEmployess = listEmployee.Where(lr => lr.estatus == "A")
-                                               .OrderByDescending(lr => lr.rdate)
-                                               .AsQueryable()
-                                               .Skip((filter.pageNumber - 1) * filter.pageSize)
-                                               .Take(filter.pageSize)
-                                               .ToList();
 
-            return listEmployess;
+
+            //seleted branch and department and position and incharge
+            if (filter.checkBranch == false && filter.checkDepartment == false && filter.checkPosition == false && filter.checkIncharge == false
+                && filter.search == "" )
+            {
+                var listEmployess = listEmployee.Where(lr => lr.estatus == "A")
+                                                             .OrderByDescending(lr => lr.rdate)
+                                                             .AsQueryable()
+                                                             .Skip((filter.pageNumber - 1) * filter.pageSize)
+                                                             .Take(filter.pageSize)
+                                                             .ToList();
+                return Ok(listEmployess);
+
+            }
+
+            //seleted branch and department and position and incharge
+            if (filter.checkBranch == true && filter.checkDepartment == true && filter.checkPosition == true && filter.checkIncharge == true
+                && filter.search != "" && filter.search != null)
+            {
+                var branchCode = _context.hrBranchClass.SingleOrDefault(e => e.braname.ToLower().Contains(filter.search.ToLower()));
+
+                var departmentCode = _context.department.SingleOrDefault(e => e.depname.ToLower().Contains(filter.search.ToLower()));
+
+                var listEmployess = listEmployee.Where(lr => lr.estatus == "A")
+                                                             .OrderByDescending(lr => lr.rdate)
+                                                             .AsQueryable()
+                                                             .Skip((filter.pageNumber - 1) * filter.pageSize)
+                                                             .Take(filter.pageSize)
+                                                             .ToList();
+                if (branchCode != null)
+                {
+                    listEmployess = listEmployee.Where(lr => lr.estatus == "A")
+                                                            .OrderByDescending(lr => lr.rdate)
+                                                            .Where(e => e.ccfemployeeJoinInfo.site == branchCode.braid)
+                                                            .AsQueryable()
+                                                            .Skip((filter.pageNumber - 1) * filter.pageSize)
+                                                            .Take(filter.pageSize)
+                                                            .ToList();
+
+                    return Ok(listEmployess);
+                }
+
+                if (departmentCode != null)
+                {
+                    listEmployess = listEmployee.Where(lr => lr.estatus == "A")
+                                                            .OrderByDescending(lr => lr.rdate)
+                                                            .Where(e => e.ccfemployeeJoinInfo.dep == departmentCode.depid)
+                                                            .AsQueryable()
+                                                            .Skip((filter.pageNumber - 1) * filter.pageSize)
+                                                            .Take(filter.pageSize)
+                                                            .ToList();
+                    return Ok(listEmployess);
+
+                }
+
+                var filterPosition = listEmployee.Where(lr => lr.estatus == "A")
+                                                            .OrderByDescending(lr => lr.rdate)
+                                                            .Where(e => e.ccfemployeeJoinInfo.pos.ToLower().Contains(filter.search.ToLower()))
+                                                            .AsQueryable()
+                                                            .Skip((filter.pageNumber - 1) * filter.pageSize)
+                                                            .Take(filter.pageSize)
+                                                            .ToList();
+                if (filterPosition != null && filterPosition.Count() != 0)
+                {
+                    listEmployess = listEmployee.Where(lr => lr.estatus == "A")
+                                                            .OrderByDescending(lr => lr.rdate)
+                                                            .Where(e => e.ccfemployeeJoinInfo.pos.ToLower().Contains(filter.search.ToLower()))
+                                                            .AsQueryable()
+                                                            .Skip((filter.pageNumber - 1) * filter.pageSize)
+                                                            .Take(filter.pageSize)
+                                                            .ToList();
+                    return Ok(listEmployess);
+
+                }
+
+                var filterIncharge = listEmployee.Where(lr => lr.estatus == "A")
+                                                           .OrderByDescending(lr => lr.rdate)
+                                                           .Where(e => e.ccfemployeeJoinInfo.incharge.ToLower().Contains(filter.search.ToLower()))
+                                                           .AsQueryable()
+                                                           .Skip((filter.pageNumber - 1) * filter.pageSize)
+                                                           .Take(filter.pageSize)
+                                                           .ToList();
+                if (filterIncharge != null)
+                {
+                    listEmployess = listEmployee.Where(lr => lr.estatus == "A")
+                                                            .OrderByDescending(lr => lr.rdate)
+                                                            .Where(e => e.ccfemployeeJoinInfo.incharge.ToLower().Contains(filter.search.ToLower()))
+                                                            .AsQueryable()
+                                                            .Skip((filter.pageNumber - 1) * filter.pageSize)
+                                                            .Take(filter.pageSize)
+                                                            .ToList();
+                    return Ok(listEmployess);
+
+                }
+
+                return Ok(listEmployess);
+            }
+
+            //seleted branch and position and incharge
+            if (filter.checkBranch == true && filter.checkPosition == true && filter.checkIncharge == true
+                && filter.search != "" && filter.search != null)
+            {
+                
+                var branchCode = _context.hrBranchClass.SingleOrDefault(e => e.braname.ToLower().Contains(filter.search.ToLower()));
+
+                var listEmployess = listEmployee.Where(lr => lr.estatus == "A")
+                                                          .OrderByDescending(lr => lr.rdate)
+                                                          .AsQueryable()
+                                                          .Skip((filter.pageNumber - 1) * filter.pageSize)
+                                                          .Take(filter.pageSize)
+                                                          .ToList();
+                if (branchCode != null)
+                {
+                    listEmployess = listEmployee.Where(lr => lr.estatus == "A")
+                                                            .OrderByDescending(lr => lr.rdate)
+                                                            .Where(e => e.ccfemployeeJoinInfo.site == branchCode.braid)
+                                                            .AsQueryable()
+                                                            .Skip((filter.pageNumber - 1) * filter.pageSize)
+                                                            .Take(filter.pageSize)
+                                                            .ToList();
+
+                    return Ok(listEmployess);
+                }
+
+                var filterPosition = listEmployee.Where(lr => lr.estatus == "A")
+                                                           .OrderByDescending(lr => lr.rdate)
+                                                           .Where(e => e.ccfemployeeJoinInfo.pos.ToLower().Contains(filter.search.ToLower()))
+                                                           .AsQueryable()
+                                                           .Skip((filter.pageNumber - 1) * filter.pageSize)
+                                                           .Take(filter.pageSize)
+                                                           .ToList();
+                if (filterPosition != null && filterPosition.Count() != 0)
+                {
+                    listEmployess = listEmployee.Where(lr => lr.estatus == "A")
+                                                            .OrderByDescending(lr => lr.rdate)
+                                                            .Where(e => e.ccfemployeeJoinInfo.pos.ToLower().Contains(filter.search.ToLower()))
+                                                            .AsQueryable()
+                                                            .Skip((filter.pageNumber - 1) * filter.pageSize)
+                                                            .Take(filter.pageSize)
+                                                            .ToList();
+                    return Ok(listEmployess);
+
+                }
+
+
+                var filterIncharge = listEmployee.Where(lr => lr.estatus == "A")
+                                                           .OrderByDescending(lr => lr.rdate)
+                                                           .Where(e => e.ccfemployeeJoinInfo.incharge.ToLower().Contains(filter.search.ToLower()))
+                                                           .AsQueryable()
+                                                           .Skip((filter.pageNumber - 1) * filter.pageSize)
+                                                           .Take(filter.pageSize)
+                                                           .ToList();
+                if (filterIncharge != null)
+                {
+                    listEmployess = listEmployee.Where(lr => lr.estatus == "A")
+                                                            .OrderByDescending(lr => lr.rdate)
+                                                            .Where(e => e.ccfemployeeJoinInfo.incharge.ToLower().Contains(filter.search.ToLower()))
+                                                            .AsQueryable()
+                                                            .Skip((filter.pageNumber - 1) * filter.pageSize)
+                                                            .Take(filter.pageSize)
+                                                            .ToList();
+                    return Ok(listEmployess);
+
+                }
+
+                return Ok(listEmployess);
+
+            }
+
+
+            //seleted department and position and incharge
+            if (filter.checkDepartment == true && filter.checkPosition == true && filter.checkIncharge == true
+                    && filter.search != "" && filter.search != null)
+            {
+                var departmentCode = _context.department.SingleOrDefault(e => e.depname.ToLower().Contains(filter.search.ToLower()));
+              
+                var listEmployess = listEmployee.Where(lr => lr.estatus == "A")
+                                                         .OrderByDescending(lr => lr.rdate)
+                                                         .AsQueryable()
+                                                         .Skip((filter.pageNumber - 1) * filter.pageSize)
+                                                         .Take(filter.pageSize)
+                                                         .ToList();
+
+                if (departmentCode != null)
+                {
+                    listEmployess = listEmployee.Where(lr => lr.estatus == "A")
+                                                            .OrderByDescending(lr => lr.rdate)
+                                                            .Where(e => e.ccfemployeeJoinInfo.dep == departmentCode.depid)
+                                                            .AsQueryable()
+                                                            .Skip((filter.pageNumber - 1) * filter.pageSize)
+                                                            .Take(filter.pageSize)
+                                                            .ToList();
+                    return Ok(listEmployess);
+
+                }
+
+                var filterPosition = listEmployee.Where(lr => lr.estatus == "A")
+                                                          .OrderByDescending(lr => lr.rdate)
+                                                          .Where(e => e.ccfemployeeJoinInfo.pos.ToLower().Contains(filter.search.ToLower()))
+                                                          .AsQueryable()
+                                                          .Skip((filter.pageNumber - 1) * filter.pageSize)
+                                                          .Take(filter.pageSize)
+                                                          .ToList();
+                if (filterPosition != null && filterPosition.Count() != 0)
+                {
+                    listEmployess = listEmployee.Where(lr => lr.estatus == "A")
+                                                            .OrderByDescending(lr => lr.rdate)
+                                                            .Where(e => e.ccfemployeeJoinInfo.pos.ToLower().Contains(filter.search.ToLower()))
+                                                            .AsQueryable()
+                                                            .Skip((filter.pageNumber - 1) * filter.pageSize)
+                                                            .Take(filter.pageSize)
+                                                            .ToList();
+                    return Ok(listEmployess);
+
+                }
+
+
+                var filterIncharge = listEmployee.Where(lr => lr.estatus == "A")
+                                                           .OrderByDescending(lr => lr.rdate)
+                                                           .Where(e => e.ccfemployeeJoinInfo.incharge.ToLower().Contains(filter.search.ToLower()))
+                                                           .AsQueryable()
+                                                           .Skip((filter.pageNumber - 1) * filter.pageSize)
+                                                           .Take(filter.pageSize)
+                                                           .ToList();
+                if (filterIncharge != null)
+                {
+                    listEmployess = listEmployee.Where(lr => lr.estatus == "A")
+                                                            .OrderByDescending(lr => lr.rdate)
+                                                            .Where(e => e.ccfemployeeJoinInfo.incharge.ToLower().Contains(filter.search.ToLower()))
+                                                            .AsQueryable()
+                                                            .Skip((filter.pageNumber - 1) * filter.pageSize)
+                                                            .Take(filter.pageSize)
+                                                            .ToList();
+                    return Ok(listEmployess);
+
+                }
+                return Ok(listEmployess);
+            }
+
+
+            //seleted branch and department and incharge
+            if (filter.checkBranch == true && filter.checkDepartment == true && filter.checkIncharge == true
+                    && filter.search != "" && filter.search != null)
+            {
+                var branchCode = _context.hrBranchClass.SingleOrDefault(e => e.braname.Contains(filter.search));
+                var departmentCode = _context.department.SingleOrDefault(e => e.depname.Contains(filter.search));
+
+
+                var listEmployess = listEmployee.Where(lr => lr.estatus == "A")
+                                                         .OrderByDescending(lr => lr.rdate)
+                                                         .AsQueryable()
+                                                         .Skip((filter.pageNumber - 1) * filter.pageSize)
+                                                         .Take(filter.pageSize)
+                                                         .ToList();
+                if (branchCode != null)
+                {
+                    listEmployess = listEmployee.Where(lr => lr.estatus == "A")
+                                                            .OrderByDescending(lr => lr.rdate)
+                                                            .Where(e => e.ccfemployeeJoinInfo.site == branchCode.braid)
+                                                            .AsQueryable()
+                                                            .Skip((filter.pageNumber - 1) * filter.pageSize)
+                                                            .Take(filter.pageSize)
+                                                            .ToList();
+
+                    return Ok(listEmployess);
+                }
+                if (departmentCode != null)
+                {
+                    listEmployess = listEmployee.Where(lr => lr.estatus == "A")
+                                                            .OrderByDescending(lr => lr.rdate)
+                                                            .Where(e => e.ccfemployeeJoinInfo.dep == departmentCode.depid)
+                                                            .AsQueryable()
+                                                            .Skip((filter.pageNumber - 1) * filter.pageSize)
+                                                            .Take(filter.pageSize)
+                                                            .ToList();
+                    return Ok(listEmployess);
+
+                }
+                var filterIncharge = listEmployee.Where(lr => lr.estatus == "A")
+                                                           .OrderByDescending(lr => lr.rdate)
+                                                           .Where(e => e.ccfemployeeJoinInfo.incharge.ToLower().Contains(filter.search.ToLower()))
+                                                           .AsQueryable()
+                                                           .Skip((filter.pageNumber - 1) * filter.pageSize)
+                                                           .Take(filter.pageSize)
+                                                           .ToList();
+                if (filterIncharge != null)
+                {
+                    listEmployess = listEmployee.Where(lr => lr.estatus == "A")
+                                                            .OrderByDescending(lr => lr.rdate)
+                                                            .Where(e => e.ccfemployeeJoinInfo.incharge.ToLower().Contains(filter.search.ToLower()))
+                                                            .AsQueryable()
+                                                            .Skip((filter.pageNumber - 1) * filter.pageSize)
+                                                            .Take(filter.pageSize)
+                                                            .ToList();
+                    return Ok(listEmployess);
+
+                }
+                return Ok(listEmployess);
+            }
+
+
+            //seleted branch and department and position
+            if (filter.checkBranch == true && filter.checkDepartment == true
+                && filter.checkPosition == true && filter.search != "" && filter.search != null)
+            {
+                var branchCode = _context.hrBranchClass.SingleOrDefault(e => e.braname.Contains(filter.search));
+                var departmentCode = _context.department.SingleOrDefault(e => e.depname.Contains(filter.search));
+
+                var listEmployess = listEmployee.Where(lr => lr.estatus == "A")
+                                                          .OrderByDescending(lr => lr.rdate)
+                                                          .AsQueryable()
+                                                          .Skip((filter.pageNumber - 1) * filter.pageSize)
+                                                          .Take(filter.pageSize)
+                                                          .ToList();
+                if (branchCode != null)
+                {
+                    listEmployess = listEmployee.Where(lr => lr.estatus == "A")
+                                                            .OrderByDescending(lr => lr.rdate)
+                                                            .Where(e => e.ccfemployeeJoinInfo.site == branchCode.braid)
+                                                            .AsQueryable()
+                                                            .Skip((filter.pageNumber - 1) * filter.pageSize)
+                                                            .Take(filter.pageSize)
+                                                            .ToList();
+
+                    return Ok(listEmployess);
+                }
+
+                if (departmentCode != null)
+                {
+                    listEmployess = listEmployee.Where(lr => lr.estatus == "A")
+                                                            .OrderByDescending(lr => lr.rdate)
+                                                            .Where(e => e.ccfemployeeJoinInfo.dep == departmentCode.depid)
+                                                            .AsQueryable()
+                                                            .Skip((filter.pageNumber - 1) * filter.pageSize)
+                                                            .Take(filter.pageSize)
+                                                            .ToList();
+                    return Ok(listEmployess);
+
+                }
+                var filterPosition = listEmployee.Where(lr => lr.estatus == "A")
+                                                          .OrderByDescending(lr => lr.rdate)
+                                                          .Where(e => e.ccfemployeeJoinInfo.pos.ToLower().Contains(filter.search.ToLower()))
+                                                          .AsQueryable()
+                                                          .Skip((filter.pageNumber - 1) * filter.pageSize)
+                                                          .Take(filter.pageSize)
+                                                          .ToList();
+                if (filterPosition != null && filterPosition.Count() != 0)
+                {
+                    listEmployess = listEmployee.Where(lr => lr.estatus == "A")
+                                                            .OrderByDescending(lr => lr.rdate)
+                                                            .Where(e => e.ccfemployeeJoinInfo.pos.ToLower().Contains(filter.search.ToLower()))
+                                                            .AsQueryable()
+                                                            .Skip((filter.pageNumber - 1) * filter.pageSize)
+                                                            .Take(filter.pageSize)
+                                                            .ToList();
+                    return Ok(listEmployess);
+
+                }
+
+                return Ok(listEmployess);
+
+            }
+
+
+            //seleted position and incharge
+            if (filter.checkPosition == true && filter.checkIncharge == true && filter.search != "" && filter.search != null)
+            {
+                var listEmployess = listEmployee.Where(lr => lr.estatus == "A")
+                                                       .OrderByDescending(lr => lr.rdate)
+                                                       .AsQueryable()
+                                                       .Skip((filter.pageNumber - 1) * filter.pageSize)
+                                                       .Take(filter.pageSize)
+                                                       .ToList();
+
+                var filterPosition = listEmployee.Where(lr => lr.estatus == "A")
+                                                          .OrderByDescending(lr => lr.rdate)
+                                                          .Where(e => e.ccfemployeeJoinInfo.pos.ToLower().Contains(filter.search.ToLower()))
+                                                          .AsQueryable()
+                                                          .Skip((filter.pageNumber - 1) * filter.pageSize)
+                                                          .Take(filter.pageSize)
+                                                          .ToList();
+                if (filterPosition != null && filterPosition.Count() != 0)
+                {
+                    listEmployess = listEmployee.Where(lr => lr.estatus == "A")
+                                                            .OrderByDescending(lr => lr.rdate)
+                                                            .Where(e => e.ccfemployeeJoinInfo.pos.ToLower().Contains(filter.search.ToLower()))
+                                                            .AsQueryable()
+                                                            .Skip((filter.pageNumber - 1) * filter.pageSize)
+                                                            .Take(filter.pageSize)
+                                                            .ToList();
+                    return Ok(listEmployess);
+
+                }
+
+                var filterIncharge = listEmployee.Where(lr => lr.estatus == "A")
+                                                          .OrderByDescending(lr => lr.rdate)
+                                                          .Where(e => e.ccfemployeeJoinInfo.incharge.ToLower().Contains(filter.search.ToLower()))
+                                                          .AsQueryable()
+                                                          .Skip((filter.pageNumber - 1) * filter.pageSize)
+                                                          .Take(filter.pageSize)
+                                                          .ToList();
+                if (filterIncharge != null)
+                {
+                    listEmployess = listEmployee.Where(lr => lr.estatus == "A")
+                                                            .OrderByDescending(lr => lr.rdate)
+                                                            .Where(e => e.ccfemployeeJoinInfo.incharge.ToLower().Contains(filter.search.ToLower()))
+                                                            .AsQueryable()
+                                                            .Skip((filter.pageNumber - 1) * filter.pageSize)
+                                                            .Take(filter.pageSize)
+                                                            .ToList();
+                    return Ok(listEmployess);
+
+                }
+
+                return listEmployess;
+
+            }
+
+
+
+            //seleted department and incharge
+            if (filter.checkDepartment == true && filter.checkIncharge == true && filter.search != "" && filter.search != null)
+            {
+                var departmentCode = _context.department.SingleOrDefault(e => e.depname.ToLower().Contains(filter.search.ToLower()));
+
+                var listEmployess = listEmployee.Where(lr => lr.estatus == "A")
+                                                      .OrderByDescending(lr => lr.rdate)
+                                                      .AsQueryable()
+                                                      .Skip((filter.pageNumber - 1) * filter.pageSize)
+                                                      .Take(filter.pageSize)
+                                                      .ToList();
+                if (departmentCode != null)
+                {
+                    listEmployess = listEmployee.Where(lr => lr.estatus == "A")
+                                                            .OrderByDescending(lr => lr.rdate)
+                                                            .Where(e => e.ccfemployeeJoinInfo.dep == departmentCode.depid)
+                                                            .AsQueryable()
+                                                            .Skip((filter.pageNumber - 1) * filter.pageSize)
+                                                            .Take(filter.pageSize)
+                                                            .ToList();
+                    return Ok(listEmployess);
+
+                }
+                var filterIncharge = listEmployee.Where(lr => lr.estatus == "A")
+                                                         .OrderByDescending(lr => lr.rdate)
+                                                         .Where(e => e.ccfemployeeJoinInfo.incharge.ToLower().Contains(filter.search.ToLower()))
+                                                         .AsQueryable()
+                                                         .Skip((filter.pageNumber - 1) * filter.pageSize)
+                                                         .Take(filter.pageSize)
+                                                         .ToList();
+                if (filterIncharge != null)
+                {
+                    listEmployess = listEmployee.Where(lr => lr.estatus == "A")
+                                                            .OrderByDescending(lr => lr.rdate)
+                                                            .Where(e => e.ccfemployeeJoinInfo.incharge.ToLower().Contains(filter.search.ToLower()))
+                                                            .AsQueryable()
+                                                            .Skip((filter.pageNumber - 1) * filter.pageSize)
+                                                            .Take(filter.pageSize)
+                                                            .ToList();
+                    return Ok(listEmployess);
+
+                }
+                return listEmployess;
+
+            }
+
+            //seleted department and position
+            if (filter.checkDepartment == true && filter.checkPosition == true && filter.search != "" && filter.search != null)
+            {
+                var departmentCode = _context.department.SingleOrDefault(e => e.depname.ToLower().Contains(filter.search.ToLower()));
+
+                var listEmployess = listEmployee.Where(lr => lr.estatus == "A")
+                                                      .OrderByDescending(lr => lr.rdate)
+                                                      .AsQueryable()
+                                                      .Skip((filter.pageNumber - 1) * filter.pageSize)
+                                                      .Take(filter.pageSize)
+                                                      .ToList();
+                if (departmentCode != null)
+                {
+                    listEmployess = listEmployee.Where(lr => lr.estatus == "A")
+                                                            .OrderByDescending(lr => lr.rdate)
+                                                            .Where(e => e.ccfemployeeJoinInfo.dep == departmentCode.depid)
+                                                            .AsQueryable()
+                                                            .Skip((filter.pageNumber - 1) * filter.pageSize)
+                                                            .Take(filter.pageSize)
+                                                            .ToList();
+                    return Ok(listEmployess);
+
+                }
+                var filterPosition = listEmployee.Where(lr => lr.estatus == "A")
+                                                         .OrderByDescending(lr => lr.rdate)
+                                                         .Where(e => e.ccfemployeeJoinInfo.pos.ToLower().Contains(filter.search.ToLower()))
+                                                         .AsQueryable()
+                                                         .Skip((filter.pageNumber - 1) * filter.pageSize)
+                                                         .Take(filter.pageSize)
+                                                         .ToList();
+                if (filterPosition != null && filterPosition.Count() != 0)
+                {
+                    listEmployess = listEmployee.Where(lr => lr.estatus == "A")
+                                                            .OrderByDescending(lr => lr.rdate)
+                                                            .Where(e => e.ccfemployeeJoinInfo.pos.ToLower().Contains(filter.search.ToLower()))
+                                                            .AsQueryable()
+                                                            .Skip((filter.pageNumber - 1) * filter.pageSize)
+                                                            .Take(filter.pageSize)
+                                                            .ToList();
+                    return Ok(listEmployess);
+
+                }
+
+
+                return listEmployess;
+
+            }
+
+            //seleted department and brach
+            if (filter.checkDepartment == true && filter.checkBranch == true && filter.search != "" && filter.search != null)
+            {
+                var departmentCode = _context.department.SingleOrDefault(e => e.depname.ToLower().Contains(filter.search.ToLower()));
+                var branchCode = _context.hrBranchClass.SingleOrDefault(e => e.braname.ToLower().Contains(filter.search.ToLower()));
+                var listEmployess = listEmployee.Where(lr => lr.estatus == "A")
+                                                    .OrderByDescending(lr => lr.rdate)
+                                                    .AsQueryable()
+                                                    .Skip((filter.pageNumber - 1) * filter.pageSize)
+                                                    .Take(filter.pageSize)
+                                                    .ToList();
+
+                if (departmentCode != null)
+                {
+                    listEmployess = listEmployee.Where(lr => lr.estatus == "A")
+                                                            .OrderByDescending(lr => lr.rdate)
+                                                            .Where(e => e.ccfemployeeJoinInfo.dep == departmentCode.depid)
+                                                            .AsQueryable()
+                                                            .Skip((filter.pageNumber - 1) * filter.pageSize)
+                                                            .Take(filter.pageSize)
+                                                            .ToList();
+                    return Ok(listEmployess);
+
+                }
+                if (branchCode != null)
+                {
+                    listEmployess = listEmployee.Where(lr => lr.estatus == "A")
+                                                            .OrderByDescending(lr => lr.rdate)
+                                                            .Where(e => e.ccfemployeeJoinInfo.site == branchCode.braid)
+                                                            .AsQueryable()
+                                                            .Skip((filter.pageNumber - 1) * filter.pageSize)
+                                                            .Take(filter.pageSize)
+                                                            .ToList();
+
+                    return Ok(listEmployess);
+                }
+                return Ok(departmentCode);
+
+            }
+
+
+            //seleted branch and incharge
+            if (filter.checkBranch == true && filter.checkIncharge == true && filter.search != "" && filter.search != null)
+            {
+                var branchCode = _context.hrBranchClass.SingleOrDefault(e => e.braname.ToLower().Contains(filter.search.ToLower()));
+                var listEmployess = listEmployee.Where(lr => lr.estatus == "A")
+                                                    .OrderByDescending(lr => lr.rdate)
+                                                    .AsQueryable()
+                                                    .Skip((filter.pageNumber - 1) * filter.pageSize)
+                                                    .Take(filter.pageSize)
+                                                    .ToList();
+
+                if (branchCode != null)
+                {
+                    listEmployess = listEmployee.Where(lr => lr.estatus == "A")
+                                                            .OrderByDescending(lr => lr.rdate)
+                                                            .Where(e => e.ccfemployeeJoinInfo.site == branchCode.braid)
+                                                            .AsQueryable()
+                                                            .Skip((filter.pageNumber - 1) * filter.pageSize)
+                                                            .Take(filter.pageSize)
+                                                            .ToList();
+
+                    return Ok(listEmployess);
+                }
+                var filterIncharge = listEmployee.Where(lr => lr.estatus == "A")
+                                                         .OrderByDescending(lr => lr.rdate)
+                                                         .Where(e => e.ccfemployeeJoinInfo.incharge.ToLower().Contains(filter.search.ToLower()))
+                                                         .AsQueryable()
+                                                         .Skip((filter.pageNumber - 1) * filter.pageSize)
+                                                         .Take(filter.pageSize)
+                                                         .ToList();
+                if (filterIncharge != null)
+                {
+                    listEmployess = listEmployee.Where(lr => lr.estatus == "A")
+                                                            .OrderByDescending(lr => lr.rdate)
+                                                            .Where(e => e.ccfemployeeJoinInfo.incharge.ToLower().Contains(filter.search.ToLower()))
+                                                            .AsQueryable()
+                                                            .Skip((filter.pageNumber - 1) * filter.pageSize)
+                                                            .Take(filter.pageSize)
+                                                            .ToList();
+                    return Ok(listEmployess);
+
+                }
+                return listEmployess;
+
+            }
+
+            //seleted branch and position
+            if (filter.checkBranch == true && filter.checkPosition == true && filter.search != "" && filter.search != null)
+            {
+                var branchCode = _context.hrBranchClass.SingleOrDefault(e => e.braname.ToLower().Contains(filter.search.ToLower()));
+                var listEmployess = listEmployee.Where(lr => lr.estatus == "A")
+                                                     .OrderByDescending(lr => lr.rdate)
+                                                     .AsQueryable()
+                                                     .Skip((filter.pageNumber - 1) * filter.pageSize)
+                                                     .Take(filter.pageSize)
+                                                     .ToList();
+
+                if (branchCode != null)
+                {
+                    listEmployess = listEmployee.Where(lr => lr.estatus == "A")
+                                                            .OrderByDescending(lr => lr.rdate)
+                                                            .Where(e => e.ccfemployeeJoinInfo.site == branchCode.braid)
+                                                            .AsQueryable()
+                                                            .Skip((filter.pageNumber - 1) * filter.pageSize)
+                                                            .Take(filter.pageSize)
+                                                            .ToList();
+
+                    return Ok(listEmployess);
+                }
+
+                var filterPosition = listEmployee.Where(lr => lr.estatus == "A")
+                                                         .OrderByDescending(lr => lr.rdate)
+                                                         .Where(e => e.ccfemployeeJoinInfo.pos.ToLower().Contains(filter.search.ToLower()))
+                                                         .AsQueryable()
+                                                         .Skip((filter.pageNumber - 1) * filter.pageSize)
+                                                         .Take(filter.pageSize)
+                                                         .ToList();
+                if (filterPosition != null && filterPosition.Count() != 0)
+                {
+                    listEmployess = listEmployee.Where(lr => lr.estatus == "A")
+                                                            .OrderByDescending(lr => lr.rdate)
+                                                            .Where(e => e.ccfemployeeJoinInfo.pos.ToLower().Contains(filter.search.ToLower()))
+                                                            .AsQueryable()
+                                                            .Skip((filter.pageNumber - 1) * filter.pageSize)
+                                                            .Take(filter.pageSize)
+                                                            .ToList();
+                    return Ok(listEmployess);
+
+                }
+                return listEmployess;
+
+            }
+
+
+            //seleted branch
+            if (filter.checkBranch == true && filter.search != null && filter.search != "")
+            {
+                var branchCode = _context.hrBranchClass.SingleOrDefault(e => e.braname.ToLower().Contains(filter.search.ToLower()));
+                var listEmployess = listEmployee.Where(lr => lr.estatus == "A")
+                                                             .OrderByDescending(lr => lr.rdate)
+                                                             .Where(e => e.ccfemployeeJoinInfo.site == branchCode.braid)
+                                                             .AsQueryable()
+                                                             .Skip((filter.pageNumber - 1) * filter.pageSize)
+                                                             .Take(filter.pageSize)
+                                                             .ToList();
+                return listEmployess;
+
+            }
+
+            //seleted department 
+            if (filter.search != "" && filter.search != null &&
+                filter.checkDepartment == true )
+            {
+                var departmentCode = _context.department.SingleOrDefault(e => e.depname.ToLower().Contains(filter.search.ToLower()));
+
+                var listEmployess = listEmployee.Where(lr => lr.estatus == "A")
+                                                             .OrderByDescending(lr => lr.rdate)
+                                                             .Where(e => e.ccfemployeeJoinInfo.dep == departmentCode.depid)
+                                                             .AsQueryable()
+                                                             .Skip((filter.pageNumber - 1) * filter.pageSize)
+                                                             .Take(filter.pageSize)
+                                                             .ToList();
+                return listEmployess;
+
+            }
+
+            //seleted position 
+            if (filter.checkPosition == true && filter.search != null && filter.search != "")
+             {
+
+                    var listEmployess = listEmployee.Where(lr => lr.estatus == "A")
+                                                             .OrderByDescending(lr => lr.rdate)
+                                                             .Where(e => e.ccfemployeeJoinInfo.pos.Contains(filter.search))
+                                                             .AsQueryable()
+                                                             .Skip((filter.pageNumber - 1) * filter.pageSize)
+                                                             .Take(filter.pageSize)
+                                                             .ToList();
+                return listEmployess;
+
+            }
+
+            //seleted position 
+            if (filter.checkIncharge == true && filter.search != null && filter.search != "")
+            {
+                var listEmployess = listEmployee.Where(lr => lr.estatus == "A")
+                                                             .OrderByDescending(lr => lr.rdate)
+                                                             .Where(e => e.ccfemployeeJoinInfo.incharge.Contains(filter.search))
+                                                             .AsQueryable()
+                                                             .Skip((filter.pageNumber - 1) * filter.pageSize)
+                                                             .Take(filter.pageSize)
+                                                             .ToList();
+                return listEmployess;
+
+            }
+
+            return BadRequest("Not Found");
 
         }
 
@@ -54,8 +758,9 @@ namespace ccf_re_seller_api.Controllers
         public async Task<ActionResult<IEnumerable<HREmployee>>> GetDetailEmployee(string id)
         {
             var detail = await _context.employee.Where(u => u.eid == id)
-              .Include(e => e.employeeJoinInfo)
-              .Include(e => e.employeeHistory)
+              .Include(e => e.ccfemployeeJoinInfo)
+              .Include(e => e.ccfemployeeHistory)
+              .Include(e => e.ccfuser)
               .AsQueryable()
               .ToListAsync();
             if (detail == null)
@@ -83,7 +788,6 @@ namespace ccf_re_seller_api.Controllers
         //create employee
         [HttpPost("hr/createEmployee")]
         public async Task<IActionResult> CreateUser(HRCreateEmployee employee)
-
         {
             var datetime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
             DateTime DOI = DateTime.ParseExact((datetime).Trim(), "yyyy-MM-dd HH:mm:ss", CultureInfo.GetCultureInfo("en-GB"));
@@ -193,7 +897,7 @@ namespace ccf_re_seller_api.Controllers
 
 
                         //Employee Join Infor
-                        HREmployeeJoinInfo _employeeJoinInfo = new HREmployeeJoinInfo();
+                        HREmployeeJoinInfo _employeeJoinInfo = new HREmployeeJoinInfo(_context);
 
                         _employeeJoinInfo.jonid = await GetNextIDJonid();
                         _employeeJoinInfo.eid = employee1.eid;
@@ -212,6 +916,9 @@ namespace ccf_re_seller_api.Controllers
                         _employeeJoinInfo.npm = employee.npm;
                         _employeeJoinInfo.status = employee.status;
                         _employeeJoinInfo.remark = employee.remark;
+                        _employeeJoinInfo.incharge = employee.incharge;
+
+                        
                         _context.employeeJoinInfo.Add(_employeeJoinInfo);
                         await _context.SaveChangesAsync();
 

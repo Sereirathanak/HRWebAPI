@@ -1,14 +1,16 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using ccf_re_seller_api.Modals;
+
 namespace ccf_re_seller_api.Models
 {
-    [Table("eedu")]
+    [Table("ccfeedu")]
     public class HREmployeeEducation
     {
         [Key]
         public string eduid { get; set; }
-        [ForeignKey("pinfo")]
+        [ForeignKey("ccfpinfo")]
         public string eid { get; set; }
         public string inst { get; set; }
         public string sub { get; set; }
@@ -16,7 +18,7 @@ namespace ccf_re_seller_api.Models
         public DateTime edate { get; set; }
         public byte[] certyfi { get; set; }
         public string remark { get; set; }
-        public virtual HREmployee pinfo { get; set; }
+        public virtual HRTimeLogClass ccfpinfo { get; set; }
 
 
     }

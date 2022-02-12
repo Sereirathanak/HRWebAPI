@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "vAyL9Vr89r1rlg8T+J+2iqUYqjeHUjWOYoUzzuMJ8txjqM3By+45ZNvViaKQ6UeME5OtsNqE5vXT7Wvv9rVkFw==",
+  "dgSpecHash": "9OTJtNp7oMfpffs2X1+EXUbI5kVMccTbTq3TZxvovq/gRYEnoi2zczs++vfgBpr8IcrnyIZL4XFPnloEKSt8Kg==",
   "success": true,
   "projectFilePath": "/Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/ccf_re_seller_api.csproj",
   "expectedPackageFiles": [
@@ -104,7 +104,8 @@
     "/Users/vatsopheap/.nuget/packages/system.threading/4.3.0/system.threading.4.3.0.nupkg.sha512",
     "/Users/vatsopheap/.nuget/packages/system.threading.overlapped/4.3.0/system.threading.overlapped.4.3.0.nupkg.sha512",
     "/Users/vatsopheap/.nuget/packages/system.threading.tasks/4.3.0/system.threading.tasks.4.3.0.nupkg.sha512",
-    "/Users/vatsopheap/.nuget/packages/system.windows.extensions/4.7.0/system.windows.extensions.4.7.0.nupkg.sha512"
+    "/Users/vatsopheap/.nuget/packages/system.windows.extensions/4.7.0/system.windows.extensions.4.7.0.nupkg.sha512",
+    "/Users/vatsopheap/.nuget/packages/microsoft.netcore.app.host.osx-x64/3.1.22/microsoft.netcore.app.host.osx-x64.3.1.22.nupkg.sha512"
   ],
   "logs": [
     {

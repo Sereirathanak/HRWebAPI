@@ -1,15 +1,16 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using ccf_re_seller_api.Modals;
 
 namespace ccf_re_seller_api.Models
 {
-    [Table("efam")]
+    [Table("ccfefam")]
     public class HREmployeeFamily
     {
         [Key]
         public string famid { get; set; }
-        [ForeignKey("pinfo")]
+        [ForeignKey("ccfpinfo")]
         public string eid { get; set; }
         public string fname { get; set; }
         public string rtype { get; set; }
@@ -17,7 +18,7 @@ namespace ccf_re_seller_api.Models
 
         public byte[] photo { get; set; }
         public string rmark { get; set; }
-        public virtual HREmployee pinfo { get; set; }
+        public virtual HRTimeLogClass ccfpinfo { get; set; }
 
     }
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using ccf_re_seller_api.Modals;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 namespace ccf_re_seller_api.Models
@@ -17,7 +18,7 @@ namespace ccf_re_seller_api.Models
             public virtual DbSet<HRCcfUserClass> ccfUserClass { get; set; }
             public virtual DbSet<HREmployee> employee { get; set; }
             public virtual DbSet<HREmployeeJoinInfo> employeeJoinInfo { get; set; }
-            public virtual DbSet<HRBranchClass> branchClass { get; set; }
+            public virtual DbSet<HRBranchClass> hrBranchClass { get; set; }
             public virtual DbSet<HRCcfassign> ccfassign { get; set; }
             public virtual DbSet<HRCcfrole> ccfrole { get; set; }
             public virtual DbSet<HRCcfulog> ccfulog { get; set; }
@@ -25,8 +26,32 @@ namespace ccf_re_seller_api.Models
             public virtual DbSet<HREmployeeFamily> employeeFamily { get; set; }
             public virtual DbSet<HREmployeeHistory> employeeHistory { get; set; }
             public virtual DbSet<HREmployeeEducation> employeeEducation { get; set; }
+            public virtual DbSet<HRTimeLogClass> timeLogClass { get; set; }
+            public virtual DbSet<HROrganizationClass> organizationClass { get; set; }
+            public virtual DbSet<HRPosition> position { get; set; }
+            public virtual DbSet<HRDepartment> department { get; set; }
+            public virtual DbSet<HREmployeeType> employeeType { get; set; }
+            public virtual DbSet<HRWorkCalendar> workCalendar { get; set; }
+            public virtual DbSet<HRCalendar> calendar { get; set; }
+            public virtual DbSet<HRLeaveType> leaveType { get; set; }
+            public virtual DbSet<HRMapZoneClass> mapZoneClass { get; set; }
+            public virtual DbSet<HRLeaveRequest> leaveRequest { get; set; }
+            public virtual DbSet<HRMissionType> mssionType { get; set; }
+            public virtual DbSet<HRMissionreq> missionreq { get; set; }
+            public virtual DbSet<HRMissionApproval> missionApproval { get; set; }
+            public virtual DbSet<HROverTimeType> overTimeType { get; set; }
+            public virtual DbSet<HRleaveEnrollment> leaveEnrollment { get; set; }
+            public virtual DbSet<HRleaveApprovalRequest> leaveApprovalRequest { get; set; }
+            public virtual DbSet<HROverTimeRequest> overTimeRequest { get; set; }
+            public virtual DbSet<HROverTimeApproval> overTimeApproval { get; set; }
+            public virtual DbSet<HRMissionRequestDocument> missionRequestDocument { get; set; }
+            public virtual DbSet<HRLeaveRequestDocument> leaveRequestDocument { get; set; }
+            public virtual DbSet<HROvertimeRequestDocument> overtimeRequestDocument { get; set; }
+            public virtual DbSet<HRImageProfile> imageProfile { get; set; }
+            public virtual DbSet<HRCcfmessage> hrccfmessages { get; set; }
 
         
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
             {
                 OnModelCreatingPartial(modelBuilder);

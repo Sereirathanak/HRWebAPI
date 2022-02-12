@@ -28,6 +28,13 @@ namespace ccf_re_seller_api.Controllers
             _configuration = config;
             _context = context;
         }
+
+        //
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<HREmployeeEducation>>> GetCcfreferalCus()
+        {
+            return await _context.employeeEducation.ToListAsync();
+        }
         //
 
         [HttpGet("{id}")]
@@ -48,12 +55,12 @@ namespace ccf_re_seller_api.Controllers
         [HttpPost("hr/createEmployeeEducation")]
          public async Task<ActionResult> Post([FromForm] HRValidateEmployeeEducation _employeeEducation)
         {
-
             try
             {
                 bool exsitingEmployee = false;
 
                 exsitingEmployee = _context.employee.Any(e => e.eid == _employeeEducation.eid);
+
                 if (_context.employee.Any(e => e.ecard == null))
                 {
                     exsitingEmployee = false;
@@ -67,10 +74,10 @@ namespace ccf_re_seller_api.Controllers
                 {
                     var employee = _context.employee.SingleOrDefault(e => e.eid == _employeeEducation.eid);
 
+
+
                     if (_employeeEducation.inst != null
                         && _employeeEducation.sub != null
-                        && _employeeEducation.sdate != null
-                        && _employeeEducation.edate != null
                         && _employeeEducation.eid != null
                         )
                     {
@@ -102,12 +109,16 @@ namespace ccf_re_seller_api.Controllers
 
                         }
                         var GenerateID = convertInt.ToString();
+
+
                         if (HttpContext.Request.Form.Files["eduuid[101]"] != null)
                         {
 
                             fileName = HttpContext.Request.Form.Files["eduuid[101]"].FileName;
                             mineType = HttpContext.Request.Form.Files["eduuid[101]"].ContentType;
                             fileEx = Path.GetExtension(fileName);
+
+
                             //
                             using (var memoryStream = new MemoryStream())
                             {
@@ -155,7 +166,7 @@ namespace ccf_re_seller_api.Controllers
                         //
                         await _context.SaveChangesAsync();
 
-                        return Ok();
+                        return Ok(_employeeEducation);
                     }
                     else
                     {

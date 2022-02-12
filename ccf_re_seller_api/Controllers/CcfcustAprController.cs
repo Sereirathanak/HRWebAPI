@@ -179,7 +179,7 @@ namespace ccf_re_seller_api.Controllers
                         exitingUser.caid = exitingUser.caid;
                         exitingUser.uid = exitingUser.uid;
                         exitingUser.currentamount = exitingUser.currentamount + amount;
-                        exitingUser.status = "Deposit";
+                        exitingUser.status = "Received from chokchey";
                         exitingUser.createdate = DOI;
                         _context.Entry(exitingUser).State = EntityState.Modified;
 
@@ -203,7 +203,7 @@ namespace ccf_re_seller_api.Controllers
                         currentAmountUser.caid = convertIntCurrentAmount.ToString();
                         currentAmountUser.uid = referer.uid;
                         currentAmountUser.currentamount = amount;
-                        currentAmountUser.status = "Deposit";
+                        currentAmountUser.status = "Received from chokchey";
                         currentAmountUser.createdate = DOI;
                         _context.CcfcurrentAmount.Add(currentAmountUser);
 
@@ -211,7 +211,7 @@ namespace ccf_re_seller_api.Controllers
 
 
 
-                    //deposit to referrer account into Transition Table
+                    //Received from chokchey to referrer account into Transition Table
 
 
                     var id = _context.Transition.Max(c => c.tid);
@@ -231,7 +231,7 @@ namespace ccf_re_seller_api.Controllers
                     updateTransition.tid = convertInt.ToString();
                     updateTransition.cid = ccfcustApr.cid;
                     updateTransition.refcode = userReferer.refcode;
-                    updateTransition.transitiontype = "Deposit";
+                    updateTransition.transitiontype = "Received from chokchey";
                     updateTransition.approvecode = ccfcustApr.aprcode;
                     updateTransition.datecreate = DOI;
                     updateTransition.status = ccfcustApr.status;

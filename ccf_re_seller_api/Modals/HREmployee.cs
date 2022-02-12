@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 namespace ccf_re_seller_api.Models
 {
-    [Table("pinfo")]
+    [Table("ccfpinfo")]
     public class HREmployee
     {
         private readonly HRContext _context;
@@ -48,8 +48,11 @@ namespace ccf_re_seller_api.Models
         public string u4 { get; set; }
         public string u5 { get; set; }
 
-        public virtual HREmployeeJoinInfo employeeJoinInfo { get; set; }
-        public virtual HREmployeeHistory employeeHistory { get; set; }
+
+        public virtual HREmployeeJoinInfo ccfemployeeJoinInfo { get; set; }
+        public virtual HREmployeeHistory ccfemployeeHistory { get; set; }
+        public virtual HRCcfUserClass ccfuser { get; set; }
+
 
 
     }
