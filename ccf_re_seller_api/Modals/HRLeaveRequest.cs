@@ -58,8 +58,8 @@ namespace ccf_re_seller_api.Modals
 
         public string leaid { get; set; }
 
-        public DateTime frdate { get; set; }
-        public DateTime todate { get; set; }
+        public DateTime frdat { get; set; }
+        public DateTime todat { get; set; }
         public string numleav { get; set; }
 
         public string lfor { get; set; }

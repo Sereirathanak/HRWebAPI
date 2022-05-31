@@ -1,23 +1,20 @@
 ﻿<Properties StartupConfiguration="{0A30F87B-9A53-4034-B81D-B4759050C150}|CCFWebAPI">
   <MonoDevelop.Ide.ItemProperties.ccf__re__seller__api PreferredExecutionTarget="/Applications/Google Chrome.app" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="ccf_re_seller_api/Controllers/HREmployeeController.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="ccf_re_seller_api/Repositories/UserRepository.cs">
     <Files>
-      <File FileName="ccf_re_seller_api/Controllers/HREmployeeController.cs" Line="109" Column="98" />
-      <File FileName="ccf_re_seller_api/Modals/CustomerFilter.cs" />
-      <File FileName="ccf_re_seller_api/Startup.cs" Line="48" Column="76" />
+      <File FileName="ccf_re_seller_api/Controllers/HRTimeLogController.cs" Line="233" Column="1" />
       <File FileName="ccf_re_seller_api/appsettings.json" />
-      <File FileName="ccf_re_seller_api/Controllers/HRUserLogsController.cs" Line="1" Column="1" />
-      <File FileName="ccf_re_seller_api/Controllers/HRCcfUserController.cs" Line="40" Column="61" />
+      <File FileName="ccf_re_seller_api/Startup.cs" />
+      <File FileName="ccf_re_seller_api/Repositories/UserRepository.cs" Line="70" Column="41" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="ccf_re_seller_api" expanded="True">
             <Node name="ccf_re_seller_api" expanded="True">
-              <Node name="Controllers" expanded="True">
-                <Node name="HREmployeeController.cs" selected="True" />
+              <Node name="Repositories" expanded="True">
+                <Node name="UserRepository.cs" selected="True" />
               </Node>
-              <Node name="Modals" expanded="True" />
             </Node>
           </Node>
         </State>
@@ -25,7 +22,7 @@
     </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Release" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>

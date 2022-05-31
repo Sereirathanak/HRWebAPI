@@ -36,9 +36,47 @@ namespace ccf_re_seller_api.Controllers
 
         }
         //
+        [HttpPost("report")]
+        public async Task<ActionResult<IEnumerable<HRLeaveRequest>>> FetchAllReportLeave(HRClockInOut filter)
+        {
+            var datetime = DateTime.Now.ToString("HH:mm");
+            DateTime DOI = DateTime.ParseExact((datetime).Trim(), "HH:mm", CultureInfo.GetCultureInfo("en-GB"));
+            var employeees = _context.leaveRequest
+                                 .OrderByDescending(x => x.frdat).Reverse()
+                                 .OrderByDescending(e => e.eid)
+                                 .Include(e => e.ccfpinfo)
+                                 .AsQueryable();
+
+            if (filter.status != null && filter.status != "")
+            {
+                employeees = employeees.Where(e => e.statu == filter.status);
+            }
+
+            if (filter.eid != null && filter.eid != "")
+            {
+                employeees = employeees.Where(e => e.eid == filter.eid);
+            }
+
+
+            if ((filter.sdate != null && filter.sdate != "") && (filter.edate != null && filter.edate != ""))
+            {
+                DateTime dateFrom = DateTime.Parse(filter.sdate.ToString());
+                DateTime dateTo = DateTime.Parse(filter.edate.ToString());
+                employeees = employeees.Where(la => la.frdat >= dateFrom && la.todat <= dateTo);
+            }
+            else if (filter.sdate != null && filter.sdate != "")
+            {
+                var strDateTo = DateTime.Now.ToString("yyyy-MM-dd 00:00:00");
+                DateTime dateFrom = DateTime.Parse(filter.sdate.ToString());
+                DateTime dateTo = DateTime.Parse(strDateTo.ToString());
+                employeees = employeees.Where(la => la.frdat >= dateFrom && la.frdat <= dateTo);
+            }
+
+            return Ok(employeees);
+        }
         //
-        [HttpGet("{id}")]
-        public async Task<ActionResult<IEnumerable<HRLeaveRequest>>> Get(string id)
+        [HttpPost("{id}")]
+        public async Task<ActionResult<IEnumerable<HRLeaveRequest>>> Get(string id, HRCustomerFilter filter)
         {
             var listLeave = _context.leaveRequest.AsQueryable()
                   .Include(e => e.ccfpinfo)
@@ -47,7 +85,25 @@ namespace ccf_re_seller_api.Controllers
             ;
             var leave = listLeave.Where(mis => mis.eid == id)
                                            .AsQueryable()
+                                           .OrderByDescending(lr => lr.createdate).Reverse()
+                                           .AsQueryable()
+                                           .Skip((filter.pageNumber - 1) * filter.pageSize)
+                                           .Take(filter.pageSize)
                                            .ToList();
+
+            if (filter.search != "" && filter.search != null)
+            {
+                leave = listLeave.Where(mis => mis.eid == id)
+                                           .AsQueryable()
+                                           .Where(e => e.reason.ToLower().Contains(filter.search.ToLower()))
+                                           .OrderByDescending(lr => lr.createdate).Reverse()
+                                           .AsQueryable()
+                                           .Skip((filter.pageNumber - 1) * filter.pageSize)
+                                           .Take(filter.pageSize)
+                                           .ToList();
+                return Ok(leave);
+
+            }
             return Ok(leave);
         }
         //
@@ -56,8 +112,8 @@ namespace ccf_re_seller_api.Controllers
         {
             try
             {
-                var datetime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-                DateTime DOI = DateTime.ParseExact((datetime).Trim(), "yyyy-MM-dd HH:mm:ss", CultureInfo.GetCultureInfo("en-GB"));
+                var datetime = DateTime.Now.ToString("yyyy-MM-dd");
+                DateTime DOI = DateTime.ParseExact((datetime).Trim(), "yyyy-MM-dd", CultureInfo.GetCultureInfo("en-GB"));
                 if (
                     _leaveRequest.numleav != null &&
                     _leaveRequest.lfor != null &&
@@ -133,8 +189,8 @@ namespace ccf_re_seller_api.Controllers
                                         orgid = _leaveRequest.orgid,
                                         eid = _leaveRequest.eid,
                                         leaid = _leaveRequest.leaid,
-                                        frdat = _leaveRequest.frdate,
-                                        todat = _leaveRequest.todate,
+                                        frdat = _leaveRequest.frdat,
+                                        todat = _leaveRequest.todat,
                                         numleav = _leaveRequest.numleav,
                                         lfor = _leaveRequest.lfor,
                                         lnot = _leaveRequest.lnot,
@@ -185,8 +241,8 @@ namespace ccf_re_seller_api.Controllers
                             orgid = _leaveRequest.orgid,
                             eid = _leaveRequest.eid,
                             leaid = _leaveRequest.leaid,
-                            frdat = _leaveRequest.frdate,
-                            todat = _leaveRequest.todate,
+                            frdat = _leaveRequest.frdat,
+                            todat = _leaveRequest.todat,
                             numleav = _leaveRequest.numleav,
                             lfor = _leaveRequest.lfor,
                             lnot = _leaveRequest.lnot,

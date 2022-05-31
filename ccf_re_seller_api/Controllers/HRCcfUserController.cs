@@ -85,6 +85,8 @@ namespace ccf_re_seller_api.Controllers
             bool exsitingUser = false;
 
             exsitingUser = _context.ccfUserClass.Any(e => e.uid == _user.uid);
+            exsitingUser = _context.ccfUserClass.Any(e => e.uid == _user.uid);
+
             if (_context.employee.Any(e => e.ecard == null))
             {
                 exsitingUser = false;
@@ -222,7 +224,35 @@ namespace ccf_re_seller_api.Controllers
                 }
             }
 
-            return Ok(_user);
+            var employeeEcard = _context.employee.FirstOrDefault(u => u.eid == _user.uid);
+            var userJoinInfo = _context.employeeJoinInfo.FirstOrDefault(u => u.eid == employeeEcard.eid);
+
+            var user = _context.ccfUserClass.FirstOrDefault(u => u.uid == employeeEcard.eid);
+
+            List<HRAuthentication> result = new List<HRAuthentication>
+            {
+                new HRAuthentication {
+                    ucode   = user.ucode,
+                    uname   = employeeEcard.dname,
+                    uid   = employeeEcard.ecard,
+                    phone   = employeeEcard.pnum,
+                    pwe = user.upassword,
+                    email = employeeEcard.email,
+                    ustatus = employeeEcard.estatus,
+                    level = employeeEcard.elevel,
+                    roles   = GetRoleListByUser(user.ucode),
+                    changePassword = user.changepassword,
+                    token   = "",
+                    brcode = userJoinInfo.site,
+                    eid = employeeEcard.eid,
+                    datecreate = user.datecreate,
+                    isapprover = user.isapprover,
+                    exdate = user.exdate,
+
+                }
+            };
+
+            return Ok(result);
         }
 
         private bool CcfUserExists(string id)
@@ -292,7 +322,7 @@ namespace ccf_re_seller_api.Controllers
                             //     var registerToken = new JwtSecurityTokenHandler().WriteToken(token);
 
 
-                            var userBranchCode = _context.employeeJoinInfo.FirstOrDefault(u => u.eid == employeeEcard.eid);
+                            var userJoinInfo= _context.employeeJoinInfo.FirstOrDefault(u => u.eid == employeeEcard.eid);
 
                             var user = _context.ccfUserClass.FirstOrDefault(u => u.uid == employeeEcard.eid);
 
@@ -310,9 +340,11 @@ namespace ccf_re_seller_api.Controllers
                                     roles   = GetRoleListByUser(user.ucode),
                                     changePassword = user.changepassword,
                                     token   = "",
-                                    brcode = userBranchCode.site,
-                                    eid = employeeEcard.eid
-
+                                    brcode = userJoinInfo.site,
+                                    eid = employeeEcard.eid,
+                                    datecreate = user.datecreate,
+                                    isapprover = user.isapprover,
+                                    exdate = user.exdate,
 
                                 }
                             };

@@ -101,7 +101,7 @@ namespace ccf_re_seller_api.Controllers
                     //
                     var requestMission = _context.overTimeRequest.SingleOrDefault(e => e.oveid == _overtimeApproval.oveid);
                     var user = _context.ccfUserClass.SingleOrDefault(e => e.uid == requestMission.eid);
-                    await _userRepository.SendNotificationUser(requestMission.eid, user.bcode, "CCF HR System App", $"Over-Time reqest from {user.uname}.", requestMission.eid, _overtimeApproval.oveid, "O");
+                    await _userRepository.SendNotificationUser(requestMission.eid, user.bcode, "CCF HR System App", $"Over-Time request from {user.uname}.", requestMission.eid, _overtimeApproval.oveid, "O");
                     //
 
                     return Ok(_overtimeApproval);
@@ -128,30 +128,35 @@ namespace ccf_re_seller_api.Controllers
                 return BadRequest();
             }
 
+            _context.Entry(_overtimeApproval).State = EntityState.Modified;
+
+            var listApproveRequest = _context.overTimeApproval.Where(e => e.oveid == _overtimeApproval.oveid);
+
+
+            var statusRequtest = 1;
+
+            if (_overtimeApproval.applev != listApproveRequest.Count() - 2)
+            {
+                if (_overtimeApproval.apstatu != 3)
+                {
+                    statusRequtest = 2;
+                }
+            }
+
+            if (_overtimeApproval.applev == 99)
+            {
+                statusRequtest = _overtimeApproval.apstatu;
+            }
+
+            if (_overtimeApproval.applev == 98)
+            {
+                statusRequtest = _overtimeApproval.apstatu;
+            }
+
 
             var _overtimereq = _context.overTimeRequest.SingleOrDefault(e => e.oveid == _overtimeApproval.oveid);
 
-            _overtimereq.statu = _overtimeApproval.apstatu.ToString();
-
-            await _context.SaveChangesAsync();
-
-            _context.Entry(_overtimeApproval).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!CcflogReExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            _overtimereq.statu = statusRequtest.ToString();
 
             //
             var statusEdit = "pedding";
@@ -178,16 +183,32 @@ namespace ccf_re_seller_api.Controllers
 
             var requestLeave = _context.overTimeRequest.SingleOrDefault(e => e.oveid == _overtimeApproval.oveid);
             var user = _context.ccfUserClass.SingleOrDefault(e => e.uid == _overtimeApproval.eid);
-            await _userRepository.SendNotificationUser(requestLeave.eid, user.bcode, "CCF HR System App", $"Over-Time reqest have been {statusEdit} from {user.uname}.", requestLeave.eid, requestLeave.oveid, "O");
+            await _userRepository.SendNotificationUser(requestLeave.eid, user.bcode, "CCF HR System App", $"Over-Time request have been {statusEdit} from {user.uname}.", requestLeave.eid, requestLeave.oveid, "O");
             var userApproval = _context.overTimeApproval.Where(e => e.oveid == _overtimeApproval.oveid)
-                                .Where(e => e.eid != _overtimeApproval.eid).AsQueryable();
+                                .Where(e => e.eid != _overtimeApproval.eid).ToList();
 
             foreach (var userApprove in userApproval)
             {
-                await _userRepository.SendNotificationUser(userApprove.eid, user.bcode, "CCF HR System App", $"Over-Time reqest have been {statusEdit} from {user.uname}.", requestLeave.eid, requestLeave.oveid, "O");
+                await _userRepository.SendNotificationUser(userApprove.eid, user.bcode, "CCF HR System App", $"Over-Time request have been {statusEdit} from {user.uname}.", requestLeave.eid, requestLeave.oveid, "O");
 
             }
             //
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!CcflogReExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
 
 
             return Ok(_overtimeApproval);

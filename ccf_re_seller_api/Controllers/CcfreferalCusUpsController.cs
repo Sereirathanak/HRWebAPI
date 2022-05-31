@@ -138,6 +138,7 @@ namespace ccf_re_seller_api.Controllers
                 var listReferalsCustomer = listReferalCustomer
                     .Where(us => us.uid == filter.uid)
                     .OrderByDescending(lr => lr.refdate)
+                    .OrderBy(e => e.refdate)
                     .AsQueryable()
                     .Skip((filter.pageNumber - 1) * filter.pageSize)
                     .Take(filter.pageSize)
@@ -152,6 +153,7 @@ namespace ccf_re_seller_api.Controllers
                 var listReferalCustomer = _context.CcfreferalCusUps
                     .Include(rf => rf.CcfreferalCu)
                     .Include(ul => ul.CcfuserRe)
+                    .OrderBy(d => (DateTime)d.refdate)
                     .AsQueryable();
                 if ((filter.sdate != null && filter.sdate != "") && (filter.edate != null && filter.edate != ""))
                 {
@@ -172,11 +174,11 @@ namespace ccf_re_seller_api.Controllers
                 }
                 int totalListReferalCustomer = listReferalCustomer.Count();
                 var listReferalsCustomer = listReferalCustomer
-                    .OrderByDescending(lr => lr.refdate)
                     .AsQueryable()
                     .Skip((filter.pageNumber - 1) * filter.pageSize)
                     .Take(filter.pageSize)
                     .OrderBy(x => x.status == Constant.PEDDING ? 1 : x.status == Constant.PROCESS ? 2 : x.status == "FINAL APPROVE" ? 3 : x.status == "Request Disbursement" ? 4 : x.status == "D" ? 5 : x.status == "A" ? 6 : 7)
+                    .Distinct()
                     .ToList();
                 return listReferalsCustomer;
             };

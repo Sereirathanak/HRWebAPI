@@ -21,4 +21,5 @@ namespace ccf_re_seller_api.Modals
         public virtual HROrganizationClass ccforg { get; set; }
 
     }
+
 }

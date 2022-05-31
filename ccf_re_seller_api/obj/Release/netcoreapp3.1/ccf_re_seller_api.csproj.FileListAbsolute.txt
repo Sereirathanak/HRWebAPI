@@ -84,12 +84,7 @@
 /Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/bin/Release/netcoreapp3.1/ccf-re-seller-app-firebase-adminsdk-khxlw-681bd6ea44.json
 /Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/bin/Release/netcoreapp3.1/ccf-reseller-web-app-firebase-adminsdk-cjlin-7306caa621.json
 /Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/bin/Release/netcoreapp3.1/chokchey-reseller-app-5a4ab-firebase-adminsdk-rejho-48b8595ed9.json
-/Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/bin/Release/netcoreapp3.1/mono_crash.11a6748113.0.json
-/Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/bin/Release/netcoreapp3.1/mono_crash.141911c23f.0.json
-/Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/bin/Release/netcoreapp3.1/mono_crash.141911c23f.1.json
-/Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/bin/Release/netcoreapp3.1/mono_crash.d15830b10.0.json
-/Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/bin/Release/netcoreapp3.1/mono_crash.d15830b10.1.json
-/Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/bin/Release/netcoreapp3.1/mono_crash.d15830b10.2.json
+/Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/bin/Release/netcoreapp3.1/mono_crash.11a67480d0.0.json
 /Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/bin/Release/netcoreapp3.1/ccf_re_seller_api.deps.json
 /Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/bin/Release/netcoreapp3.1/ccf_re_seller_api.runtimeconfig.json
 /Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/bin/Release/netcoreapp3.1/ccf_re_seller_api.runtimeconfig.dev.json

@@ -37,30 +37,78 @@ namespace ccf_re_seller_api.Controllers
         [HttpGet("approver/{id}")]
         public async Task<ActionResult<IEnumerable<HRleaveApprovalRequest>>> GetListApprove(string id)
         {
-
+            //, HRCustomerFilter filter
             var listLeave = _context.leaveApprovalRequest.AsQueryable()
                 .Include(e => e.ccflre)
                 .Include(e => e.ccfpinfo);
-            var leave = listLeave.Where(mis => mis.eid == id)
-                                           .OrderByDescending(lr => lr.applev).Reverse()
-                                           .AsQueryable()
-                                           .ToList();
-            return leave;
+        
+            var leave = listLeave.Where(lr => lr.eid == id)
+                                      .OrderByDescending(lr => lr.applev).Reverse()
+                                      .AsQueryable()
+                                      //.Skip((filter.pageNumber - 1) * filter.pageSize)
+                                      //.Take(filter.pageSize)
+                                      .ToList();
+
+            //if (filter.search != "")
+            //{
+            //    var leaveRequest = _context.leaveApprovalRequest.FirstOrDefault(e => e.ccflre.reason.ToLower().Contains(filter.search.ToLower()));
+
+            //    if (leaveRequest != null || leaveRequest.lreid != null || leaveRequest.lreid != "")
+            //    {
+
+            //        var leaverequest = leave.Where(lr => lr.lreid == leaveRequest.lreid)
+            //                                  .OrderByDescending(lr => lr.applev).Reverse()
+            //                                  .AsQueryable()
+            //                                  .Skip((filter.pageNumber - 1) * filter.pageSize)
+            //                                  .Take(filter.pageSize)
+            //                                  .ToList();
+
+            //        return Ok(leaverequest);
+
+
+            //    }
+            //}
+            return Ok(leave);
         }
 
 
         //
-        [HttpGet("{id}")]
-        public async Task<ActionResult<IEnumerable<HRleaveApprovalRequest>>> GetLeaveRequest(string id)
+        [HttpPost("{id}")]
+        public async Task<ActionResult<IEnumerable<HRleaveApprovalRequest>>> GetLeaveRequest(string id, HRCustomerFilter filter)
         {
-
             var listLeave = _context.leaveApprovalRequest.AsQueryable()
                 .Include(e => e.ccflre)
                 .Include(e => e.ccfpinfo);
-            var leave = listLeave.Where(mis => mis.lreid == id)
-                                           .OrderByDescending(lr => lr.applev).Reverse()
-                                           .AsQueryable()
-                                           .ToList();
+      
+
+            var leave = listLeave.Where(lr => lr.lreid == id)
+                                        .OrderByDescending(lr => lr.applev).Reverse()
+                                        .AsQueryable()
+                                        .Skip((filter.pageNumber - 1) * filter.pageSize)
+                                        .Take(filter.pageSize)
+                                        .ToList();
+
+            if(filter.search != "" && filter.search != null)
+            {
+                var leaveRequest = _context.leaveRequest.SingleOrDefault(e => e.reason.ToLower().Contains(filter.search.ToLower()));
+
+                if (leaveRequest != null)
+                {
+
+                    leave = listLeave.Where(lr => lr.lreid == leaveRequest.lreid)
+                                             .OrderByDescending(lr => lr.applev).Reverse()
+                                             .AsQueryable()
+                                             .Skip((filter.pageNumber - 1) * filter.pageSize)
+                                             .Take(filter.pageSize)
+                                             .ToList();
+
+                    return leave;
+
+                }
+            }
+
+          
+
             return leave;
         }
 
@@ -102,7 +150,7 @@ namespace ccf_re_seller_api.Controllers
                     //
                     var requestLeave = _context.leaveRequest.SingleOrDefault(e => e.lreid == _leaveApproval.lreid);
                     var user = _context.ccfUserClass.SingleOrDefault(e => e.uid == requestLeave.eid);
-                    await _userRepository.SendNotificationUser(_leaveApproval.eid, user.bcode, "CCF HR System App", $"Leave reqest from {user.uname}.", requestLeave.eid, requestLeave.lreid, "L");
+                    await _userRepository.SendNotificationUser(_leaveApproval.eid, user.bcode, "CCF HR System App", $"Leave request from {user.uname}.", requestLeave.eid, requestLeave.lreid, "L");
                     return Ok(_leaveApproval);
                 }
                 else
@@ -126,13 +174,66 @@ namespace ccf_re_seller_api.Controllers
             {
                 return BadRequest();
             }
+            _context.Entry(_leaveApproval).State = EntityState.Modified;
+            //await _context.SaveChangesAsync();
+
+            var listApproveRequest = _context.leaveApprovalRequest.Where(e => e.lreid == _leaveApproval.lreid);
+            var statusRequtest = 1;
+
+            if (_leaveApproval.applev != listApproveRequest.Count() - 2)
+            {
+                if (_leaveApproval.apstatu != 3)
+                {
+                    statusRequtest = 2;
+                }
+            }
+
+
+
             var _leavereq = _context.leaveRequest.SingleOrDefault(e => e.lreid == _leaveApproval.lreid);
 
-            _leavereq.statu = _leaveApproval.apstatu.ToString();
+            _leavereq.statu = statusRequtest.ToString();
+            //await _context.SaveChangesAsync();
 
-            await _context.SaveChangesAsync();
+          
 
-            _context.Entry(_leaveApproval).State = EntityState.Modified;
+            var statusEdit = "pending";
+
+            if (_leaveApproval.apstatu == 0)
+            {
+                statusEdit = "reject";
+            }
+
+            if (_leaveApproval.apstatu == 1)
+            {
+                statusEdit = "approved";
+            }
+
+            if (_leaveApproval.apstatu == 2)
+            {
+                statusEdit = "pending";
+            }
+
+            if (_leaveApproval.apstatu == 3)
+            {
+                statusEdit = "return";
+            }
+
+            var user = _context.ccfUserClass.SingleOrDefault(e => e.uid == _leaveApproval.eid);
+
+            await _userRepository.SendNotificationUser(_leavereq.eid, user.bcode, "CCF HR System App", $"Leave request have been {statusEdit} from {user.uname}.", _leavereq.eid, _leavereq.lreid, "L");
+            var userApproval = _context.leaveApprovalRequest.Where(e => e.lreid == _leaveApproval.lreid)
+                                .Where(e => e.eid != _leaveApproval.eid).ToList();
+            //for (var i = 0; i < userApproval.Count; i++)
+            //{
+            //    System.Diagnostics.Debug.WriteLine(userApproval[i]);
+
+            //}
+            foreach (var userApprove in userApproval)
+            {
+                await _userRepository.SendNotificationUser(userApprove.eid, user.bcode, "CCF HR System App", $"Leave request have been {statusEdit} from {user.uname}.", _leavereq.eid, _leavereq.lreid, "L");
+
+            }
 
             try
             {
@@ -149,41 +250,6 @@ namespace ccf_re_seller_api.Controllers
                     throw;
                 }
             }
-
-            var statusEdit = "pedding";
-
-            if (_leaveApproval.apstatu == 0)
-            {
-                statusEdit = "reject";
-            }
-
-            if (_leaveApproval.apstatu == 1)
-            {
-                statusEdit = "approved";
-            }
-
-            if (_leaveApproval.apstatu == 2)
-            {
-                statusEdit = "pedding";
-            }
-
-            if (_leaveApproval.apstatu == 3)
-            {
-                statusEdit = "return";
-            }
-
-            var requestLeave = _context.leaveRequest.SingleOrDefault(e => e.lreid == _leaveApproval.lreid);
-            var user = _context.ccfUserClass.SingleOrDefault(e => e.uid == _leaveApproval.eid);
-            await _userRepository.SendNotificationUser(requestLeave.eid, user.bcode, "CCF HR System App", $"Leave reqest have been {statusEdit} from {user.uname}.", requestLeave.eid, requestLeave.lreid, "L");
-            var userApproval = _context.leaveApprovalRequest.Where(e => e.lreid == _leaveApproval.lreid)
-                                .Where(e => e.eid != _leaveApproval.eid).AsQueryable();
-
-            foreach (var userApprove in userApproval)
-            {
-                await _userRepository.SendNotificationUser(userApprove.eid, user.bcode, "CCF HR System App", $"Leave reqest have been {statusEdit} from {user.uname}.", requestLeave.eid, requestLeave.lreid, "L");
-
-            }
-
             return Ok(_leaveApproval);
         }
         //

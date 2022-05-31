@@ -44,7 +44,7 @@ namespace ccf_re_seller_api.Models
         public string? pos { get; set; }
         public string? sup { get; set; }
         public decimal pmsal { get; set; }
-        public decimal msal { get; set; }
+        public double msal { get; set; }
         public string? stype { get; set; }
         public string? con { get; set; }
         public string? etype { get; set; }

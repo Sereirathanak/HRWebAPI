@@ -18,7 +18,7 @@ namespace ccf_re_seller_api.Modals
         public string eid { get; set; }
 
         public int accruyear { get; set; }
-        public int accrunum { get; set; }
+        public double accrunum { get; set; }
         public int releav { get; set; }
         public int usleav { get; set; }
         public int acruleav { get; set; }

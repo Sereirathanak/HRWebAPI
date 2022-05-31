@@ -29,7 +29,7 @@ namespace ccf_re_seller_api.Models
         public string pos { get; set; }
         public string sup { get; set; }
         public decimal pmsal { get; set; }
-        public decimal msal { get; set; }
+        public double msal { get; set; }
         public string stype { get; set; }
         public string con { get; set; }
         public string etype { get; set; }
@@ -56,6 +56,19 @@ namespace ccf_re_seller_api.Models
             }
         }
 
+        public string supervisorName
+        {
+            get
+            {
+                var checksupervisorName= _context?.employee.SingleOrDefault(cur => cur.eid == this.sup);
+                if (checksupervisorName != null)
+                {
+                    return checksupervisorName.dname;
+                }
+                return "";
+            }
+        }
+
         public string departmentName
         {
             get
@@ -64,6 +77,19 @@ namespace ccf_re_seller_api.Models
                 if (checkDepartment != null)
                 {
                     return checkDepartment.depname;
+                }
+                return "";
+            }
+        }
+
+        public string positionName
+        {
+            get
+            {
+                var checkPosition = _context?.position.SingleOrDefault(cur => cur.posid == this.pos);
+                if (checkPosition != null)
+                {
+                    return checkPosition.pos;
                 }
                 return "";
             }

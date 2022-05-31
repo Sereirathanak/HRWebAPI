@@ -1,8 +1,12 @@
+/Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/bin/Release/netcoreapp3.1/publish/ccf_re_seller_api
 /Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/bin/Release/netcoreapp3.1/publish/appsettings.Development.json
 /Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/bin/Release/netcoreapp3.1/publish/appsettings.json
+/Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/bin/Release/netcoreapp3.1/publish/ccf-hr-management-da23a-firebase-adminsdk-s5vqr-2d85b13be4.json
 /Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/bin/Release/netcoreapp3.1/publish/ccf-re-seller-app-firebase-adminsdk-khxlw-514befc41e.json
+/Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/bin/Release/netcoreapp3.1/publish/ccf-re-seller-app-firebase-adminsdk-khxlw-681bd6ea44.json
 /Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/bin/Release/netcoreapp3.1/publish/ccf-reseller-web-app-firebase-adminsdk-cjlin-7306caa621.json
 /Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/bin/Release/netcoreapp3.1/publish/chokchey-reseller-app-5a4ab-firebase-adminsdk-rejho-48b8595ed9.json
+/Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/bin/Release/netcoreapp3.1/publish/mono_crash.11a67480d0.0.json
 /Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/bin/Release/netcoreapp3.1/publish/ccf_re_seller_api.dll
 /Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/bin/Release/netcoreapp3.1/publish/ccf_re_seller_api.runtimeconfig.json
 /Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/bin/Release/netcoreapp3.1/publish/ccf_re_seller_api.pdb

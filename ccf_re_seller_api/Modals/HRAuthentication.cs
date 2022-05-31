@@ -20,6 +20,12 @@ namespace ccf_re_seller_api.Models
         public string u5 { get; set; }
         public string changePassword { get; set; }
         public string token { get; set; }
+
+
+        public DateTime datecreate { get; set; }
+        public string isapprover { get; set; }
+        public DateTime exdate { get; set; }
+
         public List<string> roles { get; set; }
 
     }

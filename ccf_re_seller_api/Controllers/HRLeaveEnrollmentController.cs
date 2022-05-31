@@ -35,6 +35,88 @@ namespace ccf_re_seller_api.Controllers
         {
             return await _context.leaveEnrollment.ToListAsync();
         }
+
+        //run srip
+        [HttpPut("runleaveenrollment")]
+        public async Task<IActionResult> RunIncreaseLeave()
+        {
+            var datetime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+            DateTime DOI = DateTime.ParseExact((datetime).Trim(), "yyyy-MM-dd HH:mm:ss", CultureInfo.GetCultureInfo("en-GB"));
+
+            
+            var checkEmployeeMoreThen = _context.employeeJoinInfo.AsNoTracking().AsQueryable()
+                .Where(e => e.status == "New");
+
+            if (checkEmployeeMoreThen.Count() >= 0)
+            {
+                var forWorkOver30 = checkEmployeeMoreThen.Where(e => (DOI - e.edate).Days >= 30).ToList();
+
+                var forWorkLessThen20 = checkEmployeeMoreThen.Where(e => (DOI - e.edate).Days <= 20).ToList();
+
+
+                HRleaveEnrollment leaveEnrollment = new HRleaveEnrollment();
+
+                if (forWorkOver30.Count() >= 0)
+                {
+                    for (int i = 0; i < forWorkOver30.Count(); i++)
+                    {
+
+                        var employeeMoreThen30 = _context.leaveEnrollment.AsNoTracking().AsQueryable()
+                            .Where(e => e.eid == forWorkOver30[i].eid).ToList();
+
+                        for (var index = 0; index < employeeMoreThen30.Count(); index++)
+                        {
+
+
+                            leaveEnrollment.lerid = employeeMoreThen30[index].lerid;
+                            leaveEnrollment.orgid = employeeMoreThen30[index].orgid;
+                            leaveEnrollment.eid = employeeMoreThen30[index].eid;
+                            leaveEnrollment.accruyear = employeeMoreThen30[index].accruyear;
+                            leaveEnrollment.accrunum = employeeMoreThen30[index].accrunum + 1.5;
+                            leaveEnrollment.releav = employeeMoreThen30[index].releav;
+                            leaveEnrollment.usleav = employeeMoreThen30[index].usleav;
+                            leaveEnrollment.acruleav = employeeMoreThen30[index].acruleav;
+                            leaveEnrollment.remark = employeeMoreThen30[index].remark;
+
+                            _context.Entry(leaveEnrollment).State = EntityState.Modified;
+                            await _context.SaveChangesAsync();
+                        }
+
+                    }
+                }
+                //
+
+                if (forWorkLessThen20.Count() >= 0)
+                {
+                    for (int i = 0; i < forWorkLessThen20.Count(); i++)
+                    {
+                        var employeeLessThen20 = _context.leaveEnrollment.AsNoTracking().AsQueryable()
+                          .Where(e => e.eid == forWorkLessThen20[i].eid).ToList();
+
+                        for (var index = 0; index < employeeLessThen20.Count(); index++)
+                        {
+                            leaveEnrollment.lerid = employeeLessThen20[index].lerid;
+                            leaveEnrollment.orgid = employeeLessThen20[index].orgid;
+                            leaveEnrollment.eid = employeeLessThen20[index].eid;
+                            leaveEnrollment.accruyear = employeeLessThen20[index].accruyear;
+                            leaveEnrollment.accrunum = employeeLessThen20[index].accrunum + 1;
+                            leaveEnrollment.releav = employeeLessThen20[index].releav;
+                            leaveEnrollment.usleav = employeeLessThen20[index].usleav;
+                            leaveEnrollment.acruleav = employeeLessThen20[index].acruleav;
+                            leaveEnrollment.remark = employeeLessThen20[index].remark;
+
+                            _context.Entry(leaveEnrollment).State = EntityState.Modified;
+                            await _context.SaveChangesAsync();
+                        }
+                    }
+                }
+            }
+
+            await _context.SaveChangesAsync();
+            var employeeEntrollment = await _context.leaveEnrollment.ToListAsync();
+            return Ok(employeeEntrollment);
+
+        }
         //
         [HttpPost("createleaveenrollment")]
         public async Task<IActionResult> CreatePostion(HRleaveEnrollment _leaveenrollment)
@@ -43,19 +125,52 @@ namespace ccf_re_seller_api.Controllers
             {
                 if (
                     _leaveenrollment.orgid != null &&
-                    _leaveenrollment.eid != null &&
-                    _leaveenrollment.accruyear != 0 &&
-                    _leaveenrollment.accrunum != 0 &&
-                    _leaveenrollment.releav != 0 &&
-                    _leaveenrollment.usleav != 0 &&
-                    _leaveenrollment.acruleav != 0 
+                    _leaveenrollment.eid != null 
                    )
 
                 {
                     _leaveenrollment.lerid = GetLogNextID();
+
+                    var checkEmployee = _context.employeeJoinInfo.SingleOrDefault(e => e.eid == _leaveenrollment.eid);
+                    var datetime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+                    DateTime DOI = DateTime.ParseExact((datetime).Trim(), "yyyy-MM-dd HH:mm:ss", CultureInfo.GetCultureInfo("en-GB"));
+                    //
+                    var day =   (DOI - checkEmployee.edate ).Days;
+
+                    var statusEmployee = checkEmployee.status;
+                    if(statusEmployee == "New")
+                    {
+                        if(day >= 30)
+                        {
+                            _leaveenrollment.accrunum = 1.5;
+                        }
+
+                        if (day >= 20)
+                        {
+                            _leaveenrollment.accrunum = 1;
+                        }
+
+                        if (day >= 10)
+                        {
+                            _leaveenrollment.accrunum = 0.5;
+                        }
+
+                        if (day < 10)
+                        {
+                            _leaveenrollment.accrunum = 0;
+                        }
+                    }
+                    else
+                    {
+                        if(_leaveenrollment.accrunum == null)
+                        {
+                            _leaveenrollment.accrunum = 18;
+                        }
+                    }
+
+
                     _context.leaveEnrollment.Add(_leaveenrollment);
                     await _context.SaveChangesAsync();
-
 
                     return Ok(_leaveenrollment);
                 }

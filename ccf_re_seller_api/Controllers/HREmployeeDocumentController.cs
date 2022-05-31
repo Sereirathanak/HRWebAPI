@@ -239,6 +239,16 @@ namespace ccf_re_seller_api.Controllers
                       && employeeDocument.eid != null
                       )
                     {
+                        var users = _context.employeeDocument.SingleOrDefault(e => e.docid == employeeDocument.docid);
+
+                        users.docid = employeeDocument.docid;
+                        users.eid = employeeDocument.eid;
+                        users.doctype = employeeDocument.doctype;
+                        users.docnum = employeeDocument.docnum;
+                        users.edate = employeeDocument.edate;
+                        users.docatt = employeeDocument.docatt;
+                        users.rmark = employeeDocument.rmark;
+
                         _context.Entry(employeeDocument).State = EntityState.Modified;
 
                         await _context.SaveChangesAsync();

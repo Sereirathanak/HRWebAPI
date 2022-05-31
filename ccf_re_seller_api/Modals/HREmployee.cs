@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using ccf_re_seller_api.Modals;
+
 namespace ccf_re_seller_api.Models
 {
     [Table("ccfpinfo")]
@@ -52,6 +54,8 @@ namespace ccf_re_seller_api.Models
         public virtual HREmployeeJoinInfo ccfemployeeJoinInfo { get; set; }
         public virtual HREmployeeHistory ccfemployeeHistory { get; set; }
         public virtual HRCcfUserClass ccfuser { get; set; }
+        public virtual HRImageProfile imageProfile { get; set; }
+
 
 
 
@@ -66,5 +70,13 @@ namespace ccf_re_seller_api.Models
         public string filepath { get; set; }
 
        
+    }
+
+    public class ReturnEmployeeName
+    {
+        public string eid { get; set; }
+        public string name { get; set; }
+
+
     }
 }

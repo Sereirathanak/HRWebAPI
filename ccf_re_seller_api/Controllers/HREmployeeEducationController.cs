@@ -197,6 +197,7 @@ namespace ccf_re_seller_api.Controllers
         {
             try
             {
+
                 bool exsitingEmployee = false;
 
                 exsitingEmployee = _context.employeeEducation.Any(e => e.eid == eid);
@@ -215,10 +216,30 @@ namespace ccf_re_seller_api.Controllers
                 {
                     if (employeeEducation.inst != null
                      && employeeEducation.sub != null
-                     && employeeEducation.certyfi != null
                      && eid != null
                      )
                     {
+
+                        var users = _context.employeeEducation.SingleOrDefault(e => e.eduid == employeeEducation.eduid);
+
+                        users.eduid = employeeEducation.eduid;
+                        users.eid = employeeEducation.eid;
+                        users.inst = employeeEducation.inst;
+                        users.sub = employeeEducation.sub;
+                        users.sdate = employeeEducation.sdate;
+                        users.edate = employeeEducation.edate;
+                        users.remark = employeeEducation.remark;
+                        users.certyfi = employeeEducation.certyfi;
+
+
+                        _context.Entry(users).State = EntityState.Modified;
+                        await _context.SaveChangesAsync();
+
+                        return Ok(employeeEducation);
+
+
+
+
                         _context.Entry(employeeEducation).State = EntityState.Modified;
 
                         await _context.SaveChangesAsync();

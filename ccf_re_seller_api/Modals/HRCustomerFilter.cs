@@ -29,6 +29,8 @@ namespace ccf_re_seller_api.Models
         public bool? checkDepartment{ get; set; }
         public bool? checkPosition { get; set; }
         public bool? checkIncharge { get; set; }
+        public bool? checkEcard { get; set; }
+
 
 
 

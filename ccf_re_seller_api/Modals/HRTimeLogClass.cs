@@ -29,7 +29,6 @@ namespace ccf_re_seller_api.Modals
         public string tim { get; set; }
         public string sta { get; set; }
         public string cty { get; set; }
-        public string remark { get; set; }
 
         public virtual HREmployee ccfpinfo { get; set; }
         public virtual HRBranchClass ccfbranch { get; set; }

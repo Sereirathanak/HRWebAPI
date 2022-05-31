@@ -49,8 +49,18 @@ namespace ccf_re_seller_api.Models
             public virtual DbSet<HROvertimeRequestDocument> overtimeRequestDocument { get; set; }
             public virtual DbSet<HRImageProfile> imageProfile { get; set; }
             public virtual DbSet<HRCcfmessage> hrccfmessages { get; set; }
+            public virtual DbSet<HRStructures> structures { get; set; }
+            public virtual DbSet<HRGroupMissionClass> groupMissionRequest { get; set; }
+            public virtual DbSet<HRGroupMissionDetailClass> groupMissionDetailClass { get; set; }
+            public virtual DbSet<HRGroupMissionApproveClass> groupMissionApprove { get; set; }
+            public virtual DbSet<HRGroupmMssionRequestDocumentClassClass> groupmMssionRequestDocumentClassClass { get; set; }
+            public virtual DbSet<HRGroupOverTimeRequest> groupOverTimeRequest { get; set; }
+            public virtual DbSet<HRGroupOverTimeDetail> groupOverTimeDetail { get; set; }
+            public virtual DbSet<HRGroupOverTimeApprove> groupOverTimeApprove { get; set; }
+            public virtual DbSet<HRGroupOverTimeDocument> groupOverTimeDocument { get; set; }
 
         
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
             {

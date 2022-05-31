@@ -214,36 +214,29 @@ namespace ccf_re_seller_api.Controllers
             return nextId.ToString();
         }
 
-        [HttpPost("ChangePassword/{id}")]
-        public async Task<ActionResult> SetPWD(string id, CcfuserRe user)
+        [HttpPut("ChangePassword/{id}")]
+        public async Task<IActionResult> Put(string id, CcfuserRe user)
         {
+
+            if (id != user.uid)
+            {
+                return BadRequest();
+            }
+
+            _context.Entry(user).State = EntityState.Modified;
+
             try
             {
-                //var getUser = _context?.CcfuserRes.Where(a => a.uid == id).FirstOrDefault();
-                var getUser = _context.CcfuserRes.SingleOrDefault(e => e.staffid == id);
-
-
-
-                //var getUser = await _context.CcfuserRes.SingleOrDefault(a => a.uid == id);
-                getUser.pwd = user.pwd;
-                getUser.changePassword = "Y";
                 await _context.SaveChangesAsync();
+                return Ok(user);
 
-                List<Authentication> results = new List<Authentication>()
-                {
-                    new Authentication()
-                    {
-                        changePassword = "Y"
-                    }
-                };
-
-                return Ok(getUser);
             }
-            catch (Exception ex)
+            catch (DbUpdateConcurrencyException)
             {
-                return BadRequest(ex.Message.ToString());
+                return NotFound();
             }
 
+            return NoContent();
         }
 
 

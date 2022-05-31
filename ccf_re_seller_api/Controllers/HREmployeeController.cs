@@ -32,18 +32,75 @@ namespace ccf_re_seller_api.Controllers
             _context = context;
         }
 
-        //Get All List Referer
+
+        [HttpPost("structure")]
+        public async Task<ActionResult<IEnumerable<ReturnEmployeeName>>> GetStructure(HRCustomerFilter filter)
+        {
+
+            var listEmployee = _context.employee.Include(e => e.ccfemployeeJoinInfo)
+                                        .Include(e => e.imageProfile)
+                                        .Include(e => e.ccfuser)
+                                        .AsQueryable();
+
+
+            if (filter.checkBranch == true && filter.checkDepartment == true && filter.checkPosition == true && filter.checkIncharge == true
+                && filter.checkEcard == true && filter.search != "" && filter.search != null)
+            {
+
+                var listEmployess = listEmployee
+                                                .Where(e => e.elevel == int.Parse(filter.search))
+                                                .Skip((filter.pageNumber - 1) * filter.pageSize)
+                                                .Take(filter.pageSize)
+                                                .AsQueryable()
+                                                .ToList();
+
+                return Ok(listEmployess);
+            }
+            else
+            {
+                return Ok(listEmployee);
+
+            }
+
+            return Ok(listEmployee);
+        }
+
+        [HttpPost("search")]
+        public async Task<ActionResult<IEnumerable<ReturnEmployeeName>>> GetName(HRCustomerFilter filter)
+        {
+            var listEmployee = _context.employee.Include(e => e.ccfemployeeJoinInfo)
+                                      .Include(e => e.imageProfile)
+                                      .Include(e => e.ccfuser)
+                                      .OrderByDescending(lr => lr.rdate)
+                                    .Where(e => e.ccfemployeeJoinInfo.sup == filter.search)
+                                    .AsQueryable()
+                                    .Skip((filter.pageNumber - 1) * filter.pageSize)
+                                    .Take(filter.pageSize)
+                                    .ToList();
+
+         
+            return Ok(listEmployee);
+        }
+
+            //Get All List 
         [HttpPost("all")]
         public async Task<ActionResult<IEnumerable<HREmployee>>> GetAll(HRCustomerFilter filter)
         {
-             
-            var listEmployee = _context.employee.AsQueryable();
+
+            var listEmployee = _context.employee.Include(e => e.ccfemployeeJoinInfo)
+                                        .Include(e => e.imageProfile)
+                                        .Include(e => e.ccfuser)
+                                        .AsQueryable();
+
+
             int totallistEmployee = listEmployee.Count();
+
+            //var departmentCode = _context.department.Where(e => e.depid == listEmployee.);
 
 
             //seleted branch and department and position and incharge
-            if (filter.checkBranch == false && filter.checkDepartment == false && filter.checkPosition == false && filter.checkIncharge == false
-                && filter.search == "" )
+            if (filter.checkBranch == false && filter.checkDepartment == false && filter.checkPosition == false && filter.checkIncharge == false &&
+               filter.checkEcard == false && filter.search == "" )
             {
                 var listEmployess = listEmployee.Where(lr => lr.estatus == "A")
                                                              .OrderByDescending(lr => lr.rdate)
@@ -55,13 +112,26 @@ namespace ccf_re_seller_api.Controllers
 
             }
 
-            //seleted branch and department and position and incharge
             if (filter.checkBranch == true && filter.checkDepartment == true && filter.checkPosition == true && filter.checkIncharge == true
-                && filter.search != "" && filter.search != null)
+               && filter.checkEcard == true && filter.search == "" )
             {
+                var listEmployess = listEmployee.Where(lr => lr.estatus == "A")
+                                                            .OrderByDescending(lr => lr.rdate)
+                                                            .AsQueryable()
+                                                            .Skip((filter.pageNumber - 1) * filter.pageSize)
+                                                            .Take(filter.pageSize)
+                                                            .ToList();
+                return Ok(listEmployess);
+            }
+                //seleted branch and department and position and incharge
+            if (filter.checkBranch == true && filter.checkDepartment == true && filter.checkPosition == true && filter.checkIncharge == true
+                && filter.checkEcard == true  && filter.search != "" && filter.search != null)
+            {
+
                 var branchCode = _context.hrBranchClass.SingleOrDefault(e => e.braname.ToLower().Contains(filter.search.ToLower()));
 
-                var departmentCode = _context.department.SingleOrDefault(e => e.depname.ToLower().Contains(filter.search.ToLower()));
+                var departmentCode = _context.department
+                    .SingleOrDefault(e => e.depname.ToLower().Contains(filter.search.ToLower()));
 
                 var listEmployess = listEmployee.Where(lr => lr.estatus == "A")
                                                              .OrderByDescending(lr => lr.rdate)
@@ -69,7 +139,70 @@ namespace ccf_re_seller_api.Controllers
                                                              .Skip((filter.pageNumber - 1) * filter.pageSize)
                                                              .Take(filter.pageSize)
                                                              .ToList();
-                if (branchCode != null)
+                var employeeCard = _context.employee.Where(e => e.ecard.Contains(filter.search));
+
+                if (employeeCard != null && employeeCard.Count() > 0)
+                {
+
+                    listEmployess = listEmployee.Where(lr => lr.estatus == "A")
+                                                          .OrderByDescending(lr => lr.rdate)
+                                                          .Where(e => e.ecard.Contains(filter.search))
+                                                          .AsQueryable()
+                                                          .Skip((filter.pageNumber - 1) * filter.pageSize)
+                                                          .Take(filter.pageSize)
+                                                          .ToList();
+
+                    return Ok(listEmployess);
+                }
+
+                var findEmployeeLevel = _context.employee.Where(e => e.elevel.ToString().Contains(filter.search));
+
+                if (findEmployeeLevel != null && findEmployeeLevel.Count() != 0)
+                {
+                    listEmployess = listEmployee.Where(lr => lr.estatus == "A")
+                                                          .OrderByDescending(lr => lr.rdate)
+                                                          .Where(e => e.elevel.ToString().Contains(filter.search))
+                                                          .AsQueryable()
+                                                          .Skip((filter.pageNumber - 1) * filter.pageSize)
+                                                          .Take(filter.pageSize)
+                                                          .ToList();
+
+                    return Ok(listEmployess);
+                }
+
+                var findEmployeeIDuser = _context.employeeJoinInfo.Where(e => e.sup == filter.search);
+
+                if (findEmployeeIDuser != null && findEmployeeIDuser.Count() > 0)
+                {
+                    listEmployess = listEmployee.Where(lr => lr.estatus == "A")
+                                                          .OrderByDescending(lr => lr.rdate)
+                                                          .Where(e => e.ccfemployeeJoinInfo.sup == filter.search)
+                                                          .AsQueryable()
+                                                          .Skip((filter.pageNumber - 1) * filter.pageSize)
+                                                          .Take(filter.pageSize)
+                                                          .ToList();
+
+                    return Ok(listEmployess);
+                }
+
+
+                var employeeCode = _context.employee.Where(e => e.dname.ToLower().Contains(filter.search.ToLower()));
+
+
+                if (employeeCode != null && employeeCode.Count()> 0 )
+                {
+                    listEmployess = listEmployee.Where(lr => lr.estatus == "A")
+                                                            .OrderByDescending(lr => lr.rdate)
+                                                            .Where(e => e.dname.ToLower().Contains(filter.search.ToLower()))
+                                                            .AsQueryable()
+                                                            .Skip((filter.pageNumber - 1) * filter.pageSize)
+                                                            .Take(filter.pageSize)
+                                                            .ToList();
+
+                    return Ok(listEmployess);
+                }
+
+                if (branchCode != null&& branchCode.braid !="")
                 {
                     listEmployess = listEmployee.Where(lr => lr.estatus == "A")
                                                             .OrderByDescending(lr => lr.rdate)
@@ -82,8 +215,9 @@ namespace ccf_re_seller_api.Controllers
                     return Ok(listEmployess);
                 }
 
-                if (departmentCode != null)
+                if (departmentCode != null && departmentCode.depid != "")
                 {
+
                     listEmployess = listEmployee.Where(lr => lr.estatus == "A")
                                                             .OrderByDescending(lr => lr.rdate)
                                                             .Where(e => e.ccfemployeeJoinInfo.dep == departmentCode.depid)
@@ -95,18 +229,13 @@ namespace ccf_re_seller_api.Controllers
 
                 }
 
-                var filterPosition = listEmployee.Where(lr => lr.estatus == "A")
-                                                            .OrderByDescending(lr => lr.rdate)
-                                                            .Where(e => e.ccfemployeeJoinInfo.pos.ToLower().Contains(filter.search.ToLower()))
-                                                            .AsQueryable()
-                                                            .Skip((filter.pageNumber - 1) * filter.pageSize)
-                                                            .Take(filter.pageSize)
-                                                            .ToList();
-                if (filterPosition != null && filterPosition.Count() != 0)
+                var filterPosition = _context.position.SingleOrDefault(e => e.pos.ToLower().Contains(filter.search.ToLower()));
+
+                if (filterPosition != null && filterPosition.posid != "")
                 {
                     listEmployess = listEmployee.Where(lr => lr.estatus == "A")
                                                             .OrderByDescending(lr => lr.rdate)
-                                                            .Where(e => e.ccfemployeeJoinInfo.pos.ToLower().Contains(filter.search.ToLower()))
+                                                            .Where(e => e.ccfemployeeJoinInfo.pos == filterPosition.posid)
                                                             .AsQueryable()
                                                             .Skip((filter.pageNumber - 1) * filter.pageSize)
                                                             .Take(filter.pageSize)
@@ -122,7 +251,7 @@ namespace ccf_re_seller_api.Controllers
                                                            .Skip((filter.pageNumber - 1) * filter.pageSize)
                                                            .Take(filter.pageSize)
                                                            .ToList();
-                if (filterIncharge != null)
+                if (filterIncharge != null && filterIncharge.Count()>0)
                 {
                     listEmployess = listEmployee.Where(lr => lr.estatus == "A")
                                                             .OrderByDescending(lr => lr.rdate)
@@ -164,18 +293,13 @@ namespace ccf_re_seller_api.Controllers
                     return Ok(listEmployess);
                 }
 
-                var filterPosition = listEmployee.Where(lr => lr.estatus == "A")
-                                                           .OrderByDescending(lr => lr.rdate)
-                                                           .Where(e => e.ccfemployeeJoinInfo.pos.ToLower().Contains(filter.search.ToLower()))
-                                                           .AsQueryable()
-                                                           .Skip((filter.pageNumber - 1) * filter.pageSize)
-                                                           .Take(filter.pageSize)
-                                                           .ToList();
-                if (filterPosition != null && filterPosition.Count() != 0)
+                var filterPosition = _context.position.SingleOrDefault(e => e.pos.ToLower().Contains(filter.search.ToLower()));
+
+                if (filterPosition != null)
                 {
                     listEmployess = listEmployee.Where(lr => lr.estatus == "A")
                                                             .OrderByDescending(lr => lr.rdate)
-                                                            .Where(e => e.ccfemployeeJoinInfo.pos.ToLower().Contains(filter.search.ToLower()))
+                                                            .Where(e => e.ccfemployeeJoinInfo.pos == filterPosition.posid)
                                                             .AsQueryable()
                                                             .Skip((filter.pageNumber - 1) * filter.pageSize)
                                                             .Take(filter.pageSize)
@@ -236,18 +360,13 @@ namespace ccf_re_seller_api.Controllers
 
                 }
 
-                var filterPosition = listEmployee.Where(lr => lr.estatus == "A")
-                                                          .OrderByDescending(lr => lr.rdate)
-                                                          .Where(e => e.ccfemployeeJoinInfo.pos.ToLower().Contains(filter.search.ToLower()))
-                                                          .AsQueryable()
-                                                          .Skip((filter.pageNumber - 1) * filter.pageSize)
-                                                          .Take(filter.pageSize)
-                                                          .ToList();
-                if (filterPosition != null && filterPosition.Count() != 0)
+                var filterPosition = _context.position.SingleOrDefault(e => e.pos.ToLower().Contains(filter.search.ToLower()));
+
+                if (filterPosition != null)
                 {
                     listEmployess = listEmployee.Where(lr => lr.estatus == "A")
                                                             .OrderByDescending(lr => lr.rdate)
-                                                            .Where(e => e.ccfemployeeJoinInfo.pos.ToLower().Contains(filter.search.ToLower()))
+                                                            .Where(e => e.ccfemployeeJoinInfo.pos == filterPosition.posid)
                                                             .AsQueryable()
                                                             .Skip((filter.pageNumber - 1) * filter.pageSize)
                                                             .Take(filter.pageSize)
@@ -379,18 +498,13 @@ namespace ccf_re_seller_api.Controllers
                     return Ok(listEmployess);
 
                 }
-                var filterPosition = listEmployee.Where(lr => lr.estatus == "A")
-                                                          .OrderByDescending(lr => lr.rdate)
-                                                          .Where(e => e.ccfemployeeJoinInfo.pos.ToLower().Contains(filter.search.ToLower()))
-                                                          .AsQueryable()
-                                                          .Skip((filter.pageNumber - 1) * filter.pageSize)
-                                                          .Take(filter.pageSize)
-                                                          .ToList();
-                if (filterPosition != null && filterPosition.Count() != 0)
+                var filterPosition = _context.position.SingleOrDefault(e => e.pos.ToLower().Contains(filter.search.ToLower()));
+
+                if (filterPosition != null)
                 {
                     listEmployess = listEmployee.Where(lr => lr.estatus == "A")
                                                             .OrderByDescending(lr => lr.rdate)
-                                                            .Where(e => e.ccfemployeeJoinInfo.pos.ToLower().Contains(filter.search.ToLower()))
+                                                            .Where(e => e.ccfemployeeJoinInfo.pos == filterPosition.posid)
                                                             .AsQueryable()
                                                             .Skip((filter.pageNumber - 1) * filter.pageSize)
                                                             .Take(filter.pageSize)
@@ -414,18 +528,13 @@ namespace ccf_re_seller_api.Controllers
                                                        .Take(filter.pageSize)
                                                        .ToList();
 
-                var filterPosition = listEmployee.Where(lr => lr.estatus == "A")
-                                                          .OrderByDescending(lr => lr.rdate)
-                                                          .Where(e => e.ccfemployeeJoinInfo.pos.ToLower().Contains(filter.search.ToLower()))
-                                                          .AsQueryable()
-                                                          .Skip((filter.pageNumber - 1) * filter.pageSize)
-                                                          .Take(filter.pageSize)
-                                                          .ToList();
-                if (filterPosition != null && filterPosition.Count() != 0)
+                var filterPosition = _context.position.SingleOrDefault(e => e.pos.ToLower().Contains(filter.search.ToLower()));
+
+                if (filterPosition != null)
                 {
                     listEmployess = listEmployee.Where(lr => lr.estatus == "A")
                                                             .OrderByDescending(lr => lr.rdate)
-                                                            .Where(e => e.ccfemployeeJoinInfo.pos.ToLower().Contains(filter.search.ToLower()))
+                                                            .Where(e => e.ccfemployeeJoinInfo.pos == filterPosition.posid)
                                                             .AsQueryable()
                                                             .Skip((filter.pageNumber - 1) * filter.pageSize)
                                                             .Take(filter.pageSize)
@@ -529,18 +638,13 @@ namespace ccf_re_seller_api.Controllers
                     return Ok(listEmployess);
 
                 }
-                var filterPosition = listEmployee.Where(lr => lr.estatus == "A")
-                                                         .OrderByDescending(lr => lr.rdate)
-                                                         .Where(e => e.ccfemployeeJoinInfo.pos.ToLower().Contains(filter.search.ToLower()))
-                                                         .AsQueryable()
-                                                         .Skip((filter.pageNumber - 1) * filter.pageSize)
-                                                         .Take(filter.pageSize)
-                                                         .ToList();
-                if (filterPosition != null && filterPosition.Count() != 0)
+                var filterPosition = _context.position.SingleOrDefault(e => e.pos.ToLower().Contains(filter.search.ToLower()));
+
+                if (filterPosition != null)
                 {
                     listEmployess = listEmployee.Where(lr => lr.estatus == "A")
                                                             .OrderByDescending(lr => lr.rdate)
-                                                            .Where(e => e.ccfemployeeJoinInfo.pos.ToLower().Contains(filter.search.ToLower()))
+                                                            .Where(e => e.ccfemployeeJoinInfo.pos == filterPosition.posid)
                                                             .AsQueryable()
                                                             .Skip((filter.pageNumber - 1) * filter.pageSize)
                                                             .Take(filter.pageSize)
@@ -665,18 +769,13 @@ namespace ccf_re_seller_api.Controllers
                     return Ok(listEmployess);
                 }
 
-                var filterPosition = listEmployee.Where(lr => lr.estatus == "A")
-                                                         .OrderByDescending(lr => lr.rdate)
-                                                         .Where(e => e.ccfemployeeJoinInfo.pos.ToLower().Contains(filter.search.ToLower()))
-                                                         .AsQueryable()
-                                                         .Skip((filter.pageNumber - 1) * filter.pageSize)
-                                                         .Take(filter.pageSize)
-                                                         .ToList();
-                if (filterPosition != null && filterPosition.Count() != 0)
+                var filterPosition = _context.position.SingleOrDefault(e => e.pos.ToLower().Contains(filter.search.ToLower()));
+
+                if (filterPosition != null)
                 {
                     listEmployess = listEmployee.Where(lr => lr.estatus == "A")
                                                             .OrderByDescending(lr => lr.rdate)
-                                                            .Where(e => e.ccfemployeeJoinInfo.pos.ToLower().Contains(filter.search.ToLower()))
+                                                            .Where(e => e.ccfemployeeJoinInfo.pos == filterPosition.posid)
                                                             .AsQueryable()
                                                             .Skip((filter.pageNumber - 1) * filter.pageSize)
                                                             .Take(filter.pageSize)

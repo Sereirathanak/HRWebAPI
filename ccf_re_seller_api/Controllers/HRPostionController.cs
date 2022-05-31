@@ -42,9 +42,7 @@ namespace ccf_re_seller_api.Controllers
 
             try
             {
-                if (position.pos != null &&
-                    position.tit != null 
-                    )
+                if (position.pos != null)
                 {
                     position.posid = GetLogNextID();
 

@@ -19,6 +19,9 @@ namespace ccf_re_seller_api.Models
         public DateTime edate { get; set; }
         public string lres { get; set; }
         public string remark { get; set; }
+        public string salary { get; set; }
+        public string otherbonus { get; set; }
+
 
         public virtual HREmployee ccfpinfo { get; set; }
 

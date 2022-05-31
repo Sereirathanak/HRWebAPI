@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 using ccf_re_seller_api.Models;
 
 namespace ccf_re_seller_api.Modals
@@ -8,6 +9,13 @@ namespace ccf_re_seller_api.Modals
     [Table("ccfmapzone")]
     public class HRMapZoneClass
     {
+        //private readonly HRContext _context;
+
+        //public HRMapZoneClass(HRContext context)
+        //{
+        //    _context = context;
+        //}
+
         [Key]
         public string zoneid { get; set; }
         [ForeignKey("ccfbranch")]
@@ -20,5 +28,19 @@ namespace ccf_re_seller_api.Modals
 
 
         public virtual HRBranchClass ccfbranch { get; set; }
+
+        //public string branchname
+        //{
+        //    get
+        //    {
+        //        var name = _context.mapZoneClass.SingleOrDefault(cur => cur.braid == this.braid);
+
+        //        if (name != null)
+        //        {
+        //            return name.branchname;
+        //        }
+        //        return "";
+        //    }
+        //}
     }
 }

@@ -248,21 +248,22 @@ namespace ccf_re_seller_api.Controllers
 
                 if (exsitingEmployee == true)
                 {
-                    if (employeeFamily.fname != null
-                         && employeeFamily.rtype != null
-                         && employeeFamily.famstatus != null
-                         && eid != null)
-                    {
-                        _context.Entry(employeeFamily).State = EntityState.Modified;
 
-                        await _context.SaveChangesAsync();
+                    var users = _context.employeeFamily.SingleOrDefault(e => e.famid == employeeFamily.famid);
 
-                        return Ok(employeeFamily);
-                    }
-                    else
-                    {
-                        return BadRequest("The credential is invalid.");
-                    }
+                    users.famid = employeeFamily.famid;
+                    users.eid = employeeFamily.eid;
+                    users.fname = employeeFamily.fname;
+                    users.rtype = employeeFamily.rtype;
+                    users.famstatus = employeeFamily.famstatus;
+                    users.photo = employeeFamily.photo;
+
+
+                    _context.Entry(users).State = EntityState.Modified;
+                    await _context.SaveChangesAsync();
+
+                    return Ok(employeeFamily);
+                   
 
                 }
                 else

@@ -32,22 +32,83 @@ namespace ccf_re_seller_api.Controllers
             _context = context;
         }
         //
-        [HttpGet("{id}")]
-        public async Task<ActionResult<IEnumerable<HRMissionreq>>> GetDetil(string id)
+        [HttpPost("{id}")]
+        public async Task<ActionResult<IEnumerable<HRMissionreq>>> GetDetil(string id, HRCustomerFilter filter)
         {
             var employee = _context.employee.SingleOrDefault(e => e.eid == id);
+
             var listMission = _context.missionreq.AsQueryable();
+
             var datetime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+
             DateTime DOI = DateTime.ParseExact((datetime).Trim(), "yyyy-MM-dd HH:mm:ss", CultureInfo.GetCultureInfo("en-GB"));
-            if (employee.elevel >=4)
+
+            if (employee.elevel == 1 )
             {
                 listMission.Include(e => e.ccfpinfo)
                .Include(e => e.ccforg)
                .Include(e => e.ccfmis).Where(mis => mis.todate == DOI);
             }
-        
+
+            if (employee.elevel == 2)
+            {
+                listMission.Include(e => e.ccfpinfo)
+               .Include(e => e.ccforg)
+               .Include(e => e.ccfmis).Where(mis => mis.todate == DOI);
+            }
+
+            if (employee.elevel == 3)
+            {
+                listMission.Include(e => e.ccfpinfo)
+               .Include(e => e.ccforg)
+               .Include(e => e.ccfmis).Where(mis => mis.todate == DOI);
+            }
+
             var mission = listMission.AsQueryable()
-                                           .ToList();
+                                          .Where(e => e.eid == id)
+                                          .OrderByDescending(lr => lr.createdate).Reverse()
+                                          .AsQueryable()
+                                          .Skip((filter.pageNumber - 1) * filter.pageSize)
+                                          .Take(filter.pageSize)
+                                          .ToList();
+
+            //
+
+            if (filter.search != "" && filter.search != null)
+            {
+
+                var reasechReason = listMission.Where(e => e.reason.ToLower().Contains(filter.search));
+                var reasechMissionName = listMission.Where(e => e.missu.ToLower().Contains(filter.search));
+
+                if (reasechReason != null && reasechReason.Count() > 0)
+                {
+                    mission = listMission.Where(mis => mis.eid == id)
+                                          .AsQueryable()
+                                          .Where(e => e.reason.ToLower().Contains(filter.search.ToLower()))
+                                          .OrderByDescending(lr => lr.createdate).Reverse()
+                                          .AsQueryable()
+                                          .Skip((filter.pageNumber - 1) * filter.pageSize)
+                                          .Take(filter.pageSize)
+                                          .ToList();
+                    return Ok(mission);
+
+                }
+
+                if (reasechMissionName != null && reasechMissionName.Count() > 0)
+                {
+                    mission = listMission.Where(mis => mis.eid == id)
+                                          .AsQueryable()
+                                          .Where(e => e.missu.ToLower().Contains(filter.search.ToLower()))
+                                          .OrderByDescending(lr => lr.createdate).Reverse()
+                                          .AsQueryable()
+                                          .Skip((filter.pageNumber - 1) * filter.pageSize)
+                                          .Take(filter.pageSize)
+                                          .ToList();
+                    return Ok(mission);
+
+                }
+            }
+
             return Ok(mission);
         }
         //

@@ -32,15 +32,53 @@ namespace ccf_re_seller_api.Controllers
             _userRepository = new HRRepository(_context, env);
         }
 
-        [HttpGet("approver/{id}")]
-        public async Task<ActionResult<IEnumerable<HRMissionApproval>>> GetListApprove(string id)
+        [HttpPost("approver/{id}")]
+        public async Task<ActionResult<IEnumerable<HRMissionApproval>>> GetListApprove(string id, HRCustomerFilter filter)
         {
 
             var listMission = _context.missionApproval.AsQueryable();
             var mission = listMission.Where(mis => mis.eid == id)
                                            .OrderByDescending(lr => lr.applev).Reverse()
                                            .AsQueryable()
+                                           .Skip((filter.pageNumber - 1) * filter.pageSize)
+                                           .Take(filter.pageSize)
                                            .ToList();
+
+
+            if (filter.search != "" && filter.search != null)
+            {
+
+                var reasechReason = mission.Where(e => e.missonreason.ToLower().Contains(filter.search));
+                var reasechMissionName = mission.Where(e => e.missionname.ToLower().Contains(filter.search));
+
+                if (reasechReason != null && reasechReason.Count() > 0)
+                {
+                    mission = mission.Where(mis => mis.eid == id)
+                                          .AsQueryable()
+                                          .Where(e => e.missonreason.ToLower().Contains(filter.search.ToLower()))
+                                          .OrderByDescending(lr => lr.missioncreate).Reverse()
+                                          .AsQueryable()
+                                          .Skip((filter.pageNumber - 1) * filter.pageSize)
+                                          .Take(filter.pageSize)
+                                          .ToList();
+                    return Ok(mission);
+
+                }
+
+                if (reasechMissionName != null && reasechMissionName.Count() > 0)
+                {
+                    mission = mission.Where(mis => mis.eid == id)
+                                          .AsQueryable()
+                                          .Where(e => e.missionname.ToLower().Contains(filter.search.ToLower()))
+                                          .OrderByDescending(lr => lr.missioncreate).Reverse()
+                                          .AsQueryable()
+                                          .Skip((filter.pageNumber - 1) * filter.pageSize)
+                                          .Take(filter.pageSize)
+                                          .ToList();
+                    return Ok(mission);
+
+                }
+            }
 
             return Ok(mission);
         }
@@ -99,7 +137,7 @@ namespace ccf_re_seller_api.Controllers
                     //
                     var requestMission = _context.missionreq.SingleOrDefault(e => e.misnid == _missionApproval.misnid);
                     var user = _context.ccfUserClass.SingleOrDefault(e => e.uid == requestMission.eid);
-                    await _userRepository.SendNotificationUser(_missionApproval.eid, user.bcode, "CCF HR System App", $"Misson reqest from {user.uname}.", requestMission.eid, _missionApproval.misnid, "M");
+                    await _userRepository.SendNotificationUser(_missionApproval.eid, user.bcode, "CCF HR System App", $"Misson request from {user.uname}.", requestMission.eid, _missionApproval.misnid, "M");
                     //
                     return Ok(_missionApproval);
                 }
@@ -124,30 +162,34 @@ namespace ccf_re_seller_api.Controllers
             {
                 return BadRequest();
             }
-
-            var _missionreq = _context.missionreq.SingleOrDefault(e => e.misnid == _missionApproval.misnid);
-
-            _missionreq.statu = _missionApproval.apstatu.ToString();
-
-            await _context.SaveChangesAsync();
-
             _context.Entry(_missionApproval).State = EntityState.Modified;
 
-            try
+            var listApproveRequest = _context.missionApproval.Where(e => e.misnid == _missionApproval.misnid);
+
+            var statusRequtest = 1;
+
+            if (_missionApproval.applev != listApproveRequest.Count() - 2)
             {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!CcflogReExists(id))
+                if (_missionApproval.apstatu != 3)
                 {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
+                    statusRequtest = 2;
                 }
             }
+
+            if (_missionApproval.applev == 99)
+            {
+                statusRequtest = _missionApproval.apstatu;
+            }
+
+            if (_missionApproval.applev == 98)
+            {
+                statusRequtest = _missionApproval.apstatu;
+            }
+
+
+            var _missionreq = _context.missionreq.SingleOrDefault(e => e.misnid == _missionApproval.misnid);
+            _missionreq.statu = statusRequtest.ToString();
+
             //
             var statusEdit = "pedding";
 
@@ -172,15 +214,32 @@ namespace ccf_re_seller_api.Controllers
             }
 
             var requestLeave = _context.missionreq.SingleOrDefault(e => e.misnid == _missionApproval.misnid);
+
             var user = _context.ccfUserClass.SingleOrDefault(e => e.uid == _missionApproval.eid);
-            await _userRepository.SendNotificationUser(requestLeave.eid, user.bcode, "CCF HR System App", $"Mission reqest have been {statusEdit} from {user.uname}.", requestLeave.eid, requestLeave.misnid, "M");
+            await _userRepository.SendNotificationUser(requestLeave.eid, user.bcode, "CCF HR System App", $"Mission request have been {statusEdit} from {user.uname}.", requestLeave.eid, requestLeave.misnid, "M");
             var userApproval = _context.missionApproval.Where(e => e.misnid == _missionApproval.misnid)
                                 .Where(e => e.eid != _missionApproval.eid).AsQueryable();
 
             foreach (var userApprove in userApproval)
             {
-                await _userRepository.SendNotificationUser(userApprove.eid, user.bcode, "CCF HR System App", $"Mission reqest have been {statusEdit} from {user.uname}.", requestLeave.eid, requestLeave.misnid, "M");
+                await _userRepository.SendNotificationUser(userApprove.eid, user.bcode, "CCF HR System App", $"Mission request have been {statusEdit} from {user.uname}.", requestLeave.eid, requestLeave.misnid, "M");
 
+            }
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!CcflogReExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
             }
             //
 

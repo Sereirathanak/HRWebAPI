@@ -26,6 +26,7 @@ namespace ccf_re_seller_api.Controllers
             _configuration = config;
             _context = context;
         }
+        
 
         [HttpGet("{id}")]
         public async Task<ActionResult<IEnumerable<HRMapZoneClass>>> Get(string id)
@@ -43,7 +44,7 @@ namespace ccf_re_seller_api.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<HRMapZoneClass>>> GetCcfreferalCus()
         {
-            return await _context.mapZoneClass.ToListAsync();
+            return await _context.mapZoneClass.Include(e => e.ccfbranch).ToListAsync();
         }
         //
         [HttpPost]
@@ -52,25 +53,47 @@ namespace ccf_re_seller_api.Controllers
             var datetime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
             DateTime DOI = DateTime.ParseExact((datetime).Trim(), "yyyy-MM-dd HH:mm:ss", CultureInfo.GetCultureInfo("en-GB"));
 
+            bool exsitingBranch = false;
+
+            exsitingBranch = _context.mapZoneClass.Any(e => e.braid == _mapZoneClass.braid);
+
+
+            if (_context.mapZoneClass.Any(e => e.braid == null))
+            {
+                exsitingBranch = false;
+            }
+            else if (exsitingBranch == true)
+            {
+                exsitingBranch = true;
+            }
+
             try
             {
-                if (_mapZoneClass.braid != null &&
-                    _mapZoneClass.latitude !=null &&
-                    _mapZoneClass.longitude !=null)
-
+                if(exsitingBranch == false)
                 {
-                    _mapZoneClass.zoneid = GetLogNextID();
-                    _mapZoneClass.datecreate = DOI;
+                    if (_mapZoneClass.braid != null &&
+                                        _mapZoneClass.latitude != null &&
+                                        _mapZoneClass.longitude != null)
 
-                    _context.mapZoneClass.Add(_mapZoneClass);
-                    await _context.SaveChangesAsync();
+                    {
+                        _mapZoneClass.zoneid = GetLogNextID();
+                        _mapZoneClass.datecreate = DOI;
 
-                    return Ok(_mapZoneClass);
+                        _context.mapZoneClass.Add(_mapZoneClass);
+                        await _context.SaveChangesAsync();
+
+                        return Ok(_mapZoneClass);
+                    }
+                    else
+                    {
+                        return BadRequest("Request Param.");
+                    }
                 }
                 else
                 {
-                    return BadRequest("Request Param.");
+                    return BadRequest("Already Create Map Zone");
                 }
+
 
             }
             catch (Exception ex)

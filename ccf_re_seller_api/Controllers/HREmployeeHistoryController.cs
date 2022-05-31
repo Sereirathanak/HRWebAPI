@@ -40,61 +40,46 @@ namespace ccf_re_seller_api.Controllers
         {
             try
             {
-                bool exsitingEmployee = false;
-
-                exsitingEmployee = _context.employee.Any(e => e.eid == employeeHistory.eid);
-                if (_context.employee.Any(e => e.ecard == null))
+               
+                if (employeeHistory.com != null
+                    && employeeHistory.pos != null
+                    && employeeHistory.res != null
+                    && employeeHistory.sdate != null
+                    && employeeHistory.edate != null
+                    && employeeHistory.lres != null
+                    && employeeHistory.eid != null
+                    )
                 {
-                    exsitingEmployee = false;
-                }
-                else if (exsitingEmployee == true)
-                {
-                    exsitingEmployee = true;
-                }
-
-                if (exsitingEmployee == true)
-                {
-                    var employee = _context.employee.FirstOrDefault(e => e.eid == employeeHistory.eid);
-
-                    if (employeeHistory.com != null
-                        && employeeHistory.pos != null
-                        && employeeHistory.res != null
-                        && employeeHistory.sdate != null
-                        && employeeHistory.edate != null
-                        && employeeHistory.lres != null
-                        && employeeHistory.eid != null
-                        )
-                    {
 
 
-                        employeeHistory.ecom = await GetNextIDEmployeeHistoryWork();
-                        employeeHistory.eid = employee.eid;
-                        employeeHistory.com = employeeHistory.com;
-                        employeeHistory.pos = employeeHistory.pos;
-                        employeeHistory.res = employeeHistory.res;
-                        employeeHistory.sdate = employeeHistory.sdate;
-                        employeeHistory.edate = employeeHistory.edate;
-                        employeeHistory.lres = employeeHistory.lres;
-                        employeeHistory.remark = employeeHistory.remark;
+                    employeeHistory.ecom = await GetNextIDEmployeeHistoryWork();
+                    employeeHistory.eid = employeeHistory.eid;
+                    employeeHistory.com = employeeHistory.com;
+                    employeeHistory.pos = employeeHistory.pos;
+                    employeeHistory.res = employeeHistory.res;
+                    employeeHistory.sdate = employeeHistory.sdate;
+                    employeeHistory.edate = employeeHistory.edate;
+                    employeeHistory.lres = employeeHistory.lres;
+                    employeeHistory.remark = employeeHistory.remark;
+                    employeeHistory.salary = employeeHistory.salary;
+                    employeeHistory.otherbonus = employeeHistory.otherbonus;
 
-                        _context.employeeHistory.Add(employeeHistory);
 
 
-                        await _context.SaveChangesAsync();
+                    _context.employeeHistory.Add(employeeHistory);
 
-                        return Ok(employeeHistory);
-                    }
-                    else
-                    {
 
-                        return BadRequest("The credential is invalid.");
+                    await _context.SaveChangesAsync();
 
-                    }
+                    return Ok(employeeHistory);
                 }
                 else
                 {
+
                     return BadRequest("The credential is invalid.");
+
                 }
+               
 
 
             }
