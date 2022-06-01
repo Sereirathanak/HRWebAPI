@@ -1,11 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "S7CDUpydlVvxtPtSB+2Zms7USpgNh4kfbNvcJmg0d6bIUfnHhMknlXHzrA4139ACIuwVxWrZevtpE3WrW/B59Q==",
+  "dgSpecHash": "rIpQABdW6USkwI7EOq52SZ7flr6SjpL1i9KxZLWvozcD5zR9RcBvesp1csVmFaxm2pMfiAIF9weHvBI+axd14Q==",
   "success": true,
   "projectFilePath": "/Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/ccf_re_seller_api.csproj",
   "expectedPackageFiles": [
     "/Users/vatsopheap/.nuget/packages/easendmail/7.7.0.8/easendmail.7.7.0.8.nupkg.sha512",
     "/Users/vatsopheap/.nuget/packages/entityframework/6.4.4/entityframework.6.4.4.nupkg.sha512",
+    "/Users/vatsopheap/.nuget/packages/exceldatareader/3.6.0/exceldatareader.3.6.0.nupkg.sha512",
+    "/Users/vatsopheap/.nuget/packages/exceldatareader.dataset/3.6.0/exceldatareader.dataset.3.6.0.nupkg.sha512",
     "/Users/vatsopheap/.nuget/packages/firebaseadmin/2.0.0/firebaseadmin.2.0.0.nupkg.sha512",
     "/Users/vatsopheap/.nuget/packages/google.api.gax/3.2.0/google.api.gax.3.2.0.nupkg.sha512",
     "/Users/vatsopheap/.nuget/packages/google.api.gax.rest/3.2.0/google.api.gax.rest.3.2.0.nupkg.sha512",

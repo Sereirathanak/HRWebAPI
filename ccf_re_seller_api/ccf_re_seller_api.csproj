@@ -33,10 +33,14 @@
     <PackageReference Include="MailKit" Version="2.11.1" />
     <PackageReference Include="FirebaseAdmin" Version="2.0.0" />
     <PackageReference Include="Microsoft.AspNet.WebApi.Cors" Version="5.2.7" />
+    <PackageReference Include="ExcelDataReader.DataSet" Version="3.6.0" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Modals\" />
     <Folder Include="Repositories\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Remove="ExcelDataReader.DataSet" />
+  </ItemGroup>
 </Project>

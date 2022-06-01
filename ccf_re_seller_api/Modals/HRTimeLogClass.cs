@@ -47,4 +47,20 @@ namespace ccf_re_seller_api.Modals
             }
         }
     }
+
+    //
+    public class HRExcelImport
+    {
+        [Key]
+        public string timid { get; set; }
+        public string eid { get; set; }
+        public string braid { get; set; }
+        public DateTime tdate { get; set; }
+        public string tim { get; set; }
+        public string sta { get; set; }
+        public string cty { get; set; }
+
+    }
+
+    //
 }
