@@ -42,37 +42,285 @@ namespace ccf_re_seller_api.Controllers
             var datetime = DateTime.Now.ToString("HH:mm");
             DateTime DOI = DateTime.ParseExact((datetime).Trim(), "HH:mm", CultureInfo.GetCultureInfo("en-GB"));
             var employeees = _context.leaveRequest
-                                 .OrderByDescending(x => x.frdat).Reverse()
+                                 .OrderByDescending(x => x.frdat)
                                  .OrderByDescending(e => e.eid)
                                  .Include(e => e.ccfpinfo)
-                                 .AsQueryable();
+                                 .Include(e => e.ccfpinfo.ccfemployeeJoinInfo)
+                                 .AsQueryable()
+                                 .ToList(); 
 
-            if (filter.status != null && filter.status != "")
+            var employeeName = employeees.Where(e => e.eid == filter.search);
+            var employeeBranch = _context.employeeJoinInfo.Where(e => e.site == filter.branchClock);
+
+            //filter branch request by page size unlimit
+            if (filter.listall == true)
             {
-                employeees = employeees.Where(e => e.statu == filter.status);
+                if (filter.branchClock != "" && employeeBranch.Count() > 0 && filter.sdate == "" && filter.edate == "")
+                {
+                    if (employeeBranch.Count() > 0)
+                    {
+                        List<Object> termsList = new List<Object>();
+
+                        foreach (var i in employeeBranch)
+                        {
+                            foreach (var listEmployee in employeees)
+                            {
+                                if (listEmployee.eid == i.eid)
+                                {
+
+                                    termsList.Add(listEmployee);
+                                }
+                            }
+                        }
+                        return Ok(termsList);
+
+                    }
+                }
+
+                if (filter.branchClock != "" && employeeBranch.Count() > 0 && filter.sdate != "" && filter.edate != "")
+                {
+                    if (employeeBranch.Count() > 0)
+                    {
+                        DateTime dateFrom = DateTime.Parse(filter.sdate.ToString());
+                        DateTime dateTo = DateTime.Parse(filter.edate.ToString());
+
+                        employeees = employeees.Where(la => la.frdat >= dateFrom && la.todat <= dateTo)
+                                                //.Skip((filter.pageNumber - 1) * filter.pageSize)
+                                                //.Take(filter.pageSize)
+                                                .ToList();
+
+                        List<Object> termsList = new List<Object>();
+                        foreach (var i in employeeBranch)
+                        {
+                            foreach (var listEmployee in employeees)
+                            {
+                                if (listEmployee.eid == i.eid)
+                                {
+                                    termsList.Add(listEmployee);
+                                }
+                            }
+                        }
+                        return Ok(employeees);
+                    }
+                }
+
             }
 
-            if (filter.eid != null && filter.eid != "")
+            //filter branch request by page size limit
+            if (filter.listall == false || filter.listall == null)
             {
-                employeees = employeees.Where(e => e.eid == filter.eid);
+                if (filter.branchClock != "" && employeeBranch.Count() > 0 && filter.sdate == "" && filter.edate == "")
+                {
+                    if (employeeBranch.Count() > 0)
+                    {
+                        List<Object> termsList = new List<Object>();
+                        employeees = employeees.Skip((filter.pageNumber - 1) * filter.pageSize)
+                                              .Take(filter.pageSize)
+                                              .ToList();
+
+                        foreach (var i in employeeBranch)
+                        {
+                            foreach (var listEmployee in employeees)
+                            {
+                                if (listEmployee.eid == i.eid)
+                                {
+
+                                    termsList.Add(listEmployee);
+                                }
+                            }
+                        }
+                        return Ok(termsList);
+
+                    }
+                }
+
+                if (filter.branchClock != "" && employeeBranch.Count() > 0 && filter.sdate != "" && filter.edate != "")
+                {
+                    if (employeeBranch.Count() > 0)
+                    {
+                        DateTime dateFrom = DateTime.Parse(filter.sdate.ToString());
+                        DateTime dateTo = DateTime.Parse(filter.edate.ToString());
+
+                        employeees = employeees.Where(la => la.frdat >= dateFrom && la.todat <= dateTo)
+                                                .Skip((filter.pageNumber - 1) * filter.pageSize)
+                                                .Take(filter.pageSize)
+                                                .ToList();
+
+                        List<Object> termsList = new List<Object>();
+                        foreach (var i in employeeBranch)
+                        {
+                            foreach (var listEmployee in employeees)
+                            {
+                                if (listEmployee.eid == i.eid)
+                                {
+                                    termsList.Add(listEmployee);
+                                }
+                            }
+                        }
+                        return Ok(employeees);
+                    }
+                }
+
+            }
+
+            //filter by user request by page size unlimit
+            if (filter.listall == true)
+            {
+                if (filter.search != "" && employeeName.Count() > 0 && filter.sdate != "" && filter.edate != "")
+                {
+                    if (employeeName.Count() > 0)
+                    {
+                        DateTime dateFrom = DateTime.Parse(filter.sdate.ToString());
+                        DateTime dateTo = DateTime.Parse(filter.edate.ToString());
+
+                        employeees = employeees.Where(e => e.eid == filter.search)
+                                                .Where(la => la.frdat >= dateFrom && la.todat <= dateTo)
+                                                //.Skip((filter.pageNumber - 1) * filter.pageSize)
+                                                //.Take(filter.pageSize)
+                                                .ToList();
+
+                        return Ok(employeees);
+
+                    }
+                }
+
+                if (filter.search != "" && employeeName.Count() > 0 && filter.sdate == "" && filter.edate == "")
+                {
+                    if (employeeName.Count() > 0)
+                    {
+                        employeees = employeees.Where(la => la.eid == filter.search)
+                                                //.Skip((filter.pageNumber - 1) * filter.pageSize)
+                                                //.Take(filter.pageSize)
+                                                .ToList();
+
+                        return Ok(employeees);
+
+                    }
+                }
+            }
+
+            if (filter.listall == false || filter.listall == null)
+            {
+                if (filter.search != "" && employeeName.Count() > 0 && filter.sdate != "" && filter.edate != "")
+                {
+                    if (employeeName.Count() > 0)
+                    {
+                        DateTime dateFrom = DateTime.Parse(filter.sdate.ToString());
+                        DateTime dateTo = DateTime.Parse(filter.edate.ToString());
+
+                        employeees = employeees.Where(e => e.eid == filter.search)
+                                                .Where(la => la.frdat >= dateFrom && la.todat <= dateTo)
+                                                .Skip((filter.pageNumber - 1) * filter.pageSize)
+                                                .Take(filter.pageSize)
+                                                .ToList();
+
+                        return Ok(employeees);
+
+                    }
+                }
+
+                if (filter.search != "" && employeeName.Count() > 0 && filter.sdate == "" && filter.edate == "")
+                {
+                    if (employeeName.Count() > 0)
+                    {
+                        employeees = employeees.Where(la => la.eid == filter.search)
+                                                .Skip((filter.pageNumber - 1) * filter.pageSize)
+                                                .Take(filter.pageSize)
+                                                .ToList();
+
+                        return Ok(employeees);
+
+                    }
+                }
+
             }
 
 
-            if ((filter.sdate != null && filter.sdate != "") && (filter.edate != null && filter.edate != ""))
+            if (filter.listall == true)
             {
-                DateTime dateFrom = DateTime.Parse(filter.sdate.ToString());
-                DateTime dateTo = DateTime.Parse(filter.edate.ToString());
-                employeees = employeees.Where(la => la.frdat >= dateFrom && la.todat <= dateTo);
+                if (filter.sdate != "" && filter.edate != "" && filter.search == "")
+                {
+                    DateTime dateFrom = DateTime.Parse(filter.sdate.ToString());
+                    DateTime dateTo = DateTime.Parse(filter.edate.ToString());
+                    employeees = employeees.Where(la => la.frdat >= dateFrom && la.todat <= dateTo)
+                                            .ToList();
+                    return Ok(employeees);
+
+                }
             }
-            else if (filter.sdate != null && filter.sdate != "")
+            if (filter.listall == false || filter.listall == null)
             {
-                var strDateTo = DateTime.Now.ToString("yyyy-MM-dd 00:00:00");
-                DateTime dateFrom = DateTime.Parse(filter.sdate.ToString());
-                DateTime dateTo = DateTime.Parse(strDateTo.ToString());
-                employeees = employeees.Where(la => la.frdat >= dateFrom && la.frdat <= dateTo);
+                if (filter.sdate != "" && filter.edate != "" && filter.search == "")
+                {
+                    DateTime dateFrom = DateTime.Parse(filter.sdate.ToString());
+                    DateTime dateTo = DateTime.Parse(filter.edate.ToString());
+                    employeees = employeees.Where(la => la.frdat >= dateFrom && la.todat <= dateTo)
+                                            .Skip((filter.pageNumber - 1) * filter.pageSize)
+                                            .Take(filter.pageSize)
+                                            .ToList();
+                    return Ok(employeees);
+
+                }
+            }
+            if (filter.listall == true)
+            {
+                if (filter.status != "")
+                {
+                    employeees = employeees.Where(e => e.statu == filter.status)
+                                            //.Skip((filter.pageNumber - 1) * filter.pageSize)
+                                            //.Take(filter.pageSize)
+                                            .ToList();
+                    return Ok(employeees);
+
+                }
             }
 
-            return Ok(employeees);
+
+            if (filter.listall == false || filter.listall == null)
+            {
+                if (filter.status != "")
+                {
+                    employeees = employeees.Where(e => e.statu == filter.status)
+                                            .Skip((filter.pageNumber - 1) * filter.pageSize)
+                                            .Take(filter.pageSize)
+                                            .ToList();
+                    return Ok(employeees);
+
+                }
+            }
+
+
+            if (filter.listall == true)
+            {
+                if (filter.sdate != "" && filter.search == "")
+                {
+                    var strDateTo = DateTime.Now.ToString("yyyy-MM-dd 00:00:00");
+                    DateTime dateFrom = DateTime.Parse(filter.sdate.ToString());
+                    DateTime dateTo = DateTime.Parse(strDateTo.ToString());
+                    employeees = employeees.Where(la => la.frdat >= dateFrom && la.frdat <= dateTo)
+                                            .ToList();
+                    return Ok(employeees);
+
+                }
+            }
+
+            if (filter.listall == false || filter.listall == null)
+            {
+                if (filter.sdate != "" && filter.search == "")
+                {
+                    var strDateTo = DateTime.Now.ToString("yyyy-MM-dd 00:00:00");
+                    DateTime dateFrom = DateTime.Parse(filter.sdate.ToString());
+                    DateTime dateTo = DateTime.Parse(strDateTo.ToString());
+                    employeees = employeees.Where(la => la.frdat >= dateFrom && la.frdat <= dateTo)
+                                            .Skip((filter.pageNumber - 1) * filter.pageSize)
+                                            .Take(filter.pageSize)
+                                            .ToList();
+                    return Ok(employeees);
+
+                }
+            }
+
+            return BadRequest();
         }
         //
         [HttpPost("{id}")]

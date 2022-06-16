@@ -91,10 +91,10 @@ namespace ccf_re_seller_api.Repositories
             // Google Firebase
             var googleCredential = _env.ContentRootPath;
             //mac
-            googleCredential = googleCredential + "//ccf-hr-management-da23a-firebase-adminsdk-s5vqr-2d85b13be4.json";
+            //googleCredential = googleCredential + "//ccf-hr-management-da23a-firebase-adminsdk-s5vqr-2d85b13be4.json";
 
             //window
-            //googleCredential = googleCredential + "\\ccf-hr-management-da23a-firebase-adminsdk-s5vqr-2d85b13be4.json";
+            googleCredential = googleCredential + "\\ccf-hr-management-da23a-firebase-adminsdk-s5vqr-2d85b13be4.json";
 
             // I suggest to create by specifying a name for instance while we have multiple projects to setup.
             var app = FirebaseApp.Create(new AppOptions

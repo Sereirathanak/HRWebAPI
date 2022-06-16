@@ -31,17 +31,6 @@ namespace ccf_re_seller_api.Models
         public bool? checkIncharge { get; set; }
         public bool? checkEcard { get; set; }
 
-
-
-
-
-
-
-
-
-
-
-
     }
     public class HRClockInOut
     {
@@ -57,6 +46,9 @@ namespace ccf_re_seller_api.Models
         public string? status { get; set; }
         public string? eid { get; set; }
         public int? level { get; set; }
+        public string? search{ get; set; }
+        public bool? listall { get; set; }
+
 
     }
 }

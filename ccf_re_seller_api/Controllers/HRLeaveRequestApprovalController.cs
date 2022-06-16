@@ -34,8 +34,8 @@ namespace ccf_re_seller_api.Controllers
 
         }
 
-        [HttpGet("approver/{id}")]
-        public async Task<ActionResult<IEnumerable<HRleaveApprovalRequest>>> GetListApprove(string id)
+        [HttpPost("approver/{id}")]
+        public async Task<ActionResult<IEnumerable<HRleaveApprovalRequest>>> GetListApprove(string id,HRClockInOut filter)
         {
             //, HRCustomerFilter filter
             var listLeave = _context.leaveApprovalRequest.AsQueryable()
@@ -43,31 +43,37 @@ namespace ccf_re_seller_api.Controllers
                 .Include(e => e.ccfpinfo);
         
             var leave = listLeave.Where(lr => lr.eid == id)
-                                      .OrderByDescending(lr => lr.applev).Reverse()
+                                      .OrderByDescending(lr => lr.applev)
                                       .AsQueryable()
-                                      //.Skip((filter.pageNumber - 1) * filter.pageSize)
-                                      //.Take(filter.pageSize)
+                                      .Skip((filter.pageNumber - 1) * filter.pageSize)
+                                      .Take(filter.pageSize)
                                       .ToList();
 
-            //if (filter.search != "")
-            //{
-            //    var leaveRequest = _context.leaveApprovalRequest.FirstOrDefault(e => e.ccflre.reason.ToLower().Contains(filter.search.ToLower()));
+            if (filter.search != "")
+            {
 
-            //    if (leaveRequest != null || leaveRequest.lreid != null || leaveRequest.lreid != "")
-            //    {
+                List<Object> termsList = new List<Object>();
+              
 
-            //        var leaverequest = leave.Where(lr => lr.lreid == leaveRequest.lreid)
-            //                                  .OrderByDescending(lr => lr.applev).Reverse()
-            //                                  .AsQueryable()
-            //                                  .Skip((filter.pageNumber - 1) * filter.pageSize)
-            //                                  .Take(filter.pageSize)
-            //                                  .ToList();
+                var checkLeaveRequest = _context.leaveRequest.Where(cur => cur.eid == filter.search);
 
-            //        return Ok(leaverequest);
+                foreach (var i in checkLeaveRequest)
+                {
+                    var leaverequest = leave.Where(lr => lr.lreid == i.lreid)
+                                           .OrderByDescending(lr => lr.applev)
+                                           .AsQueryable()
+                                           .Skip((filter.pageNumber - 1) * filter.pageSize)
+                                           .Take(filter.pageSize)
+                                           .ToList();
 
 
-            //    }
-            //}
+                    foreach (var listEmployee in leaverequest)
+                    {
+                            termsList.Add(listEmployee);
+                    }
+                }
+                return Ok(termsList);
+            }
             return Ok(leave);
         }
 

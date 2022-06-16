@@ -16,6 +16,8 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.EntityFrameworkCore;
 using ccf_re_seller_api.Modals;
 using ccf_re_seller_api.Models;
+using Microsoft.Extensions.FileProviders;
+using System.IO;
 
 namespace ccf_re_seller_api
 {
@@ -48,16 +50,17 @@ namespace ccf_re_seller_api
                 optionsBuilder.UseInternalServiceProvider(serviceProvider);
             });
 
+            //services.AddSingleton<IFileProvider>(
+            //new PhysicalFileProvider(
+            //    Path.Combine(Directory.GetCurrentDirectory(), "DefaultConnection")));
+
             services.AddDbContext<HRContext>((serviceProvider, optionsBuilder) =>
             {
-                //Production
-                //var connection = Configuration.GetConnectionString("ProductionConnection");
+                //Production or UAT
+                var connection = Configuration.GetConnectionString("ProductionConnection");
 
                 //Default
-                var connection = Configuration.GetConnectionString("DefaultConnection");
-
-                //UAT
-                //var connection = Configuration.GetConnectionString("ProductionConnection");
+                //var connection = Configuration.GetConnectionString("DefaultConnection");
 
                 optionsBuilder.UseNpgsql(connection);
                 optionsBuilder.UseInternalServiceProvider(serviceProvider);

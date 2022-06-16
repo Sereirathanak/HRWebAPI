@@ -200,53 +200,274 @@ namespace ccf_re_seller_api.Controllers
         [HttpPost("all")]
         public async Task<ActionResult<IEnumerable<HRTimeLogClass>>> GetTimeClock(HRClockInOut filter)
         {
-            //var datetime = DateTime.Now.ToString("yyyy-MM-dd");
-            //DateTime DOI = DateTime.ParseExact((datetime).Trim(), "yyyy-MM-dd", CultureInfo.GetCultureInfo("en-GB"));
-
             var listEmployeeClock = _context.timeLogClass
                                     .Include(e => e.ccfpinfo)
                                     .AsQueryable()
-                                  
-                                    .ToList(); ;
+                                    .ToList();
 
+            var employeeEcard = _context.employee.SingleOrDefault(e => e.ecard == filter.ecard);
+            var employeeName = _context.employee.Where(e => e.eid == filter.search);
+            var employeeBranch = listEmployeeClock.Where(e => e.braid == filter.branchClock);
 
-
-            var employee = _context.employee.SingleOrDefault(e => e.ecard == filter.ecard);
-            //var listEmployess = listEmployeeClock.ToList();
-
-
-            if (filter.ecard != null && filter.ecard != "")
+            if (filter.ecard != "")
             {
-                //    var employee = _context.employee.SingleOrDefault(e => e.ecard == filter.ecard);
-                var datetime = DateTime.Now.ToString("yyyy-MM-dd");
 
+                List<Object> termsList = new List<Object>();
+
+                var datetime = DateTime.Now.ToString("yyyy-MM-dd");
                 DateTime DT = DateTime.Parse(datetime.ToString());
                 DateTime DTT = DateTime.Parse(DT.ToString("yyyy-MM-dd"));
-                listEmployeeClock = listEmployeeClock
-                                    .Where(e => e.eid == employee.eid)
-                                    .Where(e => e.tdate == DTT)
+                var checkLeaveRequest = _context.leaveRequest.Where(cur => cur.eid == filter.search);
+
+                var newEcardSearch = listEmployeeClock
+                            .Where(e => e.eid == employeeEcard.eid)
+                            .Where(e => e.tdate == DTT)
+                            .OrderByDescending(lr => lr.tim)
+                            .Skip((filter.pageNumber - 1) * filter.pageSize)
+                            .Take(filter.pageSize)
+                            .ToList();
+
+
+                return Ok(newEcardSearch);
+            }
+
+            if (employeeBranch.Count() > 0 && filter.branchClock != "" && filter.sdate != "" && filter.edate != "")
+            {
+                DateTime dateFrom = DateTime.Parse(filter.sdate.ToString());
+                DateTime dateTo = DateTime.Parse(filter.edate.ToString());
+                if (filter.listall == true)
+                {
+                    if (employeeBranch.Count() > 0)
+                    {
+                        var listClocked = listEmployeeClock
+                                      .Where(e => e.braid == filter.branchClock)
+                                      .Where(e => e.tdate >= dateFrom && e.tdate <= dateTo)
+                                      .OrderByDescending(lr => lr.tdate)
+                                      .ToList();
+
+                        return Ok(listClocked);
+                    }
+                }
+
+                if (filter.listall == false || filter.listall == null)
+                {
+                    if (employeeBranch.Count() > 0)
+                    {
+                        var listClocked = listEmployeeClock
+                                      .Where(e => e.braid == filter.branchClock)
+                                      .Where(e => e.tdate >= dateFrom && e.tdate <= dateTo)
+                                      .OrderByDescending(lr => lr.tdate)
+                                      .Skip((filter.pageNumber - 1) * filter.pageSize)
+                                      .Take(filter.pageSize)
+                                      .ToList();
+
+                        return Ok(listClocked);
+                    }
+                }
+            }
+
+            if (employeeName.Count() > 0 && filter.search != "" && filter.sdate != "" && filter.edate != "")
+            {
+                DateTime dateFrom = DateTime.Parse(filter.sdate.ToString());
+                DateTime dateTo = DateTime.Parse(filter.edate.ToString());
+                List<Object> termsList = new List<Object>();
+
+                if (employeeName.Count() > 0)
+                {
+                    if (filter.listall == true)
+                    {
+                        var listClocked = listEmployeeClock
+                                                         .Where(e => e.eid == filter.search)
+                                                         .Where(e => e.tdate >= dateFrom && e.tdate <= dateTo)
+                                                         .OrderByDescending(lr => lr.tdate)
+                                                         .ToList();
+                        return Ok(listClocked);
+
+                    }
+
+                    if (filter.listall == false || filter.listall == null)
+                    {
+                        var listClocked = listEmployeeClock
+                                                         .Where(e => e.eid == filter.search)
+                                                         .Where(e => e.tdate >= dateFrom && e.tdate <= dateTo)
+                                                         .OrderByDescending(lr => lr.tdate)
+                                                         .Skip((filter.pageNumber - 1) * filter.pageSize)
+                                                         .Take(filter.pageSize)
+                                                         .ToList();
+                        return Ok(listClocked);
+
+                    }
+                }
+            }
+
+            if (filter.search == null)
+            {
+                var datetime = DateTime.Now.ToString("yyyy-MM-dd");
+                DateTime DT = DateTime.Parse(datetime.ToString());
+                DateTime DTT = DateTime.Parse(DT.ToString("yyyy-MM-dd"));
+
+                var newList = listEmployeeClock
+                                        .Where(e => e.tdate == DTT)
+                                        .OrderByDescending(lr => lr.tim)
+                                        .Skip((filter.pageNumber - 1) * filter.pageSize)
+                                        .Take(filter.pageSize)
+                                        .ToList();
+
+                return Ok(newList);
+            }
+            if (filter.listall == true)
+            {
+                if ((filter.sdate != "") && (filter.edate != ""))
+                {
+                    DateTime dateFrom = DateTime.Parse(filter.sdate.ToString());
+                    DateTime dateTo = DateTime.Parse(filter.edate.ToString());
+                    var newList = listEmployeeClock
+                                       .Where(e => e.tdate >= dateFrom && e.tdate <= dateTo)
+                                       .OrderByDescending(lr => lr.tdate)
+                                       .ToList();
+
+                    return Ok(newList);
+                }
+            }
+            if (filter.listall == false || filter.listall == null)
+            {
+                if ((filter.sdate != "") && (filter.edate != ""))
+                {
+                    DateTime dateFrom = DateTime.Parse(filter.sdate.ToString());
+                    DateTime dateTo = DateTime.Parse(filter.edate.ToString());
+                    var newList = listEmployeeClock
+                                       .Where(e => e.tdate >= dateFrom && e.tdate <= dateTo)
+                                       .OrderByDescending(lr => lr.tdate)
+                                       .Skip((filter.pageNumber - 1) * filter.pageSize)
+                                       .Take(filter.pageSize)
+                                       .ToList();
+
+                    return Ok(newList);
+                }
+            }
+
+            if (filter.listall == true)
+            {
+                if (filter.edate == "" && filter.sdate != "")
+                {
+                    var strDateTo = DateTime.Now.ToString("yyyy-MM-dd 00:00:00");
+                    DateTime dateFrom = DateTime.Parse(filter.sdate.ToString());
+                    DateTime dateTo = DateTime.Parse(strDateTo.ToString());
+                    var newList = listEmployeeClock
+                                      .Where(e => e.tdate >= dateFrom && e.tdate <= dateTo)
+                                      .OrderByDescending(lr => lr.tdate)
+                                      .ToList();
+
+                    return Ok(newList);
+                }
+            }
+            if (filter.listall == false || filter.listall == null)
+            {
+                if (filter.edate == "" && filter.sdate != "")
+                {
+                    var strDateTo = DateTime.Now.ToString("yyyy-MM-dd 00:00:00");
+                    DateTime dateFrom = DateTime.Parse(filter.sdate.ToString());
+                    DateTime dateTo = DateTime.Parse(strDateTo.ToString());
+                    var newList = listEmployeeClock
+                                      .Where(e => e.tdate >= dateFrom && e.tdate <= dateTo)
+                                      .OrderByDescending(lr => lr.tdate)
+                                      .Skip((filter.pageNumber - 1) * filter.pageSize)
+                                      .Take(filter.pageSize)
+                                      .ToList();
+
+                    return Ok(newList);
+
+
+                }
+            }
+            if (filter.listall == true)
+            {
+                if (filter.branchClock != "")
+                {
+                    if (employeeBranch != null && employeeBranch.Count() > 0)
+                    {
+
+                        var newList = listEmployeeClock
+                                            .Where(e => e.braid == filter.branchClock)
+                                            .OrderByDescending(lr => lr.tdate)
+                                            .ToList();
+                        return Ok(newList);
+
+
+
+                    }
+                }
+            }
+
+            if (filter.listall == false || filter.listall == null)
+            {
+                if (filter.branchClock != "")
+                {
+                    if (employeeBranch != null && employeeBranch.Count() > 0)
+                    {
+
+                        var newList = listEmployeeClock
+                                            .Where(e => e.braid == filter.branchClock)
+                                            .OrderByDescending(lr => lr.tdate)
+                                            .Skip((filter.pageNumber - 1) * filter.pageSize)
+                                            .Take(filter.pageSize)
+                                            .ToList();
+                        return Ok(newList);
+
+
+
+                    }
+                }
+            }
+
+            if (filter.listall == true)
+            {
+                if (filter.search != "")
+                {
+                    if (employeeName != null && employeeName.Count() > 0 && filter.edate == "" && filter.sdate == "")
+                    {
+                        var newList =  listEmployeeClock.Where(e => e.eid == filter.search)
+                                        .OrderByDescending(lr => lr.tdate)
+                                        .ToList();
+
+                        return Ok(newList);
+                    }
+                }
+            }
+
+            if (filter.listall == false || filter.listall == null)
+            {
+               
+                if (filter.search != "" && filter.edate == "" && filter.sdate == "")
+                {
+
+                    var newList = listEmployeeClock.Where(e => e.eid.Contains(filter.search))
                                     .OrderByDescending(lr => lr.tdate)
-                                    .OrderByDescending(lr => lr.tim)
                                     .Skip((filter.pageNumber - 1) * filter.pageSize)
                                     .Take(filter.pageSize)
-                                    .ToList(); ;
+                                    .ToList();
 
+                    return Ok(newList);
+                }
             }
-            else
+
+
+            if (filter.search == "" && filter.sdate == "" && filter.edate == "")
             {
-                 listEmployeeClock = _context.timeLogClass
-                                  .Include(e => e.ccfpinfo)
-                                  .AsQueryable()
-                                  .OrderByDescending(lr => lr.tdate)
-                                  .OrderByDescending(lr => lr.tim)
-                                  .Skip((filter.pageNumber - 1) * filter.pageSize)
-                                  .Take(filter.pageSize)
-                                  .ToList(); ;
+                var strDateTo = DateTime.Now.ToString("yyyy-MM-dd 00:00:00");
+                DateTime dateTo = DateTime.Parse(strDateTo.ToString());
+                var newList = _context.timeLogClass
+                                 .Where(e => e.tdate == dateTo)
+                                 .Include(e => e.ccfpinfo)
+                                 .AsQueryable()
+                                 .OrderByDescending(lr => lr.tdate)
+                                 .Skip((filter.pageNumber - 1) * filter.pageSize)
+                                 .Take(filter.pageSize)
+                                 .ToList();
+                return Ok(newList);
             }
 
-
-            return Ok(listEmployeeClock);
-
+            return BadRequest();
         }
 
         [HttpPost("posttimelog")]

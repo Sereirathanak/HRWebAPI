@@ -34,6 +34,9 @@
     <PackageReference Include="FirebaseAdmin" Version="2.0.0" />
     <PackageReference Include="Microsoft.AspNet.WebApi.Cors" Version="5.2.7" />
     <PackageReference Include="ExcelDataReader.DataSet" Version="3.6.0" />
+    <PackageReference Include="GemBox.Spreadsheet" Version="49.0.1017" />
+    <PackageReference Include="EPPlus" Version="6.0.4" />
+    <PackageReference Include="Syncfusion.XlsIO.Net.Core" Version="20.1.0.58" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Modals\" />
@@ -42,5 +45,10 @@
 
   <ItemGroup>
     <None Remove="ExcelDataReader.DataSet" />
+    <None Remove="EPPlus.Core" />
+    <None Remove="ExcelPackage" />
+    <None Remove="GemBox.Spreadsheet" />
+    <None Remove="EPPlus" />
+    <None Remove="Syncfusion.XlsIO.Net.Core" />
   </ItemGroup>
 </Project>

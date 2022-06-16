@@ -32,17 +32,42 @@ namespace ccf_re_seller_api.Controllers
             _userRepository = new HRRepository(_context, env);
         }
 
-        [HttpGet("approver/{id}")]
-        public async Task<ActionResult<IEnumerable<HROverTimeApproval>>> GetListApprove(string id)
+        [HttpPost("approver/{id}")]
+        public async Task<ActionResult<IEnumerable<HROverTimeApproval>>> GetListApprove(string id, HRClockInOut filter)
         {
 
             var listOT = _context.overTimeApproval.AsQueryable()
                 .Include(e => e.ccfove)
                 .Include(e => e.ccfpinfo);
             var overtime = listOT.Where(mis => mis.eid == id)
-                                           .OrderByDescending(lr => lr.applev).Reverse()
+                                           .OrderByDescending(lr => lr.applev)
                                            .AsQueryable()
                                            .ToList();
+            if (filter.search != "")
+            {
+
+                List<Object> termsList = new List<Object>();
+
+
+                var checkOTRequest = _context.overTimeRequest.Where(cur => cur.eid == filter.search);
+
+                foreach (var i in checkOTRequest)
+                {
+                    var OTRequest = overtime.Where(lr => lr.oveid == i.oveid)
+                                           .OrderByDescending(lr => lr.applev)
+                                           .AsQueryable()
+                                           .Skip((filter.pageNumber - 1) * filter.pageSize)
+                                           .Take(filter.pageSize)
+                                           .ToList();
+
+
+                    foreach (var listEmployee in OTRequest)
+                    {
+                        termsList.Add(listEmployee);
+                    }
+                }
+                return Ok(termsList);
+            }
             return overtime;
         }
 
