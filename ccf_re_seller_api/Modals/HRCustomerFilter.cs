@@ -30,6 +30,9 @@ namespace ccf_re_seller_api.Models
         public bool? checkPosition { get; set; }
         public bool? checkIncharge { get; set; }
         public bool? checkEcard { get; set; }
+        public bool? listall { get; set; }
+
+
 
     }
     public class HRClockInOut

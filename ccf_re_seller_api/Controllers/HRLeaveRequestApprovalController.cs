@@ -41,7 +41,8 @@ namespace ccf_re_seller_api.Controllers
             var listLeave = _context.leaveApprovalRequest.AsQueryable()
                 .Include(e => e.ccflre)
                 .Include(e => e.ccfpinfo);
-        
+
+
             var leave = listLeave.Where(lr => lr.eid == id)
                                       .OrderByDescending(lr => lr.applev)
                                       .AsQueryable()

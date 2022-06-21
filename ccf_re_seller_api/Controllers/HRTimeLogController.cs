@@ -38,18 +38,25 @@ namespace ccf_re_seller_api.Controllers
         }
 
 
-        [HttpPost("autoclock")]
-        public async Task<ActionResult<IEnumerable<HRTimeLogClass>>> PostAutoClock(HRClockInOut filter)
+        [HttpPost("autoclockin")]
+        public async Task<ActionResult<IEnumerable<HRTimeLogClass>>> PostAutoClockIN(HRClockInOut filter)
         {
 
-            var userLog =  _context.timeLogClass
-                                    .Where(e => e.tdate == DateTime.Parse(filter.sdate) && e.sta == "Out")
+
+            var userLog = _context.timeLogClass
+                                    .Where(e => e.tdate == DateTime.Parse(filter.sdate) && e.sta == "In")
                                     .OrderByDescending(lr => lr.tdate)
                                     .OrderByDescending(lr => lr.tim)
                                     .OrderByDescending(lr => lr.eid)
                                     .ToList();
-          
+
             var datetimeLog = DateTime.Now.ToString("HH:mm:ss");
+
+            if (filter.timeClock != "" && filter.timeClock != null)
+            {
+                datetimeLog = filter.timeClock;
+            }
+
             List<string> termsList = new List<string>();
             var employeees = _context.employee.ToList();
             foreach (var item1 in userLog)
@@ -73,8 +80,62 @@ namespace ccf_re_seller_api.Controllers
                     timeLog.tdate = DateTime.Parse(filter.sdate);
                     timeLog.tim = datetimeLog.ToString();
                     timeLog.braid = joiningInfor.site;
-                    timeLog.sta = "Auto Clock";
-                    timeLog.cty = "Auto Clock";
+                    timeLog.sta = "Auto Clock In";
+                    timeLog.cty = "Auto Clock In";
+                    _context.timeLogClass.Add(timeLog);
+                    await _context.SaveChangesAsync();
+
+                }
+                catch (Exception ex)
+                {
+                    return BadRequest(ex.Message.ToString());
+                }
+            }
+            return Ok(termsList);
+        }
+
+
+        [HttpPost("autoclockout")]
+        public async Task<ActionResult<IEnumerable<HRTimeLogClass>>> PostAutoClock(HRClockInOut filter)
+        {
+
+            var userLog =  _context.timeLogClass
+                                    .Where(e => e.tdate == DateTime.Parse(filter.sdate) && e.sta == "Out")
+                                    .OrderByDescending(lr => lr.tdate)
+                                    .OrderByDescending(lr => lr.tim)
+                                    .OrderByDescending(lr => lr.eid)
+                                    .ToList();
+          
+            var datetimeLog = DateTime.Now.ToString("HH:mm:ss");
+            if (filter.timeClock != "" && filter.timeClock != null)
+            {
+                datetimeLog = filter.timeClock;
+            }
+            List<string> termsList = new List<string>();
+            var employeees = _context.employee.ToList();
+            foreach (var item1 in userLog)
+            {
+                employeees = employeees.Where(e => e.eid != item1.eid).ToList();
+            }
+            foreach (var insert in employeees)
+            {
+                termsList.Add(insert.eid);
+
+            }
+            foreach (var insert in termsList)
+            {
+                var joiningInfor = _context.employeeJoinInfo.SingleOrDefault(e => e.eid == insert);
+                try
+                {
+
+                    HRTimeLogClass timeLog = new HRTimeLogClass(_context);
+                    timeLog.timid = GetLogNextID();
+                    timeLog.eid = insert;
+                    timeLog.tdate = DateTime.Parse(filter.sdate);
+                    timeLog.tim = datetimeLog.ToString();
+                    timeLog.braid = joiningInfor.site;
+                    timeLog.sta = "Auto Clock Out";
+                    timeLog.cty = "Auto Clock Out";
                     _context.timeLogClass.Add(timeLog);
                     await _context.SaveChangesAsync();
 

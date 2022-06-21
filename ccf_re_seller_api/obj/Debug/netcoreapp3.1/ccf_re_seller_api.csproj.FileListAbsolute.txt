@@ -187,3 +187,6 @@
 /Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/obj/Debug/netcoreapp3.1/ccf_re_seller_api.dll
 /Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/obj/Debug/netcoreapp3.1/ccf_re_seller_api.pdb
 /Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/obj/Debug/netcoreapp3.1/ccf_re_seller_api.genruntimeconfig.cache
+/Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/obj/Debug/netcoreapp3.1/ccf_re_seller_api.csproj.AssemblyReference.cache
+/Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/mono_crash.11a67480d0.3.json
+/Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/bin/Debug/netcoreapp3.1/mono_crash.11a67480d0.4.json

@@ -37,10 +37,11 @@ namespace ccf_re_seller_api.Modals
             get
             {
                 var checkLeaveRequest= _context?.leaveRequest.SingleOrDefault(cur => cur.lreid == this.lreid);
-                var name = _context?.employee.SingleOrDefault(cur => cur.eid == checkLeaveRequest.eid);
 
-                if (name != null)
+                if (checkLeaveRequest != null)
                 {
+                    var name = _context?.employee.SingleOrDefault(cur => cur.eid == checkLeaveRequest.eid);
+
                     return name.dname;
                 }
                 return "";

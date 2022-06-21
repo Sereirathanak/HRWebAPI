@@ -45,12 +45,14 @@ namespace ccf_re_seller_api.Controllers
                                  .OrderByDescending(x => x.frdat)
                                  .OrderByDescending(e => e.eid)
                                  .Include(e => e.ccfpinfo)
+                                 .Include(e => e.ccflea)
                                  .Include(e => e.ccfpinfo.ccfemployeeJoinInfo)
                                  .AsQueryable()
                                  .ToList(); 
 
             var employeeName = employeees.Where(e => e.eid == filter.search);
             var employeeBranch = _context.employeeJoinInfo.Where(e => e.site == filter.branchClock);
+
 
             //filter branch request by page size unlimit
             if (filter.listall == true)
@@ -59,20 +61,9 @@ namespace ccf_re_seller_api.Controllers
                 {
                     if (employeeBranch.Count() > 0)
                     {
-                        List<Object> termsList = new List<Object>();
-
-                        foreach (var i in employeeBranch)
-                        {
-                            foreach (var listEmployee in employeees)
-                            {
-                                if (listEmployee.eid == i.eid)
-                                {
-
-                                    termsList.Add(listEmployee);
-                                }
-                            }
-                        }
-                        return Ok(termsList);
+                        var newEmployeees = employeees.Where(e => e.ccfpinfo.ccfemployeeJoinInfo.site == filter.branchClock)
+                                                .ToList();
+                        return Ok(newEmployeees);
 
                     }
                 }
@@ -84,23 +75,10 @@ namespace ccf_re_seller_api.Controllers
                         DateTime dateFrom = DateTime.Parse(filter.sdate.ToString());
                         DateTime dateTo = DateTime.Parse(filter.edate.ToString());
 
-                        employeees = employeees.Where(la => la.frdat >= dateFrom && la.todat <= dateTo)
-                                                //.Skip((filter.pageNumber - 1) * filter.pageSize)
-                                                //.Take(filter.pageSize)
+                        var newEmployeees = employeees.Where(la => la.frdat >= dateFrom && la.todat <= dateTo)
+                                                .Where(e => e.ccfpinfo.ccfemployeeJoinInfo.site == filter.branchClock)
                                                 .ToList();
-
-                        List<Object> termsList = new List<Object>();
-                        foreach (var i in employeeBranch)
-                        {
-                            foreach (var listEmployee in employeees)
-                            {
-                                if (listEmployee.eid == i.eid)
-                                {
-                                    termsList.Add(listEmployee);
-                                }
-                            }
-                        }
-                        return Ok(employeees);
+                        return Ok(newEmployeees);
                     }
                 }
 
@@ -113,23 +91,12 @@ namespace ccf_re_seller_api.Controllers
                 {
                     if (employeeBranch.Count() > 0)
                     {
-                        List<Object> termsList = new List<Object>();
-                        employeees = employeees.Skip((filter.pageNumber - 1) * filter.pageSize)
+                        var newEmployeees = employeees.Where(e => e.ccfpinfo.ccfemployeeJoinInfo.site == filter.branchClock)
+                                               .Skip((filter.pageNumber - 1) * filter.pageSize)
                                               .Take(filter.pageSize)
                                               .ToList();
 
-                        foreach (var i in employeeBranch)
-                        {
-                            foreach (var listEmployee in employeees)
-                            {
-                                if (listEmployee.eid == i.eid)
-                                {
-
-                                    termsList.Add(listEmployee);
-                                }
-                            }
-                        }
-                        return Ok(termsList);
+                        return Ok(newEmployeees);
 
                     }
                 }
@@ -141,23 +108,13 @@ namespace ccf_re_seller_api.Controllers
                         DateTime dateFrom = DateTime.Parse(filter.sdate.ToString());
                         DateTime dateTo = DateTime.Parse(filter.edate.ToString());
 
-                        employeees = employeees.Where(la => la.frdat >= dateFrom && la.todat <= dateTo)
+                       var newEmployeees = employeees.Where(la => la.frdat >= dateFrom && la.todat <= dateTo)
+                                                .Where(e => e.ccfpinfo.ccfemployeeJoinInfo.site == filter.branchClock)
                                                 .Skip((filter.pageNumber - 1) * filter.pageSize)
                                                 .Take(filter.pageSize)
                                                 .ToList();
-
-                        List<Object> termsList = new List<Object>();
-                        foreach (var i in employeeBranch)
-                        {
-                            foreach (var listEmployee in employeees)
-                            {
-                                if (listEmployee.eid == i.eid)
-                                {
-                                    termsList.Add(listEmployee);
-                                }
-                            }
-                        }
-                        return Ok(employeees);
+                    
+                        return Ok(newEmployeees);
                     }
                 }
 
@@ -173,13 +130,11 @@ namespace ccf_re_seller_api.Controllers
                         DateTime dateFrom = DateTime.Parse(filter.sdate.ToString());
                         DateTime dateTo = DateTime.Parse(filter.edate.ToString());
 
-                        employeees = employeees.Where(e => e.eid == filter.search)
+                       var newEmployeees = employeees.Where(e => e.eid == filter.search)
                                                 .Where(la => la.frdat >= dateFrom && la.todat <= dateTo)
-                                                //.Skip((filter.pageNumber - 1) * filter.pageSize)
-                                                //.Take(filter.pageSize)
                                                 .ToList();
 
-                        return Ok(employeees);
+                        return Ok(newEmployeees);
 
                     }
                 }
@@ -188,12 +143,10 @@ namespace ccf_re_seller_api.Controllers
                 {
                     if (employeeName.Count() > 0)
                     {
-                        employeees = employeees.Where(la => la.eid == filter.search)
-                                                //.Skip((filter.pageNumber - 1) * filter.pageSize)
-                                                //.Take(filter.pageSize)
+                        var newEmployeees = employeees.Where(la => la.eid == filter.search)
                                                 .ToList();
 
-                        return Ok(employeees);
+                        return Ok(newEmployeees);
 
                     }
                 }
@@ -208,13 +161,13 @@ namespace ccf_re_seller_api.Controllers
                         DateTime dateFrom = DateTime.Parse(filter.sdate.ToString());
                         DateTime dateTo = DateTime.Parse(filter.edate.ToString());
 
-                        employeees = employeees.Where(e => e.eid == filter.search)
+                        var newEmployeees = employeees.Where(e => e.eid == filter.search)
                                                 .Where(la => la.frdat >= dateFrom && la.todat <= dateTo)
                                                 .Skip((filter.pageNumber - 1) * filter.pageSize)
                                                 .Take(filter.pageSize)
                                                 .ToList();
 
-                        return Ok(employeees);
+                        return Ok(newEmployeees);
 
                     }
                 }
@@ -223,12 +176,12 @@ namespace ccf_re_seller_api.Controllers
                 {
                     if (employeeName.Count() > 0)
                     {
-                        employeees = employeees.Where(la => la.eid == filter.search)
+                        var newEmployeees = employeees.Where(la => la.eid == filter.search)
                                                 .Skip((filter.pageNumber - 1) * filter.pageSize)
                                                 .Take(filter.pageSize)
                                                 .ToList();
 
-                        return Ok(employeees);
+                        return Ok(newEmployeees);
 
                     }
                 }
@@ -242,9 +195,9 @@ namespace ccf_re_seller_api.Controllers
                 {
                     DateTime dateFrom = DateTime.Parse(filter.sdate.ToString());
                     DateTime dateTo = DateTime.Parse(filter.edate.ToString());
-                    employeees = employeees.Where(la => la.frdat >= dateFrom && la.todat <= dateTo)
+                    var newEmployeees = employeees.Where(la => la.frdat >= dateFrom && la.todat <= dateTo)
                                             .ToList();
-                    return Ok(employeees);
+                    return Ok(newEmployeees);
 
                 }
             }
@@ -254,11 +207,11 @@ namespace ccf_re_seller_api.Controllers
                 {
                     DateTime dateFrom = DateTime.Parse(filter.sdate.ToString());
                     DateTime dateTo = DateTime.Parse(filter.edate.ToString());
-                    employeees = employeees.Where(la => la.frdat >= dateFrom && la.todat <= dateTo)
+                    var newEmployeees = employeees.Where(la => la.frdat >= dateFrom && la.todat <= dateTo)
                                             .Skip((filter.pageNumber - 1) * filter.pageSize)
                                             .Take(filter.pageSize)
                                             .ToList();
-                    return Ok(employeees);
+                    return Ok(newEmployeees);
 
                 }
             }
@@ -266,11 +219,9 @@ namespace ccf_re_seller_api.Controllers
             {
                 if (filter.status != "")
                 {
-                    employeees = employeees.Where(e => e.statu == filter.status)
-                                            //.Skip((filter.pageNumber - 1) * filter.pageSize)
-                                            //.Take(filter.pageSize)
+                    var newEmployeees = employeees.Where(e => e.statu == filter.status)
                                             .ToList();
-                    return Ok(employeees);
+                    return Ok(newEmployeees);
 
                 }
             }
@@ -280,11 +231,11 @@ namespace ccf_re_seller_api.Controllers
             {
                 if (filter.status != "")
                 {
-                    employeees = employeees.Where(e => e.statu == filter.status)
+                    var newEmployeees = employeees.Where(e => e.statu == filter.status)
                                             .Skip((filter.pageNumber - 1) * filter.pageSize)
                                             .Take(filter.pageSize)
                                             .ToList();
-                    return Ok(employeees);
+                    return Ok(newEmployeees);
 
                 }
             }
@@ -297,9 +248,9 @@ namespace ccf_re_seller_api.Controllers
                     var strDateTo = DateTime.Now.ToString("yyyy-MM-dd 00:00:00");
                     DateTime dateFrom = DateTime.Parse(filter.sdate.ToString());
                     DateTime dateTo = DateTime.Parse(strDateTo.ToString());
-                    employeees = employeees.Where(la => la.frdat >= dateFrom && la.frdat <= dateTo)
+                    var newEmployeees = employeees.Where(la => la.frdat >= dateFrom && la.frdat <= dateTo)
                                             .ToList();
-                    return Ok(employeees);
+                    return Ok(newEmployeees);
 
                 }
             }
@@ -311,11 +262,11 @@ namespace ccf_re_seller_api.Controllers
                     var strDateTo = DateTime.Now.ToString("yyyy-MM-dd 00:00:00");
                     DateTime dateFrom = DateTime.Parse(filter.sdate.ToString());
                     DateTime dateTo = DateTime.Parse(strDateTo.ToString());
-                    employeees = employeees.Where(la => la.frdat >= dateFrom && la.frdat <= dateTo)
+                    var newEmployeees = employeees.Where(la => la.frdat >= dateFrom && la.frdat <= dateTo)
                                             .Skip((filter.pageNumber - 1) * filter.pageSize)
                                             .Take(filter.pageSize)
                                             .ToList();
-                    return Ok(employeees);
+                    return Ok(newEmployeees);
 
                 }
             }

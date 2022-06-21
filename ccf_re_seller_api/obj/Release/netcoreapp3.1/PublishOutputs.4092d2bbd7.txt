@@ -9,6 +9,8 @@
 /Users/vatsopheap/Desktop/Reseller App API/mono_crash.11a67480d0.0.json
 /Users/vatsopheap/Desktop/Reseller App API/mono_crash.11a67480d0.1.json
 /Users/vatsopheap/Desktop/Reseller App API/mono_crash.11a67480d0.2.json
+/Users/vatsopheap/Desktop/Reseller App API/mono_crash.11a67480d0.3.json
+/Users/vatsopheap/Desktop/Reseller App API/mono_crash.11a67480d0.4.json
 /Users/vatsopheap/Desktop/Reseller App API/ccf_re_seller_api.dll
 /Users/vatsopheap/Desktop/Reseller App API/ccf_re_seller_api.runtimeconfig.json
 /Users/vatsopheap/Desktop/Reseller App API/ccf_re_seller_api.pdb

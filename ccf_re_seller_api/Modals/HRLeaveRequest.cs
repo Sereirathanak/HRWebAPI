@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 using ccf_re_seller_api.Models;
 
 namespace ccf_re_seller_api.Modals
@@ -39,11 +40,46 @@ namespace ccf_re_seller_api.Modals
         public string statu { get; set; }
 
 
+
         public virtual HROrganizationClass ccforg { get; set; }
         public virtual HRLeaveType ccflea { get; set; }
         public virtual HREmployee ccfpinfo { get; set; }
 
+        public virtual HRleaveApprovalRequest ccfleaveApproval { get; set; }
+
+
+        public String leavenoted
+        {
+            get
+            {
+                var checkLeaveRequest = _context?.leaveType.SingleOrDefault(cur => cur.leaid == this.leaid);
+                if (checkLeaveRequest != null)
+                {
+                    return checkLeaveRequest.ltyp;
+                }
+                return "";
+            }
+        }
+
+
+        public object[] leaveapproverby
+        {
+            get
+            {
+                var checkLeaveRequest = _context?.leaveApprovalRequest.Where(cur => cur.lreid == this.lreid).ToList();
+
+                if (checkLeaveRequest != null)
+                {
+                    return checkLeaveRequest.ToArray();
+                }
+
+                return null;
+            }
+        }
+
     }
+
+   
 
 
     public class ValidateLeaveDocument
@@ -75,4 +111,6 @@ namespace ccf_re_seller_api.Modals
 
 
     }
+
+   
 }
