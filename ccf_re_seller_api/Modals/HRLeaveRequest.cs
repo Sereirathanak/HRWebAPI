@@ -61,6 +61,32 @@ namespace ccf_re_seller_api.Modals
             }
         }
 
+        public String leaverequestname
+        {
+            get
+            {
+                var checkLeaveRequest = _context?.employee.SingleOrDefault(cur => cur.eid == this.eid);
+                if (checkLeaveRequest != null)
+                {
+                    return checkLeaveRequest.dname;
+                }
+                return "";
+            }
+        }
+
+        public String leaverequestposition
+        {
+            get
+            {
+                var checkLeaveRequest = _context?.employeeJoinInfo.SingleOrDefault(cur => cur.eid == this.eid);
+                if (checkLeaveRequest != null)
+                {
+                    return checkLeaveRequest.positionName;
+                }
+                return "";
+            }
+        }
+
 
         public object[] leaveapproverby
         {

@@ -52,10 +52,10 @@ namespace ccf_re_seller_api.Controllers
 
             var datetimeLog = DateTime.Now.ToString("HH:mm:ss");
 
-            if (filter.timeClock != "" && filter.timeClock != null)
-            {
-                datetimeLog = filter.timeClock;
-            }
+            //if (filter.timeClock != "" && filter.timeClock != null)
+            //{
+            //    datetimeLog = filter.timeClock;
+            //}
 
             List<string> termsList = new List<string>();
             var employeees = _context.employee.ToList();
@@ -107,10 +107,10 @@ namespace ccf_re_seller_api.Controllers
                                     .ToList();
           
             var datetimeLog = DateTime.Now.ToString("HH:mm:ss");
-            if (filter.timeClock != "" && filter.timeClock != null)
-            {
-                datetimeLog = filter.timeClock;
-            }
+            //if (filter.timeClock != "" && filter.timeClock != null)
+            //{
+            //    datetimeLog = filter.timeClock;
+            //}
             List<string> termsList = new List<string>();
             var employeees = _context.employee.ToList();
             foreach (var item1 in userLog)

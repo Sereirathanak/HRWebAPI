@@ -53,6 +53,71 @@ namespace ccf_re_seller_api.Controllers
             var employeeName = employeees.Where(e => e.eid == filter.search);
             var employeeBranch = _context.employeeJoinInfo.Where(e => e.site == filter.branchClock);
 
+            //filter status request by page size unlimit
+            if (filter.listall == true)
+            {
+                if (filter.status != ""  && filter.sdate == "" && filter.edate == "")
+                {
+                    if (employeeBranch.Count() > 0)
+                    {
+                        var newEmployeees = employeees.Where(e => e.statu == filter.status)
+                                                .ToList();
+                        return Ok(newEmployeees);
+
+                    }
+                }
+
+                if (filter.status != "" && filter.sdate != "" && filter.edate != "")
+                {
+                    if (employeeBranch.Count() > 0)
+                    {
+                        DateTime dateFrom = DateTime.Parse(filter.sdate.ToString());
+                        DateTime dateTo = DateTime.Parse(filter.edate.ToString());
+
+                        var newEmployeees = employeees.Where(la => la.frdat >= dateFrom && la.todat <= dateTo)
+                                                .Where(e => e.statu == filter.status)
+                                                .ToList();
+                        return Ok(newEmployeees);
+                    }
+                }
+
+            }
+
+            //filter status request by page size limit
+            if (filter.listall == false || filter.listall == null)
+            {
+                if (filter.status != ""  && filter.sdate == "" && filter.edate == "")
+                {
+                    if (employeeBranch.Count() > 0)
+                    {
+                        var newEmployeees = employeees.Where(e => e.statu == filter.status)
+                                               .Skip((filter.pageNumber - 1) * filter.pageSize)
+                                              .Take(filter.pageSize)
+                                              .ToList();
+
+                        return Ok(newEmployeees);
+
+                    }
+                }
+
+                if (filter.status != ""  && filter.sdate != "" && filter.edate != "")
+                {
+                    if (employeeBranch.Count() > 0)
+                    {
+                        DateTime dateFrom = DateTime.Parse(filter.sdate.ToString());
+                        DateTime dateTo = DateTime.Parse(filter.edate.ToString());
+
+                        var newEmployeees = employeees.Where(la => la.frdat >= dateFrom && la.todat <= dateTo)
+                                                 .Where(e => e.statu == filter.status)
+                                                 .Skip((filter.pageNumber - 1) * filter.pageSize)
+                                                 .Take(filter.pageSize)
+                                                 .ToList();
+
+                        return Ok(newEmployeees);
+                    }
+                }
+
+            }
 
             //filter branch request by page size unlimit
             if (filter.listall == true)

@@ -38,11 +38,29 @@ namespace ccf_re_seller_api.Modals
             {
                 var checkLeaveRequest= _context?.leaveRequest.SingleOrDefault(cur => cur.lreid == this.lreid);
 
+
                 if (checkLeaveRequest != null)
                 {
                     var name = _context?.employee.SingleOrDefault(cur => cur.eid == checkLeaveRequest.eid);
 
-                    return name.dname;
+                    return checkLeaveRequest.eid;
+                }
+                return "";
+            }
+        }
+
+
+        public string approvername
+        {
+            get
+            {
+                var checkLeaveRequest = _context?.employee.SingleOrDefault(cur => cur.eid == this.eid);
+
+                if (checkLeaveRequest != null)
+                {
+                    //var name = _context?.employee.SingleOrDefault(cur => cur.eid == checkLeaveRequest.eid);
+
+                    return checkLeaveRequest.dname;
                 }
                 return "";
             }

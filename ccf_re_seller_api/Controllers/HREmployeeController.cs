@@ -82,7 +82,25 @@ namespace ccf_re_seller_api.Controllers
             return Ok(listEmployee);
         }
 
-            //Get All List 
+
+        [HttpPost("approvalrequest")]
+        public async Task<ActionResult<IEnumerable<ReturnEmployeeName>>> GetRequestApprover(HRCustomerFilter filter)
+        {
+            var listEmployee = _context.employee.Include(e => e.ccfemployeeJoinInfo)
+                                      .Include(e => e.imageProfile)
+                                      .Include(e => e.ccfuser)
+                                      .OrderByDescending(lr => lr.rdate)
+                                    .Where(e => e.u5 != "")
+                                    .AsQueryable()
+                                    .Skip((filter.pageNumber - 1) * filter.pageSize)
+                                    .Take(filter.pageSize)
+                                    .ToList();
+
+
+            return Ok(listEmployee);
+        }
+
+        //Get All List 
         [HttpPost("all")]
         public async Task<ActionResult<IEnumerable<HREmployee>>> GetAll(HRCustomerFilter filter)
         {
@@ -166,6 +184,22 @@ namespace ccf_re_seller_api.Controllers
                                                              //.Take(filter.pageSize)
                                                              .ToList();
                 var employeeCard = _context.employee.Where(e => e.ecard.Contains(filter.search));
+
+
+                if (filter.status != null && filter.status !="")
+                {
+
+                    listEmployess = listEmployee.Where(lr => lr.estatus == filter.status)
+                                                          .OrderByDescending(lr => lr.rdate)
+                                                          .Where(e => e.ecard.Contains(filter.search))
+                                                          .AsQueryable()
+                                                          //.Skip((filter.pageNumber - 1) * filter.pageSize)
+                                                          //.Take(filter.pageSize)
+                                                          .ToList();
+
+                    return Ok(listEmployess);
+                }
+
 
                 if (employeeCard != null && employeeCard.Count() > 0)
                 {
@@ -1174,6 +1208,7 @@ namespace ccf_re_seller_api.Controllers
               .Include(e => e.ccfemployeeJoinInfo)
               .Include(e => e.ccfemployeeHistory)
               .Include(e => e.ccfuser)
+              .Include(e => e.imageProfile)
               .AsQueryable()
               .ToListAsync();
             if (detail == null)

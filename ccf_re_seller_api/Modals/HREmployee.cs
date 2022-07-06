@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 using ccf_re_seller_api.Modals;
 
 namespace ccf_re_seller_api.Models
@@ -56,7 +57,21 @@ namespace ccf_re_seller_api.Models
         public virtual HRCcfUserClass ccfuser { get; set; }
         public virtual HRImageProfile imageProfile { get; set; }
 
+        public string employeeposition
+        {
+            get
+            {
+                var checkLeaveRequest = _context?.employeeJoinInfo.SingleOrDefault(cur => cur.eid == this.eid);
 
+
+                if (checkLeaveRequest != null)
+                {
+
+                    return checkLeaveRequest.positionName;
+                }
+                return "";
+            }
+        }
 
 
     }

@@ -57,10 +57,10 @@ namespace ccf_re_seller_api
             services.AddDbContext<HRContext>((serviceProvider, optionsBuilder) =>
             {
                 //Production or UAT
-                var connection = Configuration.GetConnectionString("ProductionConnection");
+                //var connection = Configuration.GetConnectionString("ProductionConnection");
 
                 //Default
-                //var connection = Configuration.GetConnectionString("DefaultConnection");
+                var connection = Configuration.GetConnectionString("DefaultConnection");
 
                 optionsBuilder.UseNpgsql(connection);
                 optionsBuilder.UseInternalServiceProvider(serviceProvider);
