@@ -58,7 +58,7 @@ namespace ccf_re_seller_api.Models
             public virtual DbSet<HRGroupOverTimeDetail> groupOverTimeDetail { get; set; }
             public virtual DbSet<HRGroupOverTimeApprove> groupOverTimeApprove { get; set; }
             public virtual DbSet<HRGroupOverTimeDocument> groupOverTimeDocument { get; set; }
-
+            public virtual DbSet<HRCcfUserBranch> UserBranches { get; set; }
         
 
 
@@ -67,7 +67,10 @@ namespace ccf_re_seller_api.Models
                 OnModelCreatingPartial(modelBuilder);
 
                 modelBuilder.HasDefaultSchema("ccfhrmanagement");
-            }
+            modelBuilder.Entity<HRCcfUserBranch>().ToTable("ccfuserbranch");
+            modelBuilder.Entity<HRTimeLogClass>().ToTable("ccftim");
+
+        }
             partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
         }
 }

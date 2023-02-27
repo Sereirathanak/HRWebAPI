@@ -19,10 +19,6 @@
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.8" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.8.0" />
-    <PackageReference Include="Microsoft.Net.Compilers" Version="3.8.0">
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-      <PrivateAssets>all</PrivateAssets>
-    </PackageReference>
     <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="3.3.2">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
@@ -41,6 +37,8 @@
   <ItemGroup>
     <Folder Include="Modals\" />
     <Folder Include="Repositories\" />
+    <Folder Include="CO_Models\" />
+    <Folder Include="Data\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -50,5 +48,9 @@
     <None Remove="GemBox.Spreadsheet" />
     <None Remove="EPPlus" />
     <None Remove="Syncfusion.XlsIO.Net.Core" />
+    <None Remove="Microsoft.Net.Native.Compiler" />
+    <None Remove="System.ValueTuple" />
+    <None Remove="CO_Models\" />
+    <None Remove="Data\" />
   </ItemGroup>
 </Project>

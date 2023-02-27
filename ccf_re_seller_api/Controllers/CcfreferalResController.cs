@@ -94,6 +94,7 @@ namespace ccf_re_seller_api.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutCcfreferalRe(string id, CcfreferalRe ccfreferalRe)
         {
+            _context.Entry(ccfreferalRe).State = EntityState.Modified;
             var datetime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
             DateTime DOI = DateTime.ParseExact((datetime).Trim(), "yyyy-MM-dd HH:mm:ss", CultureInfo.GetCultureInfo("en-GB"));
             ccfreferalRe.status = Constant.PROCESS;
@@ -103,8 +104,6 @@ namespace ccf_re_seller_api.Controllers
             {
                 return BadRequest();
             }
-
-            _context.Entry(ccfreferalRe).State = EntityState.Modified;
 
             try
             {

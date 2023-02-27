@@ -106,7 +106,7 @@ namespace ccf_re_seller_api.Controllers
         {
 
             var listEmployee = _context.employee.Include(e => e.ccfemployeeJoinInfo)
-                                        .Include(e => e.imageProfile)
+                                       // .Include(e => e.imageProfile)
                                         .Include(e => e.ccfuser)
                                         .AsQueryable();
 
@@ -118,7 +118,7 @@ namespace ccf_re_seller_api.Controllers
 
             //seleted branch and department and position and incharge
             if (filter.checkBranch == false && filter.checkDepartment == false && filter.checkPosition == false && filter.checkIncharge == false &&
-               filter.checkEcard == false && filter.search == "" )
+               filter.checkEcard == false && filter.search == "")
             {
                 var listEmployess = listEmployee.Where(lr => lr.estatus == "A")
                                                              .OrderByDescending(lr => lr.rdate)
@@ -126,7 +126,7 @@ namespace ccf_re_seller_api.Controllers
                                                              .Skip((filter.pageNumber - 1) * filter.pageSize)
                                                              .Take(filter.pageSize)
                                                              .ToList();
-                return Ok(listEmployess);
+                    return Ok(listEmployess);
 
             }
 
@@ -169,7 +169,7 @@ namespace ccf_re_seller_api.Controllers
             }
             //seleted branch and department and position and incharge
             if (filter.checkBranch == true && filter.checkDepartment == true && filter.checkPosition == true && filter.checkIncharge == true
-                && filter.checkEcard == true  && filter.search != "" && filter.search != null && filter.listall == true)
+                && filter.checkEcard == true && filter.search != "" && filter.search != null && filter.listall == true)
             {
 
                 var branchCode = _context.hrBranchClass.SingleOrDefault(e => e.braname.ToLower().Contains(filter.search.ToLower()));
@@ -186,7 +186,7 @@ namespace ccf_re_seller_api.Controllers
                 var employeeCard = _context.employee.Where(e => e.ecard.Contains(filter.search));
 
 
-                if (filter.status != null && filter.status !="")
+                if (filter.status != null && filter.status != "")
                 {
 
                     listEmployess = listEmployee.Where(lr => lr.estatus == filter.status)
@@ -249,7 +249,7 @@ namespace ccf_re_seller_api.Controllers
                 var employeeCode = _context.employee.Where(e => e.dname.ToLower().Contains(filter.search.ToLower()));
 
 
-                if (employeeCode != null && employeeCode.Count()> 0 )
+                if (employeeCode != null && employeeCode.Count() > 0)
                 {
                     listEmployess = listEmployee.Where(lr => lr.estatus == "A")
                                                             .OrderByDescending(lr => lr.rdate)
@@ -262,7 +262,7 @@ namespace ccf_re_seller_api.Controllers
                     return Ok(listEmployess);
                 }
 
-                if (branchCode != null&& branchCode.braid !="")
+                if (branchCode != null && branchCode.braid != "")
                 {
                     listEmployess = listEmployee.Where(lr => lr.estatus == "A")
                                                             .OrderByDescending(lr => lr.rdate)
@@ -311,7 +311,7 @@ namespace ccf_re_seller_api.Controllers
                                                            //.Skip((filter.pageNumber - 1) * filter.pageSize)
                                                            //.Take(filter.pageSize)
                                                            .ToList();
-                if (filterIncharge != null && filterIncharge.Count()>0)
+                if (filterIncharge != null && filterIncharge.Count() > 0)
                 {
                     listEmployess = listEmployee.Where(lr => lr.estatus == "A")
                                                             .OrderByDescending(lr => lr.rdate)
@@ -619,7 +619,7 @@ namespace ccf_re_seller_api.Controllers
             if (filter.checkBranch == true && filter.checkPosition == true && filter.checkIncharge == true
                 && filter.search != "" && filter.search != null)
             {
-                
+
                 var branchCode = _context.hrBranchClass.SingleOrDefault(e => e.braname.ToLower().Contains(filter.search.ToLower()));
 
                 var listEmployess = listEmployee.Where(lr => lr.estatus == "A")
@@ -687,7 +687,7 @@ namespace ccf_re_seller_api.Controllers
                     && filter.search != "" && filter.search != null)
             {
                 var departmentCode = _context.department.SingleOrDefault(e => e.depname.ToLower().Contains(filter.search.ToLower()));
-              
+
                 var listEmployess = listEmployee.Where(lr => lr.estatus == "A")
                                                          .OrderByDescending(lr => lr.rdate)
                                                          .AsQueryable()
@@ -1153,7 +1153,7 @@ namespace ccf_re_seller_api.Controllers
 
             //seleted department 
             if (filter.search != "" && filter.search != null &&
-                filter.checkDepartment == true )
+                filter.checkDepartment == true)
             {
                 var departmentCode = _context.department.SingleOrDefault(e => e.depname.ToLower().Contains(filter.search.ToLower()));
 
@@ -1170,15 +1170,15 @@ namespace ccf_re_seller_api.Controllers
 
             //seleted position 
             if (filter.checkPosition == true && filter.search != null && filter.search != "")
-             {
+            {
 
-                    var listEmployess = listEmployee.Where(lr => lr.estatus == "A")
-                                                             .OrderByDescending(lr => lr.rdate)
-                                                             .Where(e => e.ccfemployeeJoinInfo.pos.Contains(filter.search))
-                                                             .AsQueryable()
-                                                             .Skip((filter.pageNumber - 1) * filter.pageSize)
-                                                             .Take(filter.pageSize)
-                                                             .ToList();
+                var listEmployess = listEmployee.Where(lr => lr.estatus == "A")
+                                                         .OrderByDescending(lr => lr.rdate)
+                                                         .Where(e => e.ccfemployeeJoinInfo.pos.Contains(filter.search))
+                                                         .AsQueryable()
+                                                         .Skip((filter.pageNumber - 1) * filter.pageSize)
+                                                         .Take(filter.pageSize)
+                                                         .ToList();
                 return listEmployess;
 
             }
@@ -1545,6 +1545,26 @@ namespace ccf_re_seller_api.Controllers
             }
 
         }
+
+        [HttpPut("changebranch/{eid}/{bcode}")]
+        public async Task<ActionResult> UpdateBranch(string eid,string bcode)
+        {
+            var emp =await _context.ccfUserClass.FirstOrDefaultAsync(e => e.uid == eid);
+            if (emp != null)
+            {
+                emp.bcode = bcode;
+                _context.Entry(emp).State = EntityState.Modified;
+                await _context.SaveChangesAsync();
+                return Ok(emp);
+            }
+            else
+            {
+                return NotFound("Employee not found");
+            }
+
+           
+        }
+
 
         //
         public async Task<string> GetNextIDEmployee()

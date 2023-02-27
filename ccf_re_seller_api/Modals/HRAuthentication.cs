@@ -28,5 +28,7 @@ namespace ccf_re_seller_api.Models
 
         public List<string> roles { get; set; }
 
+        public int leaveRemain { get; set; }
+
     }
 }

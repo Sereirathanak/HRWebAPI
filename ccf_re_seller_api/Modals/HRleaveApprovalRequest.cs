@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using System.Text.Json.Serialization;
 using ccf_re_seller_api.Models;
 namespace ccf_re_seller_api.Modals
 {
@@ -29,6 +30,7 @@ namespace ccf_re_seller_api.Modals
         public string com { get; set; }
         public string remark { get; set; }
 
+       
         public virtual HRLeaveRequest ccflre { get; set; }
         public virtual HREmployee ccfpinfo { get; set; }
 

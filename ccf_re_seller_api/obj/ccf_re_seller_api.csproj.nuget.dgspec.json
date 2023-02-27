@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "/Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/ccf_re_seller_api.csproj": {}
+    "/Users/sereirathanakphal/Project API/ccf_re_seller_api/ccf_re_seller_api/ccf_re_seller_api.csproj": {}
   },
   "projects": {
-    "/Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/ccf_re_seller_api.csproj": {
+    "/Users/sereirathanakphal/Project API/ccf_re_seller_api/ccf_re_seller_api/ccf_re_seller_api.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/ccf_re_seller_api.csproj",
+        "projectUniqueName": "/Users/sereirathanakphal/Project API/ccf_re_seller_api/ccf_re_seller_api/ccf_re_seller_api.csproj",
         "projectName": "ccf_re_seller_api",
-        "projectPath": "/Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/ccf_re_seller_api.csproj",
-        "packagesPath": "/Users/vatsopheap/.nuget/packages/",
-        "outputPath": "/Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/obj/",
+        "projectPath": "/Users/sereirathanakphal/Project API/ccf_re_seller_api/ccf_re_seller_api/ccf_re_seller_api.csproj",
+        "packagesPath": "/Users/sereirathanakphal/.nuget/packages/",
+        "outputPath": "/Users/sereirathanakphal/Project API/ccf_re_seller_api/ccf_re_seller_api/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/Users/vatsopheap/.config/NuGet/NuGet.Config"
+          "/Users/sereirathanakphal/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp3.1"
@@ -98,12 +98,6 @@
               "target": "Package",
               "version": "[2.0.3, )"
             },
-            "Microsoft.Net.Compilers": {
-              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
-              "suppressParent": "All",
-              "target": "Package",
-              "version": "[3.8.0, )"
-            },
             "Newtonsoft.Json": {
               "target": "Package",
               "version": "[12.0.3, )"
@@ -139,10 +133,25 @@
             "net47",
             "net471",
             "net472",
-            "net48"
+            "net48",
+            "net481"
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[3.1.10, 3.1.10]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Host.osx-x64",
+              "version": "[3.1.32, 3.1.32]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Ref",
+              "version": "[3.1.0, 3.1.0]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.AspNetCore.App": {
               "privateAssets": "none"
@@ -151,7 +160,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/6.0.102/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/7.0.102/RuntimeIdentifierGraph.json"
         }
       }
     }

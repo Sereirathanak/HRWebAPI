@@ -35,6 +35,22 @@ namespace ccf_re_seller_api.Controllers
             _context = context;
 
         }
+
+        [HttpPost("doc")]
+        public async Task<ActionResult<IEnumerable<HRLeaveRequestDocument>>> GetDocu(HRClockInOut LeaveRequestID)
+        {
+
+
+            var docs = _context.leaveRequestDocument.Where(x => x.leaverequestid == LeaveRequestID.leaveIDDoc).AsQueryable().ToList();
+
+            if (docs != null)
+            {
+                return Ok(docs);
+            }
+            return BadRequest("Bad");
+        } 
+
+
         //
         [HttpPost("report")]
         public async Task<ActionResult<IEnumerable<HRLeaveRequest>>> FetchAllReportLeave(HRClockInOut filter)
@@ -320,6 +336,10 @@ namespace ccf_re_seller_api.Controllers
                 }
             }
 
+
+            // Add new condtion here.
+
+
             if (filter.listall == false || filter.listall == null)
             {
                 if (filter.sdate != "" && filter.search == "")
@@ -447,49 +467,63 @@ namespace ccf_re_seller_api.Controllers
                                     //_leaveRequest.lreid = GetLogNextID();
                                     //_leaveRequest.file = memoryStream.ToArray();
                                     //_context.leaveRequest.Add(_leaveRequest);
-                                    var leavereq = new HRLeaveRequest(_context)
-                                    {
-                                        lreid = GenerateID.ToString(),
-                                        orgid = _leaveRequest.orgid,
-                                        eid = _leaveRequest.eid,
-                                        leaid = _leaveRequest.leaid,
-                                        frdat = _leaveRequest.frdat,
-                                        todat = _leaveRequest.todat,
-                                        numleav = _leaveRequest.numleav,
-                                        lfor = _leaveRequest.lfor,
-                                        lnot = _leaveRequest.lnot,
-                                        reason = _leaveRequest.reason,
-                                        remark = _leaveRequest.remark,
-                                        createdate = DOI,
-                                        statu = "2"
-                                    };
 
-                                    _context.leaveRequest.Add(leavereq);
-                                    await _context.SaveChangesAsync();
 
-                                    var idDocument = _context.leaveRequestDocument.Max(c => c.leavereqdocid);
-                                    int convertIntDocument = 0;
-                                    if (idDocument == null)
-                                    {
-                                        convertIntDocument = 200000;
-                                    }
-                                    else
-                                    {
-                                        convertIntDocument = int.Parse(idDocument) + 1;
+                                    // check for existed leave on the same day.
+                                    // if user already apply for leave ready system not allow to apply leave again.
+                                    //var existedLeave = await _context.leaveRequest.Where(x => x.frdat == _leaveRequest.frdat && x.eid == _leaveRequest.eid).FirstOrDefaultAsync();
+                                    //if (existedLeave != null)
+                                    //{
+                                    //    return BadRequest("Cannot Request Leave");
+                                    //}
+                                    //else
+                                    //{
 
-                                    }
-                                    var GenerateIDDcument = convertIntDocument.ToString();
-                                    var leavereqDcument = new HRLeaveRequestDocument()
-                                    {
-                                        leavereqdocid = GenerateIDDcument.ToString(),
-                                        eid = leavereq.eid,
-                                        leaverequestid = leavereq.lreid,
-                                        file = memoryStream.ToArray(),
-                                    };
-                                    _context.leaveRequestDocument.Add(leavereqDcument);
-                                    await _context.SaveChangesAsync();
-                                    _idMissionRequest = leavereq.lreid;
+                                        var leavereq = new HRLeaveRequest(_context)
+                                        {
+                                            lreid = GenerateID.ToString(),
+                                            orgid = _leaveRequest.orgid,
+                                            eid = _leaveRequest.eid,
+                                            leaid = _leaveRequest.leaid,
+                                            frdat = _leaveRequest.frdat,
+                                            todat = _leaveRequest.todat,
+                                            numleav = _leaveRequest.numleav,
+                                            lfor = _leaveRequest.lfor,
+                                            lnot = _leaveRequest.lnot,
+                                            reason = _leaveRequest.reason,
+                                            remark = _leaveRequest.remark,
+                                            createdate = DOI,
+                                            statu = "2"
+                                        };
 
+
+                                        _context.leaveRequest.Add(leavereq);
+                                        await _context.SaveChangesAsync();
+
+                                        var idDocument = _context.leaveRequestDocument.Max(c => c.leavereqdocid);
+                                        int convertIntDocument = 0;
+                                        if (idDocument == null)
+                                        {
+                                            convertIntDocument = 200000;
+                                        }
+                                        else
+                                        {
+                                            convertIntDocument = int.Parse(idDocument) + 1;
+
+                                        }
+                                        var GenerateIDDcument = convertIntDocument.ToString();
+                                        var leavereqDcument = new HRLeaveRequestDocument()
+                                        {
+                                            leavereqdocid = GenerateIDDcument.ToString(),
+                                            eid = leavereq.eid,
+                                            leaverequestid = leavereq.lreid,
+                                            file = memoryStream.ToArray(),
+                                        };
+                                        _context.leaveRequestDocument.Add(leavereqDcument);
+                                        await _context.SaveChangesAsync();
+                                        _idMissionRequest = leavereq.lreid;
+
+                                    //}
                                 }
 
                                 memoryStream.Close();
@@ -499,28 +533,35 @@ namespace ccf_re_seller_api.Controllers
                     }
                     else
                     {
-                        var leavereq = new HRLeaveRequest(_context)
+                        // Add condtion to check if user used to apply for leave with the same day or not
+                        // if user already apply leave on the same day system will not allow to apply again.
+                        var existedLeave = await _context.leaveRequest.Where(x => x.frdat == _leaveRequest.frdat && x.eid == _leaveRequest.eid).FirstOrDefaultAsync();
+                        if(existedLeave != null)
                         {
-                            lreid = GetLogNextID(),
-                            orgid = _leaveRequest.orgid,
-                            eid = _leaveRequest.eid,
-                            leaid = _leaveRequest.leaid,
-                            frdat = _leaveRequest.frdat,
-                            todat = _leaveRequest.todat,
-                            numleav = _leaveRequest.numleav,
-                            lfor = _leaveRequest.lfor,
-                            lnot = _leaveRequest.lnot,
-                            reason = _leaveRequest.reason,
-                            remark = _leaveRequest.remark,
-                            createdate = DOI,
-                            statu = "2"
-                        };
+                            return BadRequest("Cannot Request Leave");
+                        }else
+                        {
+                            var leavereq = new HRLeaveRequest(_context)
+                            {
+                                lreid = GetLogNextID(),
+                                orgid = _leaveRequest.orgid,
+                                eid = _leaveRequest.eid,
+                                leaid = _leaveRequest.leaid,
+                                frdat = _leaveRequest.frdat,
+                                todat = _leaveRequest.todat,
+                                numleav = _leaveRequest.numleav,
+                                lfor = _leaveRequest.lfor,
+                                lnot = _leaveRequest.lnot,
+                                reason = _leaveRequest.reason,
+                                remark = _leaveRequest.remark,
+                                createdate = DOI,
+                                statu = "2"
+                            };
 
-                        //_leaveRequest.lreid = GetLogNextID();
-                        _context.leaveRequest.Add(leavereq);
-                        _idMissionRequest = leavereq.lreid;
-
-
+                            //_leaveRequest.lreid = GetLogNextID();
+                            _context.leaveRequest.Add(leavereq);
+                            _idMissionRequest = leavereq.lreid;
+                        }
                     }
 
                     await _context.SaveChangesAsync();

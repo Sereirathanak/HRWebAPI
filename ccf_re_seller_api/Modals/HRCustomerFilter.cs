@@ -52,6 +52,7 @@ namespace ccf_re_seller_api.Models
         public string? search{ get; set; }
         public bool? listall { get; set; }
 
+        public string? leaveIDDoc { get; set; }
 
     }
 }

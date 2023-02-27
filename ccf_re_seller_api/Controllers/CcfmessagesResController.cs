@@ -42,8 +42,10 @@ namespace ccf_re_seller_api.Controllers
                                        .Where(m => m.ucode == filter.uid)
                                        .AsQueryable();
 
-                var recordLists = messages.OrderBy(m => m.mstatus)
-                                      .ThenByDescending(m => m.id)
+                var recordLists = messages.OrderByDescending(m => m.date)
+
+                                       .OrderBy(m => m.mstatus)
+                                     // .ThenByDescending(m => m.id)
                                       .AsQueryable()
                                       .Skip((filter.pageNumber - 1) * filter.pageSize)
                                       .Take(filter.pageSize)

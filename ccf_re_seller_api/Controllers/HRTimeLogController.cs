@@ -9,6 +9,10 @@ using ccf_re_seller_api.Modals;
 using System.Globalization;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
+using ccf_re_seller_api.Data;
+using System.Diagnostics;
+using Npgsql;
+using System.Data;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -531,42 +535,76 @@ namespace ccf_re_seller_api.Controllers
             return BadRequest();
         }
 
+        [HttpPost("adjust")]
+        public async Task<ActionResult> AdjustTime(string eid,TimeLogDTO timeLog)
+        {
+            HRTimeLogClass hRTimeLog = new HRTimeLogClass(_context);
+
+            hRTimeLog.braid = timeLog.bcode;
+            hRTimeLog.timid = GetLogNextID();
+            hRTimeLog.eid = timeLog.eid;
+            if (timeLog.Status == "In")
+            {
+                hRTimeLog.tim = "8:00:00";
+            }
+            else if (timeLog.Status == "Out")
+            {
+                hRTimeLog.tim = "17:00:00";
+            }
+            hRTimeLog.cty = "Forget Scan";
+            hRTimeLog.tdate =Convert.ToDateTime(timeLog.ClockDate);
+            hRTimeLog.sta = timeLog.Status;
+            await _context.timeLogClass.AddAsync(hRTimeLog);
+            await _context.SaveChangesAsync();
+            return Ok(hRTimeLog);
+        }
+
+
+
         [HttpPost("posttimelog")]
         public async Task<IActionResult> PostTimeClock(HRTimeLogClass timeLog)
         {
+            //return BadRequest(timeLog);
+
             var datetime = DateTime.Now.ToString("yyyy-MM-dd");
-            DateTime DOI = DateTime.ParseExact((datetime).Trim(), "yyyy-MM-dd", CultureInfo.GetCultureInfo("en-GB"));
+             DateTime DOI = DateTime.ParseExact((datetime).Trim(), "yyyy-MM-dd", CultureInfo.GetCultureInfo("en-GB"));
+            //DateTime DOI = DateTime.Now;
+
             var datetimeLog = DateTime.Now.ToString("HH:mm:ss");
             DateTime convertingdatetime = DateTime.ParseExact(datetime, "yyyy-MM-dd", null);
+
+            
             try
             {
                 bool exsitingEmployee = false;
                 // timelog eid == ecard
                 exsitingEmployee = _context.employee.Any(e => e.ecard == timeLog.eid);
+                 
                 if (_context.employee.Any(e => e.ecard == null))
                 {
                     exsitingEmployee = false;
                 }
-                else if (exsitingEmployee == true)
-                {
-                    exsitingEmployee = true;
-                }
-               
+
+              
                 if (exsitingEmployee == true)
                 {
+
                     if (timeLog.braid != null &&
                         timeLog.eid != null && timeLog.cty != null)
                     {
-                        var employee = _context.employee.FirstOrDefault(e => e.ecard == timeLog.eid);
-                        var branchID = _context.employeeJoinInfo.FirstOrDefault(e => e.eid == employee.eid);
+
+                        var employee = await _context.employee.FirstOrDefaultAsync(e => e.ecard == timeLog.eid);
+                        var branchID = await _context.employeeJoinInfo.FirstOrDefaultAsync(e => e.eid == employee.eid);
 
                         timeLog.timid = GetLogNextID();
                         timeLog.braid = branchID.site;
                         timeLog.eid = employee.eid;
                         timeLog.tdate = DOI;
                         timeLog.tim = datetimeLog.ToString();
+                       
 
-                        _context.timeLogClass.Add(timeLog);
+
+                        await _context.timeLogClass.AddAsync(timeLog);
                         await _context.SaveChangesAsync();
 
                         return Ok(timeLog);
@@ -588,18 +626,89 @@ namespace ccf_re_seller_api.Controllers
             }
         }
 
-        //
+        [HttpPost("count")]
+        public IActionResult GetCount(Filter filter)
+        {
+            NpgsqlConnection con;
+            NpgsqlCommand cmd;
+            NpgsqlDataAdapter da;
+            DataTable dt;
+            string sql = "";
+            if(filter.StartDate=="" && filter.EndDate == "")
+            {
+                sql = "select distinct(ar.eid),(select count(*) from attandance_report a where a.eid ='200302' and a.timein is null and a.branchname is not null ) as \"Forget In\",(select count(*) from attandance_report b where b.eid = '200302' and b.timeout is null  and b.branchname is not null ) as \"Forget out\",(select count(distinct(l.\"KEY\")) from v_rpt_leave l where l.\"Staff ID\" = (select p.ecard  from ccfpinfo  p where p.eid='200302') )--and to_date(\"From Date\",'YYYY-MM-dd')>=date_trunc('month',now())  )as \"Number Leave\"  from attandance_report ar where ar.branchname is not  null and ar.eid ='200302' and ar.date_report >= to_char(date_trunc('month',now()),'YYYY-MM-dd')::DATE and ar.date_report<=to_char(now(),'YYYY-MM-dd')::DATE ";
+               
+            }
+
+            return BadRequest("NO Data");
+        }
+
+
+
+        [HttpPost("attendance")]
+        public IActionResult getAttendance(Filter filter)
+        {
+            NpgsqlConnection con;
+            NpgsqlCommand cmd;
+            NpgsqlDataAdapter da;
+            DataTable dt;
+            string sql="";
+            if (filter.StartDate=="" && filter.EndDate=="")
+            {
+                sql = "select * from (select distinct concat(to_char(c.tdate::timestamp,'yyyy-MM-dd'), i.ecard) as \"key\",to_char(c.tdate::timestamp,'DD-MM-yyyy') \"date_report\",i.eid,i.ecard,i.fname ,i.lname ,i.fullname ,i.department,i.jobposition,i.estatus,b.braname branchname,(select min(tt.tim) from ccfhrmanagement.ccftim tt where tt.sta='In' and tt.tdate=c.tdate and tt.eid= c.eid  limit 1) as \"timein\",(select max(tt.tim) from ccfhrmanagement.ccftim tt where tt.sta='Out' and tt.tdate =c.tdate and tt.eid=c.eid  limit 1) as \"timeout\", to_char('080000'::time,'HH24:MI:SS') \"inworkinghour\", to_char('170000'::time,'HH24:MI:SS') \"outworkinghour\" from ccfhrmanagement.ccftim c  inner join ccfhrmanagement.ccfbranch b on b.braid = c.braid right join ccfhrmanagement.v_employee i on c.eid=i.eid ) t where t.eid='" + filter.Eid + "' and t.\"date_report\"='"+DateTime.Now.ToString("dd-MM-yyyy")+ "'  order by t.\"date_report\"";
+              //  return Ok(sql);
+            }
+            else
+            {
+                sql = "select * from (select distinct concat(to_char(c.tdate::timestamp,'yyyy-MM-dd'), i.ecard) as \"key\",to_char(c.tdate::timestamp,'DD-MM-yyyy') \"date_report\",i.eid,i.ecard,i.fname ,i.lname ,i.fullname ,i.department,i.jobposition,i.estatus,b.braname branchname,(select min(tt.tim) from ccfhrmanagement.ccftim tt where tt.sta='In' and tt.tdate=c.tdate and tt.eid= c.eid  limit 1) as \"timein\",(select max(tt.tim) from ccfhrmanagement.ccftim tt where tt.sta='Out' and tt.tdate =c.tdate and tt.eid=c.eid  limit 1) as \"timeout\", to_char('080000'::time,'HH24:MI:SS') \"inworkinghour\", to_char('170000'::time,'HH24:MI:SS') \"outworkinghour\" from ccfhrmanagement.ccftim c  inner join ccfhrmanagement.ccfbranch b on b.braid = c.braid right join ccfhrmanagement.v_employee i on c.eid=i.eid and c.tdate::timestamp>='"+filter.StartDate+"' and c.tdate::timestamp<='"+filter.EndDate+"') t where t.eid='" + filter.Eid + "' order by t.\"date_report\""; ;
+                //return Ok(sql);
+            }
+            //string sql = "select * from (select distinct concat(to_char(c.tdate::timestamp,'DD-MM-YYYY'), i.ecard) as \"key\",to_char(c.tdate::timestamp,'DD-MM-YYYY') \"date_report\",i.eid,i.ecard,i.fname ,i.lname ,i.fullname ,i.department,i.jobposition,i.estatus,b.braname branchname,(select min(tt.tim) from ccfhrmanagement.ccftim tt where tt.sta='In' and tt.tdate=c.tdate and tt.eid= c.eid  limit 1) as \"timein\",(select max(tt.tim) from ccfhrmanagement.ccftim tt where tt.sta='Out' and tt.tdate =c.tdate and tt.eid=c.eid  limit 1) as \"timeout\", to_char('080000'::time,'HH24:MI:SS') \"inworkinghour\", to_char('170000'::time,'HH24:MI:SS') \"outworkinghour\" from ccfhrmanagement.ccftim c  inner join ccfhrmanagement.ccfbranch b on b.braid = c.braid right join ccfhrmanagement.v_employee i on c.eid=i.eid) t where t.eid='"+ eid+"' and t.\"date_report\">='"+startDate+"' and t.\"date_report\"<='"+ endDate+"' order by t.\"date_report\""; ;
+           // string sql = "select * from ccfhrmanagement.v_attendance limit 10";
+            try
+            {
+                con = new NpgsqlConnection(_configuration.GetConnectionString("ProductionConnection"));
+                con.Open();
+                cmd = new NpgsqlCommand();
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.Text;
+                cmd.CommandText = sql;
+                da = new NpgsqlDataAdapter(cmd);
+                dt = new DataTable();
+                da.Fill(dt);
+                if (dt.Rows.Count > 0)
+                {
+                    return Ok(dt);
+                }
+                else
+                {
+                    return BadRequest(" No Data Found");
+                }
+                con.Close();
+                con.Dispose();
+                cmd.Dispose();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.ToString());
+            }
+            return Ok();
+        }
+
+
         public string GetLogNextID()
         {
-            var userLog = _context.timeLogClass.OrderByDescending(u => u.timid).FirstOrDefault();
+            var userLog =_context.timeLogClass.OrderByDescending(u => u.timid).FirstOrDefault();
 
+            Debug.WriteLine("My second error message.", userLog);
             if (userLog == null)
             {
-                return "100000";
+                return "1";
             }
-            var nextId = int.Parse(userLog.timid) + 1;
+            var nextId = Int32.Parse(userLog.timid) + 1;
             return nextId.ToString();
+
         }
-        //
+
     }
 }

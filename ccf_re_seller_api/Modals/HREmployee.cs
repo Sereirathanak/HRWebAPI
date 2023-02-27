@@ -56,6 +56,7 @@ namespace ccf_re_seller_api.Models
         public virtual HREmployeeHistory ccfemployeeHistory { get; set; }
         public virtual HRCcfUserClass ccfuser { get; set; }
         public virtual HRImageProfile imageProfile { get; set; }
+        public virtual HRleaveEnrollment ccfler { get; set; }
 
         public string employeeposition
         {

@@ -674,12 +674,6 @@
           "lib/netcoreapp2.1/Microsoft.IO.RecyclableMemoryStream.dll": {}
         }
       },
-      "Microsoft.Net.Compilers/3.8.0": {
-        "type": "package",
-        "build": {
-          "build/Microsoft.Net.Compilers.props": {}
-        }
-      },
       "Microsoft.NETCore.App/2.0.7": {
         "type": "package",
         "dependencies": {
@@ -2840,129 +2834,6 @@
         "lib/netstandard2.1/Microsoft.IO.RecyclableMemoryStream.xml",
         "microsoft.io.recyclablememorystream.2.2.0.nupkg.sha512",
         "microsoft.io.recyclablememorystream.nuspec"
-      ]
-    },
-    "Microsoft.Net.Compilers/3.8.0": {
-      "sha512": "57PnxwBjgxJECuhRsM4CGQUWgKx0xgsSWhM5UXjjhTP1mY7QLE6Jan5zo1LzeTKOblO8+DxFNAcP4bEPXsH+kA==",
-      "type": "package",
-      "path": "microsoft.net.compilers/3.8.0",
-      "hasTools": true,
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "Icon.png",
-        "ThirdPartyNotices.rtf",
-        "build/Microsoft.Net.Compilers.props",
-        "microsoft.net.compilers.3.8.0.nupkg.sha512",
-        "microsoft.net.compilers.nuspec",
-        "tools/Microsoft.Build.Tasks.CodeAnalysis.dll",
-        "tools/Microsoft.CSharp.Core.targets",
-        "tools/Microsoft.CodeAnalysis.CSharp.Scripting.dll",
-        "tools/Microsoft.CodeAnalysis.CSharp.dll",
-        "tools/Microsoft.CodeAnalysis.Scripting.dll",
-        "tools/Microsoft.CodeAnalysis.VisualBasic.dll",
-        "tools/Microsoft.CodeAnalysis.dll",
-        "tools/Microsoft.DiaSymReader.Native.amd64.dll",
-        "tools/Microsoft.DiaSymReader.Native.x86.dll",
-        "tools/Microsoft.Managed.Core.targets",
-        "tools/Microsoft.VisualBasic.Core.targets",
-        "tools/System.Buffers.dll",
-        "tools/System.Collections.Immutable.dll",
-        "tools/System.Memory.dll",
-        "tools/System.Numerics.Vectors.dll",
-        "tools/System.Reflection.Metadata.dll",
-        "tools/System.Runtime.CompilerServices.Unsafe.dll",
-        "tools/System.Text.Encoding.CodePages.dll",
-        "tools/System.Threading.Tasks.Extensions.dll",
-        "tools/VBCSCompiler.exe",
-        "tools/VBCSCompiler.exe.config",
-        "tools/cs/Microsoft.Build.Tasks.CodeAnalysis.resources.dll",
-        "tools/cs/Microsoft.CodeAnalysis.CSharp.Scripting.resources.dll",
-        "tools/cs/Microsoft.CodeAnalysis.CSharp.resources.dll",
-        "tools/cs/Microsoft.CodeAnalysis.Scripting.resources.dll",
-        "tools/cs/Microsoft.CodeAnalysis.VisualBasic.resources.dll",
-        "tools/cs/Microsoft.CodeAnalysis.resources.dll",
-        "tools/csc.exe",
-        "tools/csc.exe.config",
-        "tools/csc.rsp",
-        "tools/csi.exe",
-        "tools/csi.exe.config",
-        "tools/csi.rsp",
-        "tools/de/Microsoft.Build.Tasks.CodeAnalysis.resources.dll",
-        "tools/de/Microsoft.CodeAnalysis.CSharp.Scripting.resources.dll",
-        "tools/de/Microsoft.CodeAnalysis.CSharp.resources.dll",
-        "tools/de/Microsoft.CodeAnalysis.Scripting.resources.dll",
-        "tools/de/Microsoft.CodeAnalysis.VisualBasic.resources.dll",
-        "tools/de/Microsoft.CodeAnalysis.resources.dll",
-        "tools/es/Microsoft.Build.Tasks.CodeAnalysis.resources.dll",
-        "tools/es/Microsoft.CodeAnalysis.CSharp.Scripting.resources.dll",
-        "tools/es/Microsoft.CodeAnalysis.CSharp.resources.dll",
-        "tools/es/Microsoft.CodeAnalysis.Scripting.resources.dll",
-        "tools/es/Microsoft.CodeAnalysis.VisualBasic.resources.dll",
-        "tools/es/Microsoft.CodeAnalysis.resources.dll",
-        "tools/fr/Microsoft.Build.Tasks.CodeAnalysis.resources.dll",
-        "tools/fr/Microsoft.CodeAnalysis.CSharp.Scripting.resources.dll",
-        "tools/fr/Microsoft.CodeAnalysis.CSharp.resources.dll",
-        "tools/fr/Microsoft.CodeAnalysis.Scripting.resources.dll",
-        "tools/fr/Microsoft.CodeAnalysis.VisualBasic.resources.dll",
-        "tools/fr/Microsoft.CodeAnalysis.resources.dll",
-        "tools/it/Microsoft.Build.Tasks.CodeAnalysis.resources.dll",
-        "tools/it/Microsoft.CodeAnalysis.CSharp.Scripting.resources.dll",
-        "tools/it/Microsoft.CodeAnalysis.CSharp.resources.dll",
-        "tools/it/Microsoft.CodeAnalysis.Scripting.resources.dll",
-        "tools/it/Microsoft.CodeAnalysis.VisualBasic.resources.dll",
-        "tools/it/Microsoft.CodeAnalysis.resources.dll",
-        "tools/ja/Microsoft.Build.Tasks.CodeAnalysis.resources.dll",
-        "tools/ja/Microsoft.CodeAnalysis.CSharp.Scripting.resources.dll",
-        "tools/ja/Microsoft.CodeAnalysis.CSharp.resources.dll",
-        "tools/ja/Microsoft.CodeAnalysis.Scripting.resources.dll",
-        "tools/ja/Microsoft.CodeAnalysis.VisualBasic.resources.dll",
-        "tools/ja/Microsoft.CodeAnalysis.resources.dll",
-        "tools/ko/Microsoft.Build.Tasks.CodeAnalysis.resources.dll",
-        "tools/ko/Microsoft.CodeAnalysis.CSharp.Scripting.resources.dll",
-        "tools/ko/Microsoft.CodeAnalysis.CSharp.resources.dll",
-        "tools/ko/Microsoft.CodeAnalysis.Scripting.resources.dll",
-        "tools/ko/Microsoft.CodeAnalysis.VisualBasic.resources.dll",
-        "tools/ko/Microsoft.CodeAnalysis.resources.dll",
-        "tools/pl/Microsoft.Build.Tasks.CodeAnalysis.resources.dll",
-        "tools/pl/Microsoft.CodeAnalysis.CSharp.Scripting.resources.dll",
-        "tools/pl/Microsoft.CodeAnalysis.CSharp.resources.dll",
-        "tools/pl/Microsoft.CodeAnalysis.Scripting.resources.dll",
-        "tools/pl/Microsoft.CodeAnalysis.VisualBasic.resources.dll",
-        "tools/pl/Microsoft.CodeAnalysis.resources.dll",
-        "tools/pt-BR/Microsoft.Build.Tasks.CodeAnalysis.resources.dll",
-        "tools/pt-BR/Microsoft.CodeAnalysis.CSharp.Scripting.resources.dll",
-        "tools/pt-BR/Microsoft.CodeAnalysis.CSharp.resources.dll",
-        "tools/pt-BR/Microsoft.CodeAnalysis.Scripting.resources.dll",
-        "tools/pt-BR/Microsoft.CodeAnalysis.VisualBasic.resources.dll",
-        "tools/pt-BR/Microsoft.CodeAnalysis.resources.dll",
-        "tools/ru/Microsoft.Build.Tasks.CodeAnalysis.resources.dll",
-        "tools/ru/Microsoft.CodeAnalysis.CSharp.Scripting.resources.dll",
-        "tools/ru/Microsoft.CodeAnalysis.CSharp.resources.dll",
-        "tools/ru/Microsoft.CodeAnalysis.Scripting.resources.dll",
-        "tools/ru/Microsoft.CodeAnalysis.VisualBasic.resources.dll",
-        "tools/ru/Microsoft.CodeAnalysis.resources.dll",
-        "tools/tr/Microsoft.Build.Tasks.CodeAnalysis.resources.dll",
-        "tools/tr/Microsoft.CodeAnalysis.CSharp.Scripting.resources.dll",
-        "tools/tr/Microsoft.CodeAnalysis.CSharp.resources.dll",
-        "tools/tr/Microsoft.CodeAnalysis.Scripting.resources.dll",
-        "tools/tr/Microsoft.CodeAnalysis.VisualBasic.resources.dll",
-        "tools/tr/Microsoft.CodeAnalysis.resources.dll",
-        "tools/vbc.exe",
-        "tools/vbc.exe.config",
-        "tools/vbc.rsp",
-        "tools/zh-Hans/Microsoft.Build.Tasks.CodeAnalysis.resources.dll",
-        "tools/zh-Hans/Microsoft.CodeAnalysis.CSharp.Scripting.resources.dll",
-        "tools/zh-Hans/Microsoft.CodeAnalysis.CSharp.resources.dll",
-        "tools/zh-Hans/Microsoft.CodeAnalysis.Scripting.resources.dll",
-        "tools/zh-Hans/Microsoft.CodeAnalysis.VisualBasic.resources.dll",
-        "tools/zh-Hans/Microsoft.CodeAnalysis.resources.dll",
-        "tools/zh-Hant/Microsoft.Build.Tasks.CodeAnalysis.resources.dll",
-        "tools/zh-Hant/Microsoft.CodeAnalysis.CSharp.Scripting.resources.dll",
-        "tools/zh-Hant/Microsoft.CodeAnalysis.CSharp.resources.dll",
-        "tools/zh-Hant/Microsoft.CodeAnalysis.Scripting.resources.dll",
-        "tools/zh-Hant/Microsoft.CodeAnalysis.VisualBasic.resources.dll",
-        "tools/zh-Hant/Microsoft.CodeAnalysis.resources.dll"
       ]
     },
     "Microsoft.NETCore.App/2.0.7": {
@@ -5887,7 +5758,6 @@
       "Microsoft.EntityFrameworkCore >= 5.0.2",
       "Microsoft.EntityFrameworkCore.Design >= 5.0.2",
       "Microsoft.EntityFrameworkCore.Tools.DotNet >= 2.0.3",
-      "Microsoft.Net.Compilers >= 3.8.0",
       "Newtonsoft.Json >= 12.0.3",
       "Npgsql.EntityFrameworkCore.PostgreSQL >= 5.0.2",
       "Npgsql.EntityFrameworkCore.PostgreSQL.Design >= 1.1.0",
@@ -5898,19 +5768,19 @@
     ]
   },
   "packageFolders": {
-    "/Users/vatsopheap/.nuget/packages/": {}
+    "/Users/sereirathanakphal/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/ccf_re_seller_api.csproj",
+      "projectUniqueName": "/Users/sereirathanakphal/Project API/ccf_re_seller_api/ccf_re_seller_api/ccf_re_seller_api.csproj",
       "projectName": "ccf_re_seller_api",
-      "projectPath": "/Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/ccf_re_seller_api.csproj",
-      "packagesPath": "/Users/vatsopheap/.nuget/packages/",
-      "outputPath": "/Users/vatsopheap/Documents/Chokchey Project/Project/ccf_re_seller_api/ccf_re_seller_api/obj/",
+      "projectPath": "/Users/sereirathanakphal/Project API/ccf_re_seller_api/ccf_re_seller_api/ccf_re_seller_api.csproj",
+      "packagesPath": "/Users/sereirathanakphal/.nuget/packages/",
+      "outputPath": "/Users/sereirathanakphal/Project API/ccf_re_seller_api/ccf_re_seller_api/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/Users/vatsopheap/.config/NuGet/NuGet.Config"
+        "/Users/sereirathanakphal/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "netcoreapp3.1"
@@ -5994,12 +5864,6 @@
             "target": "Package",
             "version": "[2.0.3, )"
           },
-          "Microsoft.Net.Compilers": {
-            "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
-            "suppressParent": "All",
-            "target": "Package",
-            "version": "[3.8.0, )"
-          },
           "Newtonsoft.Json": {
             "target": "Package",
             "version": "[12.0.3, )"
@@ -6035,10 +5899,25 @@
           "net47",
           "net471",
           "net472",
-          "net48"
+          "net48",
+          "net481"
         ],
         "assetTargetFallback": true,
         "warn": true,
+        "downloadDependencies": [
+          {
+            "name": "Microsoft.AspNetCore.App.Ref",
+            "version": "[3.1.10, 3.1.10]"
+          },
+          {
+            "name": "Microsoft.NETCore.App.Host.osx-x64",
+            "version": "[3.1.32, 3.1.32]"
+          },
+          {
+            "name": "Microsoft.NETCore.App.Ref",
+            "version": "[3.1.0, 3.1.0]"
+          }
+        ],
         "frameworkReferences": {
           "Microsoft.AspNetCore.App": {
             "privateAssets": "none"
@@ -6047,7 +5926,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/6.0.102/RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/7.0.102/RuntimeIdentifierGraph.json"
       }
     }
   },
@@ -6056,7 +5935,7 @@
       "code": "NU1701",
       "level": "Warning",
       "warningLevel": 1,
-      "message": "Package 'Microsoft.AspNet.Cors 5.2.7' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8' instead of the project target framework '.NETCoreApp,Version=v3.1'. This package may not be fully compatible with your project.",
+      "message": "Package 'Microsoft.AspNet.Cors 5.2.7' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework '.NETCoreApp,Version=v3.1'. This package may not be fully compatible with your project.",
       "libraryId": "Microsoft.AspNet.Cors",
       "targetGraphs": [
         ".NETCoreApp,Version=v3.1"
@@ -6066,7 +5945,7 @@
       "code": "NU1701",
       "level": "Warning",
       "warningLevel": 1,
-      "message": "Package 'Microsoft.AspNet.WebApi.Core 5.2.7' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8' instead of the project target framework '.NETCoreApp,Version=v3.1'. This package may not be fully compatible with your project.",
+      "message": "Package 'Microsoft.AspNet.WebApi.Core 5.2.7' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework '.NETCoreApp,Version=v3.1'. This package may not be fully compatible with your project.",
       "libraryId": "Microsoft.AspNet.WebApi.Core",
       "targetGraphs": [
         ".NETCoreApp,Version=v3.1"
@@ -6076,7 +5955,7 @@
       "code": "NU1701",
       "level": "Warning",
       "warningLevel": 1,
-      "message": "Package 'Microsoft.AspNet.WebApi.Cors 5.2.7' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8' instead of the project target framework '.NETCoreApp,Version=v3.1'. This package may not be fully compatible with your project.",
+      "message": "Package 'Microsoft.AspNet.WebApi.Cors 5.2.7' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework '.NETCoreApp,Version=v3.1'. This package may not be fully compatible with your project.",
       "libraryId": "Microsoft.AspNet.WebApi.Cors",
       "targetGraphs": [
         ".NETCoreApp,Version=v3.1"

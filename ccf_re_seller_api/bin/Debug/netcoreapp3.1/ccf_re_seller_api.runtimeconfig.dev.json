@@ -1,8 +1,8 @@
 {
   "runtimeOptions": {
     "additionalProbingPaths": [
-      "/Users/vatsopheap/.dotnet/store/|arch|/|tfm|",
-      "/Users/vatsopheap/.nuget/packages"
+      "/Users/sereirathanakphal/.dotnet/store/|arch|/|tfm|",
+      "/Users/sereirathanakphal/.nuget/packages"
     ]
   }
 }

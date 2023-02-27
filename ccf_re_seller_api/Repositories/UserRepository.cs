@@ -184,7 +184,7 @@ namespace ccf_re_seller_api.Repositories
             // Google Firebase
             var googleCredential = _env.ContentRootPath;
             //mac
-            //googleCredential = googleCredential + "//ccf-reseller-web-app-firebase-adminsdk-cjlin-7306caa621.json";
+           // googleCredential = googleCredential + "//ccf-reseller-web-app-firebase-adminsdk-cjlin-7306caa621.json";
 
             //window
             googleCredential = googleCredential + "\\ccf-reseller-web-app-firebase-adminsdk-cjlin-7306caa621.json";

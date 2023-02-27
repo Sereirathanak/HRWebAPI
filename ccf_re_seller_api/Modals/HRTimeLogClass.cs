@@ -17,6 +17,7 @@ namespace ccf_re_seller_api.Modals
         }
 
         [Key]
+        
         public string timid { get; set; }
 
         [ForeignKey("ccfpinfo")]

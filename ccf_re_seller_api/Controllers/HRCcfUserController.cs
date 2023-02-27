@@ -15,6 +15,7 @@ using System.Globalization;
 using ccf_re_seller_api.Models;
 using ccf_re_seller_api.Repositories;
 using Microsoft.AspNetCore.Hosting;
+using ccf_re_seller_api.Modals;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -40,6 +41,24 @@ namespace ccf_re_seller_api.Controllers
         public async Task<ActionResult<IEnumerable<HRCcfUserClass>>> GetAll()
         {
             return await _context.ccfUserClass.ToListAsync();
+        }
+
+
+        [HttpGet("zone/{eid}")]
+        public async Task<ActionResult> GetBranchZone(string eid)
+        {
+            var Branch =await _context.ccfUserClass.FirstOrDefaultAsync(c => c.uid == eid);
+            if(Branch == null)
+            {
+                return NotFound("User not found");
+            }
+            //return Ok(Branch);
+            var Zone =await _context.mapZoneClass.Include(e => e.ccfbranch).
+
+
+                FirstOrDefaultAsync(z => z.braid == Branch.bcode);
+            return Ok(Zone);
+
         }
 
         // POST: api/Users/5/UpdateMobileToken
@@ -286,10 +305,14 @@ namespace ccf_re_seller_api.Controllers
                     bool _checkUserLogin = false;
                     bool _checkUserEmployeeLogin = false;
 
-                    _checkUserLogin = _context.ccfUserClass.Any(u => u.upassword == _userData.upassword);
+                    var emp =await _context.employee.FirstOrDefaultAsync(e => e.ecard == _userData.uid);
+
+                    _checkUserLogin = _context.ccfUserClass.Any(u => u.upassword == _userData.upassword && u.uid== emp.eid);
                     _checkUserEmployeeLogin = _context.employee.Any(u => u.ecard == _userData.uid);
 
-                    if (_checkUserLogin == true && _checkUserEmployeeLogin == true)
+                    //return Ok(_checkUserLogin);
+
+                    if (_checkUserLogin == true)
                     {
                         var employeeEcard = _context.employee.FirstOrDefault(u => u.ecard == _userData.uid);
 
@@ -326,6 +349,10 @@ namespace ccf_re_seller_api.Controllers
 
                             var user = _context.ccfUserClass.FirstOrDefault(u => u.uid == employeeEcard.eid);
 
+                            // check for leave remain
+
+                            var LeaveBalnce = _context.leaveEnrollment.FirstOrDefault(l => l.eid == employeeEcard.eid);
+
                             List<HRAuthentication> result = new List<HRAuthentication>
                             {
                                 new HRAuthentication {
@@ -345,6 +372,7 @@ namespace ccf_re_seller_api.Controllers
                                     datecreate = user.datecreate,
                                     isapprover = user.isapprover,
                                     exdate = user.exdate,
+                                    leaveRemain=LeaveBalnce.releav,
 
                                 }
                             };
@@ -374,6 +402,20 @@ namespace ccf_re_seller_api.Controllers
                 return BadRequest(ex.Message.ToString());
             }
 
+        }
+
+        [HttpPost("userbranch")]
+        public async Task<ActionResult> AddUserBranch(HRCcfUserBranch userBranch)
+        {
+            var existed = await _context.UserBranches.Where(e => e.eid == userBranch.eid && e.branch == userBranch.branch).ToListAsync();
+                //.Where(e => e.branch==userBranch.branch);
+            if(existed.Count>0)
+            {
+                return BadRequest("User with eid " + userBranch.eid + " and Branch Code " + userBranch.branch + " already existed in system");
+            }
+            _context.UserBranches.Add(userBranch);
+            await _context.SaveChangesAsync();
+            return Ok(userBranch);
         }
 
         public string GetLogNextID()

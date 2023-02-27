@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Http.Cors;
+using ccf_re_seller_api.Data;
 using ccf_re_seller_api.Modals;
 using ccf_re_seller_api.Models;
 using ccf_re_seller_api.Repositories;
@@ -34,34 +35,38 @@ namespace ccf_re_seller_api.Controllers
 
         }
 
+        // List Approver
         [HttpPost("approver/{id}")]
         public async Task<ActionResult<IEnumerable<HRleaveApprovalRequest>>> GetListApprove(string id,HRClockInOut filter)
         {
-            //, HRCustomerFilter filter
-            var listLeave = _context.leaveApprovalRequest.AsQueryable()
-                .Include(e => e.ccflre)
-                .Include(e => e.ccfpinfo);
+             //HRCustomerFilter filter
+           var listLeave = _context.leaveApprovalRequest.AsQueryable()
+               .Include(e => e.ccflre)
+               .Include(e => e.ccfpinfo);
+            
 
-
-            var leave = listLeave.Where(lr => lr.eid == id)
-                                      .OrderByDescending(lr => lr.applev)
+            var leave = await listLeave.Where(lr => lr.lreid == id)
+                                      
+                                     // .Where(e => e.apstatu==2)
+                                      .OrderByDescending(lr => lr.applev).Reverse()
                                       .AsQueryable()
                                       .Skip((filter.pageNumber - 1) * filter.pageSize)
                                       .Take(filter.pageSize)
-                                      .ToList();
+                                      .ToListAsync();
 
-            if (filter.search != "")
+            if (filter.search != ""  && filter.search!=null)
             {
 
                 List<Object> termsList = new List<Object>();
-              
+
 
                 var checkLeaveRequest = _context.leaveRequest.Where(cur => cur.eid == filter.search);
 
                 foreach (var i in checkLeaveRequest)
                 {
-                    var leaverequest = leave.Where(lr => lr.lreid == i.lreid)
-                                           .OrderByDescending(lr => lr.applev)
+                    var leaverequest =  leave.Where(lr => lr.lreid == i.lreid)
+                                           //.Where(e => e.apstatu == 2)
+                                           .OrderByDescending(lr => lr.applev).Reverse()
                                            .AsQueryable()
                                            .Skip((filter.pageNumber - 1) * filter.pageSize)
                                            .Take(filter.pageSize)
@@ -70,7 +75,7 @@ namespace ccf_re_seller_api.Controllers
 
                     foreach (var listEmployee in leaverequest)
                     {
-                            termsList.Add(listEmployee);
+                        termsList.Add(listEmployee);
                     }
                 }
                 return Ok(termsList);
@@ -78,44 +83,48 @@ namespace ccf_re_seller_api.Controllers
             return Ok(leave);
         }
 
+        [HttpGet("a")]
+       public async Task<ActionResult> getall()
+        {
+            return Ok(await _context.leaveApprovalRequest.ToListAsync());
+        }
 
-        //
+
+
+        // List leave that need to Approve.
         [HttpPost("{id}")]
         public async Task<ActionResult<IEnumerable<HRleaveApprovalRequest>>> GetLeaveRequest(string id, HRCustomerFilter filter)
         {
-            var listLeave = _context.leaveApprovalRequest.AsQueryable()
-                .Include(e => e.ccflre)
-                .Include(e => e.ccfpinfo);
-      
+            var listLeave = _context.leaveApprovalRequest.AsQueryable();//.Where(e => e.eid==id)
+                //.Include(e => e.ccflre)
+                //.Include(e => e.ccfpinfo);
 
-            var leave = listLeave.Where(lr => lr.lreid == id)
-                                        .OrderByDescending(lr => lr.applev).Reverse()
+
+
+            var leave =await listLeave  .Where(lr => lr.eid == id)
+                                        .Where(e => e.apstatu==2).OrderByDescending(e =>e.ccflre.frdat)
+                                       // .OrderByDescending(lr => lr.applev).Reverse()
                                         .AsQueryable()
                                         .Skip((filter.pageNumber - 1) * filter.pageSize)
                                         .Take(filter.pageSize)
-                                        .ToList();
+                                        .Include(e => e.ccflre)
+                                        .Include(e => e.ccfpinfo)
+                                        .ToListAsync();
 
             if(filter.search != "" && filter.search != null)
             {
-                var leaveRequest = _context.leaveRequest.SingleOrDefault(e => e.reason.ToLower().Contains(filter.search.ToLower()));
-
-                if (leaveRequest != null)
-                {
-
-                    leave = listLeave.Where(lr => lr.lreid == leaveRequest.lreid)
-                                             .OrderByDescending(lr => lr.applev).Reverse()
+                    leave = await listLeave.Where(lr => lr.ccflre.eid == filter.search).OrderByDescending(e => e.ccflre.frdat)
+                                           //  .OrderByDescending(lr => lr.applev).Reverse()
                                              .AsQueryable()
                                              .Skip((filter.pageNumber - 1) * filter.pageSize)
                                              .Take(filter.pageSize)
-                                             .ToList();
+                                             .Include(e => e.ccfpinfo).Include(e => e.ccflre)
+                                             .ToListAsync();
 
-                    return leave;
+                    return leave.Where(e => e.lreid!= null).ToList();
 
-                }
+
             }
-
-          
-
             return leave;
         }
 
@@ -123,7 +132,7 @@ namespace ccf_re_seller_api.Controllers
         [HttpPost]
         public async Task<ActionResult<IEnumerable<HRleaveApprovalRequest>>> GetAll(HRCustomerFilter filter)
         {
-            var listEmployee = _context.leaveApprovalRequest.AsQueryable();
+            var listEmployee =await _context.leaveApprovalRequest.AsQueryable().ToListAsync();
 
 
             int totallistEmployee = listEmployee.Count();
@@ -184,22 +193,22 @@ namespace ccf_re_seller_api.Controllers
             _context.Entry(_leaveApproval).State = EntityState.Modified;
             //await _context.SaveChangesAsync();
 
-            var listApproveRequest = _context.leaveApprovalRequest.Where(e => e.lreid == _leaveApproval.lreid);
+            var listApproveRequest = await _context.leaveApprovalRequest.Where(e => e.lreid == _leaveApproval.lreid).ToListAsync();
+            var _leavereq = await _context.leaveRequest.SingleOrDefaultAsync(e => e.lreid == _leaveApproval.lreid);
             var statusRequtest = 1;
+            var LeaveBalance = await _context.leaveEnrollment.SingleOrDefaultAsync(e => e.eid == _leavereq.eid);
 
-            if (_leaveApproval.applev != listApproveRequest.Count() - 2)
+            if (_leaveApproval.applev == listApproveRequest.Count()-1)
             {
-                if (_leaveApproval.apstatu != 3)
-                {
-                    statusRequtest = 2;
-                }
+                _context.Entry(_leavereq).State = EntityState.Modified;
+
+                _context.Entry(LeaveBalance).State = EntityState.Modified;
+                //LeaveBalance.releav = LeaveBalance.releav - Convert.ToInt16(_leavereq.numleav);
+
+                statusRequtest = _leaveApproval.apstatu;
+                _leavereq.statu = statusRequtest.ToString();
+
             }
-
-
-
-            var _leavereq = _context.leaveRequest.SingleOrDefault(e => e.lreid == _leaveApproval.lreid);
-
-            _leavereq.statu = statusRequtest.ToString();
             //await _context.SaveChangesAsync();
 
           
@@ -226,7 +235,7 @@ namespace ccf_re_seller_api.Controllers
                 statusEdit = "return";
             }
 
-            var user = _context.ccfUserClass.SingleOrDefault(e => e.uid == _leaveApproval.eid);
+            var user = await _context.ccfUserClass.SingleOrDefaultAsync(e => e.uid == _leaveApproval.eid);
 
             await _userRepository.SendNotificationUser(_leavereq.eid, user.bcode, "CCF HR System App", $"Leave request have been {statusEdit} from {user.uname}.", _leavereq.eid, _leavereq.lreid, "L");
             var userApproval = _context.leaveApprovalRequest.Where(e => e.lreid == _leaveApproval.lreid)
@@ -277,6 +286,24 @@ namespace ccf_re_seller_api.Controllers
             var nextId = int.Parse(userLog.lredid) + 1;
             return nextId.ToString();
         }
-        //
+        [HttpGet("count/{eid}")]
+        public async Task<ActionResult> GetCount(string eid)
+        {
+            var pending = await _context.leaveApprovalRequest.Where(e => e.eid == eid && e.apstatu==2).ToListAsync();
+            var approve = await _context.leaveApprovalRequest.Where(e => e.eid == eid && e.apstatu == 1).ToListAsync();
+            if (pending.Count != 0 || approve.Count!=0)
+            {
+                Count count = new Count();
+                count.Approved = approve.Count;
+                count.Pending = pending.Count;
+                return Ok(count);
+            }
+            else
+            {
+                return NotFound("User Not fount");
+            }
+            
+
+        }
     }
 }

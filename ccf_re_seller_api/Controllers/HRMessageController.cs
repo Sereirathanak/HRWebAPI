@@ -37,10 +37,13 @@ namespace ccf_re_seller_api.Controllers
             {
                 //uid == eid from employee infor
                 var messages = _context.hrccfmessages
-                                       .Where(m => m.ucode == filter.uid)
+                                       .Where(m => m.ucode == filter.uid )
                                        .AsQueryable();
 
-                var recordLists = messages.OrderBy(m => m.mstatus)
+                var recordLists = messages
+                                        .Where(m => m.mstatus==0)
+                                       .OrderBy(m => m.mstatus)
+                                       
                                       .ThenByDescending(m => m.id)
                                       .AsQueryable()
                                       .Skip((filter.pageNumber - 1) * filter.pageSize)
@@ -81,7 +84,7 @@ namespace ccf_re_seller_api.Controllers
                 {
                     return BadRequest(new KeyValuePair<string, string>("000", $"The message {id} not found."));
                 }
-
+                _context.Entry(messageObj).State = EntityState.Modified;
                 messageObj.mstatus = 1;
                 _context.SaveChanges();
 
